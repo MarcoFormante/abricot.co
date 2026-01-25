@@ -16,7 +16,7 @@ export function Button(
 
 
     return (
-        <button className={`${scss.btn} w-full h-full block ${scss[type]} ${style}`}>
+        <button className={`${scss.btn} ${scss[type]} ${style}`}>
             {label}
         </button>
     )
