@@ -31,3 +31,40 @@
     background-color: #1F1F1F;
     color: #FFFFFF;
 }   
+
+
+.switchBtn{
+    height: 45px;
+    border-radius: 8px;
+    padding-inline: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    color:#D3590B;
+    font-size: 14px;
+
+    &.switchActive{
+        background-color: #FFE8D9;
+    }
+
+    & .switchSvg{
+        width: 16px;
+        height: 18px;
+        background-repeat: no-repeat;
+
+        &.listeSvg{
+            background-image: url("../../assets/list.svg");
+        }
+
+        &.kanbanSvg{
+            background-image: url("../../assets/kanban.svg");
+        }
+    }
+
+   
+}
+
+ 
