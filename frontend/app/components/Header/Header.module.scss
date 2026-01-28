@@ -1,0 +1,42 @@
+
+        .navListContainer{
+            display: flex;
+            align-items: center;
+            height: 94px;
+            justify-content: space-between;
+        }
+
+
+        .navCenterItem{
+            display: flex;
+            align-items: center;
+            color:#D3590B;
+        }
+
+        .svgItem{
+            width: 24px;
+            height: 24px;
+            background-repeat: no-repeat;
+        }
+
+        .svgTbord{
+            background-image: url("../../assets/t_bord_orange.svg");
+        }
+
+        .svgProjets{
+            background-image: url("../../assets/projects_orange.svg");
+            width: 30px;
+        }
+
+        .activeMenuItem{
+            color: #FFFFFF;
+            background-color: #0F0F0F;
+
+            .svgTbord{
+                background-image: url("../../assets/t_bord.svg");
+            }
+            .svgProjets{
+                background-image: url("../../assets/projects.svg");
+            }   
+}
+            
