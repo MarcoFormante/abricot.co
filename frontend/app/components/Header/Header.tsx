@@ -6,7 +6,7 @@ import { MenuItem } from "./MenuItem";
 export async function Header(){
     
     return (
-        <header>
+        <header className="bg-[#FFFFFF] px-25">
             <nav>
                 <ul className={styles.navListContainer}>
                     <li>
