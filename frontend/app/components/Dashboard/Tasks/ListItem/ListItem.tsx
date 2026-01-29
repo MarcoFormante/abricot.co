@@ -1,6 +1,6 @@
 import { Button } from "../../../Button/Button";
-import { ListItemDetailProject } from "./ListItemDetailProject";
 import { Tag } from "../Tag";
+import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 
 export function ListItem({tagType}:{
     tagType:"to-do" | "in-progress" | "done"
@@ -15,7 +15,7 @@ export function ListItem({tagType}:{
               Description de la tâche
             </p>
           </div>
-          <ListItemDetailProject/>
+           <TaskItemProjectDetails/>
         </div>
         <div className="flex flex-col justify-between items-end">
           <Tag type={tagType} />
