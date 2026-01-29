@@ -1,5 +1,6 @@
 import { Button } from "../../../Button/Button";
 import { Tag } from "../Tag";
+import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 
 export function KanbanItem({tagType}:{
     tagType:"to-do" | "in-progress" | "done"
@@ -7,7 +8,7 @@ export function KanbanItem({tagType}:{
   return (
     <li className="py-[25px] px-[40px] border border-[#E5E7EB] rounded-[10px] flex flex-col gap-[32px] w-[371px]">
       <div className="flex justify-between">
-        <div className="flex flex-col gap-[7px]">
+        <div className="flex flex-col gap-[1px]">
           <h4 className="text-[18px] font-semibold max-w-max inline">
             Nom de la tâche
           </h4>
@@ -20,15 +21,7 @@ export function KanbanItem({tagType}:{
       <div>
         <div>
           <div>
-            <div>
-              <span className="text-[12px] border-r pr-[15px] text-[#6B7280]">
-                Nom du projet
-              </span>
-              <span className="text-[12px] border-r pr-[15px] pl-[15px] text-[#6B7280]">
-                9 mars
-              </span>
-              <span className="text-[12px] pl-[15px] text-[#6B7280]">2</span>
-            </div>
+           <TaskItemProjectDetails/>
           </div>
         </div>
       </div>
