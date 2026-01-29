@@ -8,9 +8,9 @@ export function Button(
     }
     :
     {
-        label:string,
+        label:string | React.ReactNode,
         style?:string,
-        type: "btn-white" | "btn-grey" | "btn-softBlack" | "btn-black" 
+        type: "btn-white" | "btn-grey" | "btn-softBlack" | "btn-black" | "btn-orange" 
     }
 ){
 
