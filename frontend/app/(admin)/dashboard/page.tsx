@@ -1,7 +1,7 @@
 'use client'
 import { AdminMainTitle } from "@/app/components/Dashboard/AdminMainTitle/AdminMainTitle";
 import { Button } from "@/app/components/Button/Button";
-import { DashboardSwitchButton } from "@/app/components/Button/DashboardSwitchButton";
+import { SwitchButton } from "@/app/components/Button/SwitchButton";
 import { useState } from "react";
 import { TaskList } from "@/app/components/Dashboard/Tasks/TaskList";
 import { TaskKanban } from "@/app/components/Dashboard/Tasks/TaskKanban";
@@ -21,8 +21,8 @@ export default function Dashboard() {
             </div>
             
             <div className="flex items-center gap-[10px] mt-[60px]">
-                <DashboardSwitchButton svgName={"listeSvg"} label={"Liste"} isActive={isList} onClick={()=>setIsList(true)}/>
-                <DashboardSwitchButton svgName={"kanbanSvg"} label={"Kanban"} isActive={!isList} onClick={()=>setIsList(false)}/>
+                <SwitchButton svgName={"listeSvg"} label={"Liste"} isActive={isList} onClick={()=>setIsList(true)}/>
+                <SwitchButton svgName={"kanbanSvg"} label={"Kanban"} isActive={!isList} onClick={()=>setIsList(false)}/>
             </div>
 
 
