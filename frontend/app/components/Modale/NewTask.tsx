@@ -31,7 +31,7 @@ export function NewTask(){
     }
 
     return (
-        <div className="flex flex-col gap-[40px]">
+        <div className="flex flex-col gap-[46px]">
             <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Créer une tâche</h5>
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
                 <Input type='text' name='title' label='Title*' gap='6px' required/>
