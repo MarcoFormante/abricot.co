@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Button } from "../Button/Button";
 import { ModalContainer } from "../Modale/ModalContainer";
 import { NewTask } from "../Modale/NewTask";
+import { NewTaskAI } from "../Modale/NewTaskAi";
 
 
 export function ProjectHeader(){
-  const [showModale,setShowModal] = useState(false)
+  const [showModale,setShowModal] = useState({type:""})
     return (
       <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end">
-        
         <div className="flex gap-[16px]">
           <button className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
             <svg
@@ -41,15 +41,25 @@ export function ProjectHeader(){
 
         <div className="flex gap-[12px]">
           <div className="w-[141px] h-[50px]">
-         {  showModale && 
-            <ModalContainer setShowModal={setShowModal} showModale={showModale}>
-              <NewTask/>
-            </ModalContainer>}
+
+          { showModale?.type && 
+            <ModalContainer 
+              setShowModal={setShowModal} 
+              showModale={showModale}
+              >
+              {
+                showModale.type === "newTask" 
+                ? <NewTask/>
+                : <NewTaskAI/>
+              }
+            </ModalContainer>
+          }
            
-            <Button type={"btn-softBlack"} label="Créer une tâche" onClick={()=>setShowModal(true)} />
+            <Button type={"btn-softBlack"} label="Créer une tâche" onClick={()=>setShowModal({type:"newTask"})} />
           </div>
           <div className="w-[90px] h-[50px]">
             <Button
+            onClick={()=>setShowModal({type:"AI"})}
               type={"btn-orange"}
               label={
                 <div className="flex justify-center items-center gap-[10px]">
