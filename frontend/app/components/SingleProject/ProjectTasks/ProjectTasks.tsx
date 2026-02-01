@@ -1,11 +1,16 @@
+'use client'
+
+import { useState } from "react";
 import { SwitchButton } from "../../Button/SwitchButton";
-import { CircleTag } from "../../Collaborators/CircleTag";
-import { NameTag } from "../../Collaborators/NameTag";
-import { Tag } from "../../Dashboard/Tasks/Tag";
 import { Input } from "../../Input/Input";
+import { EditTask } from "../../Modale/EditTask";
+import { ModalContainer } from "../../Modale/ModalContainer";
 import { ProjectTaskItem } from "./ProjectTaskItem";
 
 export function ProjectTasks(){
+    const [showModal,setShowModal] = useState({type:""})
+
+
     return (
     <section className=" mt-[34px] border border-[#E5E7EB] bg-[#FFFFFF] py-[40px] max-w-[1240px] m-auto"> 
         <div className="px-[59px] flex justify-between items-center">
@@ -35,6 +40,11 @@ export function ProjectTasks(){
             </div>
         </div>
 
+    { showModal?.type && 
+        <ModalContainer setShowModal={setShowModal} showModale={showModal}>
+            <EditTask/>
+        </ModalContainer>
+        }
         <div className="mt-[41px] min-h-[30vh]">
             <ul className="px-[59px] flex flex-col gap-[17px]">
                 <ProjectTaskItem/>
