@@ -52,6 +52,15 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     position: relative;
 }
 
+input::-webkit-datetime-edit{
+    color: transparent;
+    visibility: hidden;
+}
+
+input::-webkit-datetime-edit{
+   background: #000;
+}
+
 
 .out-screen{
   position: absolute;

@@ -48,4 +48,28 @@ input[type=date]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   background-repeat: no-repeat;
   position: relative;
+}
+
+input::-webkit-datetime-edit {
+  color: transparent;
+  visibility: hidden;
+}
+
+input::-webkit-datetime-edit {
+  background: #000;
+}
+
+.out-screen {
+  position: absolute;
+  top: -5000px;
+}
+
+.ai-input::-moz-placeholder {
+  color: #000000;
+  font-size: 10px;
+}
+
+.ai-input::placeholder {
+  color: #000000;
+  font-size: 10px;
 }/*# sourceMappingURL=globals.css.map */
