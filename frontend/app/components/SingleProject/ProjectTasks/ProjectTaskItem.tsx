@@ -28,7 +28,7 @@ export function ProjectTaskItem(){
                     </p>
                   </div>
                   <div className="mt-[30px]">
-                    <p className="flex items-center gap-[8px] text-[#6B7280] text-[12px]">Assigné à : 
+                    <div className="flex items-center gap-[8px] text-[#6B7280] text-[12px]">Assigné à : 
                       <span className="flex">
                         <CircleTag name="Bertrand Dupont" isOwner={false}/>
                         <NameTag name="Bertrand Dupont" isOwner={false}/>
@@ -37,7 +37,7 @@ export function ProjectTaskItem(){
                         <CircleTag name="Bertrand Dupont" isOwner={false}/>
                         <NameTag name="Bertrand Dupont" isOwner={false}/>
                       </span>
-                    </p>
+                    </div>
                   </div>
                   <hr className="mt-[24px]  border-[#E5E7EB]" />
                   <div className="flex justify-between items-center mt-[24px]">
