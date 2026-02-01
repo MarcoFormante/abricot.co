@@ -1,10 +1,12 @@
+'use client'
 import { Input } from '../Input/Input';
 import { Tag } from '../Dashboard/Tasks/Tag';
 import { Button } from '../Button/Button';
-import { FormEvent, FormEventHandler } from 'react';
+import {useState } from 'react';
 
 
 export function NewTask(){
+    const [newDate,setNewDate] = useState("")
 
     function onSubmit(event: React.FormEvent) {
         event.preventDefault()
@@ -26,8 +28,14 @@ export function NewTask(){
         }
 
         console.log(formValues);
-        
+    }
 
+    const onDateChange = (value:string)=>{
+        const date = new Date(value)
+        const isoDate = date.toLocaleDateString("fr-FR",{
+            month:"long",day:"numeric",year:"numeric"
+        })
+        setNewDate(isoDate)
     }
 
     return (
@@ -36,7 +44,10 @@ export function NewTask(){
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
                 <Input type='text' name='title' label='Title*' gap='6px' required/>
                 <Input type='text' name='desc' label='Description*' gap='6px' required/>
-                <Input type={"date"} name='date' label='Échéance*' required/>
+                <div className='relative'>
+                    <Input type={"date"} name='date' label='Échéance*' required  onChange={(e) => onDateChange(e.target.value)} />
+                    <input name='isoDate' id='isoDate' disabled className='absolute top-[50%] left-0.5 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0' type={"text"} value={newDate}/>
+                </div>
                 
                 <div>
                     <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
