@@ -1,17 +1,13 @@
-"use client"
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
 import styles from "./Header.module.scss";
 
 
-export function MenuItem({href,label,imgClass}:{
+export function MenuItem({href,label,imgClass,pathname}:{
     href:"/dashboard" | "/projets",
     label: "Tableau de bord" | "Projets",
-    imgClass:"svgTbord" | "svgProjets"
+    imgClass:"svgTbord" | "svgProjets",
+    pathname:string
 }){
-    const pathname = usePathname()
 
     return (
         <Link href={href}>
