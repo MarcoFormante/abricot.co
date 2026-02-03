@@ -2,7 +2,7 @@ import { Button } from "../Button/Button";
 import { Form } from "./Form/Form";
 
 export function ConnectionForm({isRegisterPage}:{
-    isRegisterPage:boolean
+    isRegisterPage:boolean,
 }){
     return (
         <div className="w-70.5 flex flex-col gap-7.5">
