@@ -1,9 +1,10 @@
 import { Input } from "../../Input/Input";
 
-export function Form({ children,onSubmit }: 
+export function Form({ children,onSubmit,isRegisterPage }: 
     { 
         children: React.ReactNode 
-        onSubmit:React.FormEventHandler<HTMLFormElement>
+        onSubmit:React.FormEventHandler<HTMLFormElement>,
+        isRegisterPage:boolean
     }){
 
     return (
