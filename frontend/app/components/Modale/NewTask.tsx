@@ -7,6 +7,7 @@ import {useState } from 'react';
 
 export function NewTask(){
     const [newDate,setNewDate] = useState("")
+    const [collab,setCollab] = useState<any[]>([])
 
     function onSubmit(event: React.FormEvent) {
         event.preventDefault()
@@ -38,6 +39,16 @@ export function NewTask(){
         setNewDate(isoDate)
     }
 
+
+    const onChange = (value:any) => {
+       
+        setCollab(prev => [...prev,value])
+    }
+
+    console.log(collab);
+    
+
+
     return (
         <div className="flex flex-col gap-[46px]">
             <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Créer une tâche</h5>
@@ -51,9 +62,10 @@ export function NewTask(){
                 
                 <div>
                     <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
-                    <select name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[6px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]">
-                        <option value="" className="text-[#6B7280]">Choisir un ou plusieurs collaborateurs</option>
-                        <option value="" className="text-[#6B7280]"></option>
+                    <select onChange={(e) => onChange(e.target.value)} multiple name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[6px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]">
+                        <option value="" className="text-[#6B7280]">{collab.length} collaborators</option>
+                        <option value="c" className="text-[#6B7280]">Ciccio</option>
+                        <option value="d" className="text-[#6B7280]">Marco</option>
                     </select>
                 </div>
 
@@ -62,17 +74,17 @@ export function NewTask(){
                     <div className='flex items-center gap-[8px] mt-[15px]'>
                         <input type="radio" name="status[]" id="to-do" value={"to-do"} />
                         <label htmlFor="to-do">
-                            <Tag type='to-do'/>
+                            <Tag type='TODO'/>
                         </label>
                         
                         <input type="radio" name="status[]" id="in-progress" value={"in-progress"} />
                         <label htmlFor="in-progress">
-                            <Tag type='in-progress'/>
+                            <Tag type='IN_PROGRESS'/>
                         </label>
 
                         <input type="radio" name="status[]" id="done" value={"done"} />
                         <label htmlFor="done">
-                            <Tag type='done'/>
+                            <Tag type='DONE'/>
                         </label>
                     </div>
                 </div>
