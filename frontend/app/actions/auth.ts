@@ -19,7 +19,6 @@ export async function login(formdata:FormData){
     try {
         const response = await axiosInstance.post("auth/login",{email,password})
         const loginResponse = await response.data
-        console.log(loginResponse);
         
         if (loginResponse?.data?.errors) {
             return {
@@ -76,6 +75,60 @@ export async function login(formdata:FormData){
             message:"Une erreur est survenue"
         }
     }
+}
+
+
+
+export async function register(formdata:FormData){
+    const email = formdata.get("email")
+    const password = formdata.get("password")
+
+    
+    
+
+    if (!email || !password) {
+        return {
+            success:false,
+            status:400,
+            message:"Email et mot de passe sont requis"
+        }
+    }
+
+    const name = "USER " + email.toString().split("@")[0]
+
+    try {
+       const registerResponse = await axiosInstance.post("auth/register",{email,password,name})
+        console.log(registerResponse);
+        
+         const cookieStore = await cookies();
+            cookieStore.set("auth_token",registerResponse?.data.data?.token,{
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 24 * 2,  // 2 jours
+                path:"/",
+            })
+
+            cookieStore.set("user_info",JSON.stringify(registerResponse?.data.data.user),{
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 24 * 2,  // 2 jours
+                path:"/",
+            })
+
+        return {
+            success:true
+        }
+
+    } catch (error:any) {
+        console.log(error.response.data);
+        
+        return {
+            success:false
+        }
+    }
+
 }
 
 
