@@ -3,7 +3,7 @@ import { Input } from "../../Input/Input";
 export function Form({ children,onSubmit }: 
     { 
         children: React.ReactNode 
-        onSubmit:React.FocusEventHandler<HTMLFormElement>
+        onSubmit:React.FormEventHandler<HTMLFormElement>
     }){
 
     return (
