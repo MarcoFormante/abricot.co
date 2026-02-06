@@ -72,7 +72,7 @@ export function EditTask(){
                     
                     <div>
                         <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
-                        <select name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" defaultValue={""}>
+                        <select multiple name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" defaultValue={""}>
                             <option value="" className="text-[#6B7280] ">{fakeData.collabs.length ? `${fakeData.collabs.length < 2 ? "1 collaborateur" : fakeData.collabs.length + " collaborateurs" } ` : "Choisir un ou plusieurs collaborateurs"}</option>
                             {fakeData.collabs.map((c) => <option style={{background:"orange"}} key={c.id} value={c.id} className="text-[#6B7280]">{c.name}</option> ) }
                         </select>
@@ -83,17 +83,17 @@ export function EditTask(){
                         <div className='flex items-center gap-[8px] mt-[15px]'>
                             <input type="radio" name="status[]" id="to-do" value={"to-do"} checked={fakeData.status === "to-do"} />
                             <label htmlFor="to-do">
-                                <Tag type='to-do'/>
+                                <Tag type='TODO'/>
                             </label>
                             
                             <input type="radio" name="status[]" id="in-progress" value={"in-progress"} checked={fakeData.status === "in-progress"} />
                             <label htmlFor="in-progress">
-                                <Tag type='in-progress'/>
+                                <Tag type='IN_PROGRESS'/>
                             </label>
         
                          <input type="radio" name="status[]" id="done" value={"done"} checked={fakeData.status === "done"} />
                             <label htmlFor="done">
-                                <Tag type='done'/>
+                                <Tag type='DONE'/>
                             </label>
                         </div>
                     </div>
