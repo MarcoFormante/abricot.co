@@ -5,13 +5,25 @@ import { ModalContainer } from "../Modale/ModalContainer";
 import { NewTask } from "../Modale/NewTask";
 import { NewTaskAI } from "../Modale/NewTaskAi";
 
+import { useRouter } from "next/navigation";
 
-export function ProjectHeader(){
+export function ProjectHeader({id,name,description}:{
+  id:string,
+  name:string,
+  description:string
+}){
+
   const [showModale,setShowModal] = useState({type:""})
+  const router = useRouter()
+
+  const navigateBack = ()=>{
+      router.back()
+  }
+
     return (
       <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end">
         <div className="flex gap-[16px]">
-          <button className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
+          <button onClick={navigateBack} className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
             <svg
               aria-hidden="true"
               width="16"
@@ -29,13 +41,13 @@ export function ProjectHeader(){
           <div className="flex flex-col gap-[20px]">
             <div className="flex items-center gap-[14px] mt-[4px]">
               <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%]">
-                Nom du projet
+                {name}
               </h1>
               <button className="cursor-pointer text-[#D3590B] text-[14px] underline">
                 Modifier
               </button>
             </div>
-            <p className="leading-[100%] text-[18px] text-[#6B7280]">{`Développement de la nouvelle version de l'API REST avec authentification JWT`}</p>
+            <p className="leading-[100%] text-[18px] text-[#6B7280]">{description}</p>
           </div>
         </div>
 
