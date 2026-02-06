@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AdminMainTitle } from "@/app/components/Dashboard/AdminMainTitle/AdminMainTitle";
 import { Button } from "@/app/components/Button/Button";
 import { Project } from "@/app/components/Project/Project";
+import { getProjects } from "@/app/actions/project";
 
-export default function Projets(){
+export default async function Projets(){
+
+    const projects = await getProjects()
+    
     return(
         <main className="pt-[89px] px-25 pb-[78px]">
             <div className="flex justify-between">
@@ -16,14 +21,9 @@ export default function Projets(){
 
             <section className="mt-[64px]">
                 <ul className="grid grid-cols-3 gap-[14px] text-[#1F1F1F]">
-                  <Project/>
-                  <Project/>
-                  <Project/>
-                  <Project/>
-                  <Project/>
-                  <Project/>
-                  <Project/>
-                  <Project/>
+                    {projects && projects.data.map((project:any)=>
+                        <Project key={project.id} project={project}/>
+                    )}
                 </ul>
             </section>
         </main>    
