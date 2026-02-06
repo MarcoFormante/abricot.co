@@ -12,7 +12,7 @@ export function SignInUp({isRegisterPage}:{
          <div className="flex min-h-screen w-full">
           <div className="w-140.5 flex flex-col justify-center items-center gap-50.5">
               <div>
-                <Logo fill={"#D3590B"}/>
+                <Logo fill={"#D3590B"} width="252" height="32.17"/>
               </div>
               <div>
                  <ConnectionForm isRegisterPage={isRegisterPage}/>
