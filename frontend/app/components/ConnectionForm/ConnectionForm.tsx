@@ -1,6 +1,6 @@
 'use client'
 
-import { login } from "@/app/actions/auth";
+import { login, register } from "@/app/actions/auth";
 import { Button } from "../Button/Button";
 import { Form } from "./Form/Form";
 import { useState } from "react";
@@ -21,12 +21,17 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
         
         let response
 
-        if (!isRegisterPage) {
+        if (!isRegisterPage) {  
             response = await login(formData)
             if (response?.status !== 200) {
                 setFormErrors(response?.message || "Une erreur est survenue")
             }else{
                 router.push("/dashboard")
+            }
+        }else{
+            response = await register(formData)
+            if (response?.success) {
+                 router.push("/mon-compte")
             }
         }
     }
@@ -43,7 +48,7 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
                         : <p>{formErrors}</p>
                     }
                     </div>
-                <Form onSubmit={submitForm}>
+                <Form onSubmit={submitForm} isRegisterPage={isRegisterPage}>
                     <Button label={isRegisterPage ?"S’inscrire": "Se connecter"} type="btn-softBlack"/>
                 </Form>
             </div>
