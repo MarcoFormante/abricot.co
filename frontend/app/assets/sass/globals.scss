@@ -73,3 +73,17 @@ input::-webkit-datetime-edit{
       font-size: 10px;
     }  
 }
+
+
+.dueDate-input{
+  &::-webkit-calendar-picker-indicator{
+    transform: scaleX(10);
+    opacity: 0;
+  }
+}
+
+
+.circleTag{
+  right: attr(data-right px);
+}
+ 
