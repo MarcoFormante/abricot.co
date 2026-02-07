@@ -9,9 +9,9 @@ export function UserForm({user}:{user:any}){
     const [error,setError] = useState("")
     
     const [userProfile,setUserprofile] = useState({
-      name:user.name?.split(" ")[0].trim() ?? "",
-      surname:user.name?.split(" ")[1].trim() ?? "",
-      email:user.email.trim() ?? "",
+      name:user.name.split(" ")[0].trim(),
+      surname:user.name.split(" ")[1].trim(),
+      email:user.email.trim(),
       newPassword:"",
       currentPassword:""
     })
