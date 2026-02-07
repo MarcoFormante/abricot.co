@@ -98,7 +98,6 @@ export async function register(formdata:FormData){
 
     try {
        const registerResponse = await axiosInstance.post("auth/register",{email,password,name})
-        console.log(registerResponse);
         
          const cookieStore = await cookies();
             cookieStore.set("auth_token",registerResponse?.data.data?.token,{
