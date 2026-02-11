@@ -2,20 +2,20 @@
 
 import { useState } from "react";
 import { Button } from "../../Button/Button";
-import { ModalContainer } from "../../Modale/ModalContainer";
+import { ModaleContainer } from "../../Modale/ModaleContainer";
 import { NewProject } from "../../Modale/NewProject";
 
 export function CreateProjectButton(){
-    const [showModal,setShowModal] = useState({type:""})
+    const [showModale,setShowModale] = useState({type:""})
 
     return (
       <div className="h-[50px] self-end">
-       {showModal && showModal.type === "newProject" && 
-        <ModalContainer showModale={showModal} setShowModal={setShowModal}>
-            <NewProject closeModal={()=> setShowModal({type:""})} />
-        </ModalContainer>}
+       {showModale && showModale.type === "newProject" && 
+        <ModaleContainer showModale={showModale} setShowModale={setShowModale}>
+            <NewProject closeModale={()=> setShowModale({type:""})} />
+        </ModaleContainer>}
         <div className="w-[181px] h-[50px]">
-          <Button onClick={()=>setShowModal({type:"newProject"})} type={"btn-black"} label="+ Créer un projet" />
+          <Button onClick={()=>setShowModale({type:"newProject"})} type={"btn-black"} label="+ Créer un projet" />
         </div>
       </div>
     );
