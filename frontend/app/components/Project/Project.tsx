@@ -22,7 +22,7 @@ export function Project({project}:{
           </p>
         </div>
 
-        <ProjectProgress  totalTasks={5} tasksDone={project._count.tasks}/>
+        <ProjectProgress  totalTasks={project._count.tasks} tasksDone={project.completedTasks.length || 0}/>
         <div className="flex flex-col gap-[15px]">
           <span className="text-[#6B7280] text-[10px] h-[12px] flex items-center gap-[8px]">
             <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
