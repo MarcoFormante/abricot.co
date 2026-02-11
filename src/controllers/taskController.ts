@@ -49,6 +49,7 @@ export const createTask = async (
       priority,
       dueDate,
       assigneeIds,
+      status
     }: CreateTaskRequest = req.body;
     const authReq = req as AuthRequest;
 
@@ -128,6 +129,7 @@ export const createTask = async (
       dueDate: dueDate ? new Date(dueDate) : null,
       projectId,
       creatorId: authReq.user.id,
+      status
     };
 
     console.log("Création de tâche avec les données:", taskData);
