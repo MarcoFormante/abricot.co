@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AdminMainTitle } from "@/app/components/Dashboard/AdminMainTitle/AdminMainTitle";
-import { Button } from "@/app/components/Button/Button";
 import { Project } from "@/app/components/Project/Project";
 import { getProjects } from "@/app/actions/project";
+import { CreateProjectButton } from "@/app/components/Dashboard/CreateProjectButton/CreateProjectButton";
 
 export default async function Projets(){
-
-    const projects = await getProjects()
+    const data = await getProjects()
     
     return(
         <main className="pt-[89px] px-25 pb-[78px]">
             <div className="flex justify-between">
                 <AdminMainTitle title={"Mes projets"} text={"Gérez vos projets "}/>
-                <div className="h-[50px] self-end">
-                    <div className="w-[181px] h-[50px]">
-                        <Button type={"btn-black"} label="+ Créer un projet"/>
-                    </div>
-                </div>
+                <CreateProjectButton />
             </div>
 
             <section className="mt-[64px]">
                 <ul className="grid grid-cols-3 gap-[14px] text-[#1F1F1F]">
-                    {projects && projects.data.map((project:any)=>
+                    {data.projects && data.projects.map((project:any)=>
                         <Project key={project.id} project={project}/>
                     )}
                 </ul>
