@@ -86,4 +86,14 @@ input::-webkit-datetime-edit{
 .circleTag{
   right: attr(data-right px);
 }
- 
+
+option[data-selected=true]{
+  background-color: #D3590B;
+  color: #FFFFFF;
+}
+
+
+
+option:hover{
+  background-color: brown;
+}
