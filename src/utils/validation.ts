@@ -287,6 +287,7 @@ export const validateCreateTaskData = (data: {
   priority?: string;
   dueDate?: string;
   assigneeIds?: string[];
+  status?:string
 }): ValidationError[] => {
   const errors: ValidationError[] = [];
 
@@ -322,6 +323,13 @@ export const validateCreateTaskData = (data: {
       field: "priority",
       message: "La priorité doit être LOW, MEDIUM, HIGH ou URGENT",
     });
+  }
+
+  if (data.status && !["TODO", "IN_PROGRESS", "DONE"].includes(data.status) ) {
+      errors.push({
+        field: "status",
+        message: "La statut doit être TODO, IN_PROGRESS ou DONE",
+      });
   }
 
   // Validation de la date d'échéance
