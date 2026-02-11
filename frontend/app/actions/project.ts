@@ -3,64 +3,225 @@
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
 
+/**
+ * Get all assigned or user projects
+ * @returns success:boolean, message:string, projects:array
+ */
 export async function getProjects(){
     const token = (await cookies()).get("auth_token")?.value || ""
   try {
-        const response = await axiosInstance.get(`/projects/`,{
+        const response = await axiosInstance.get(`projects/`,{
             headers:{
                 "Authorization":"Bearer " + token
             }     
         })
         const projectData = await response.data
-
+        
         return {
-            data:projectData.data.projects,
-            status:response.status,
+            success:true,
+            message:projectData.message,
+            projects:projectData.data.projects
         }
-    } catch (error) {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     } catch (error:any){
         return {
-            status:500,
-            message:"Une Erreur est survenue"
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
         }
-    }}
+    }
+}
 
-
-
-export  async function getProjectByID(id:string){
+/**
+ * Get Project by ID
+ * @param id string
+ * @returns data:object, success:boolean,tasks:array
+ */
+export async function getProjectByID(id:string){
     const token = (await cookies()).get("auth_token")?.value || ""
     
     try {
-        const response = await axiosInstance.get(`/projects/${id}`,{
+        const response = await axiosInstance.get(`projects/${id}`,{
             headers:{
                 "Authorization":"Bearer " + token
             }     
         })
-        const projectData = await response.data
+        const projectData = response.data
+        
 
-        const responseTasks = await axiosInstance.get(`/projects/${id}/tasks`,{
+        const responseTasks = await axiosInstance.get(`projects/${id}/tasks`,{
             headers:{
                 "Authorization":"Bearer " + token
             }     
         })
 
-        const dataTasks = await responseTasks.data
-        
-        
         return {
             data:projectData.data.project,
-            status:response.status,
-            tasks:dataTasks.data.tasks
+            success:true,
+            tasks:responseTasks.data.data.tasks
         }
-    } catch (error) {
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
         return {
-            status:500,
-            message:"Une Erreur est survenue"
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
+        }
+    }
+}
+
+
+/**
+ * Create Project
+ * @param formdata name:string, description:string, 
+ * @param contributors array
+ * @returns success:boolean, status:number, projectId:string
+ */
+export async function newProject(formdata:FormData,contributors:any){
+    const token = (await cookies()).get("auth_token")?.value || ""
+    const name = formdata.get("name")
+    const description = formdata.get("description")
+    
+    try {
+        const response = await axiosInstance.post("projects",{name,description,contributors},{
+            headers:{
+                "Authorization": "Bearer " + token
+            }
+        })
+        
+        return {
+            success:true,
+            status:response.status,
+            projectId: response.data.data.project.id
+        }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
+        return {
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
         }
     }
    
 }
+
+/**
+ * Update Project
+ * @param formdata name:string, description:string
+ * @returns success:boolean,status:number, message:string
+ */
+export async function updateProject(formdata:FormData){
+    const token = (await cookies()).get("auth_token")?.value || ""
+
+    const name = formdata.get("name")
+    const description = formdata.get("description")
+    const id = formdata.get("projectId")
+
+    try {
+        const response = await axiosInstance.put(`projects/${id}`,{name,description},{
+            headers:{
+                "Authorization": "Bearer " + token
+            }
+        })
+
+        return {
+            success:true,
+            status:response.status,
+            message:response.data.data.message
+        }
+       
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
+        return {
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
+        }
+    }
+}
+
+/**
+ * Add new Contributor in a Project
+ * @param contributor string  Contributor's email
+ * @param projectId string
+ * @returns success:boolean,status:number, message:string
+ */
+export async function addContributorToProject(contributor:string,projectId:string){
+     const token = (await cookies()).get("auth_token")?.value || ""
+
+     try {
+        const response = await axiosInstance.post(`projects/${projectId}/contributors`,{email:contributor},{
+            headers:{
+                "Authorization": "Bearer " + token
+            }
+        })
+
+        return {
+            success:true,
+            status:response.status,
+            message:response.data.data.message
+        }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
+        return {
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
+        }
+    }
+
+}
+
+/**
+ * Remove Contributor
+ * @param contributor string  Contributor's ID
+ * @param projectId string 
+ * @returns 
+ */
+export async function removeContributor(contributor:any,projectId:string){
+     
+     const token = (await cookies()).get("auth_token")?.value || ""
+    
+     try {
+        const response = await axiosInstance.delete(`projects/${projectId}/contributors/${contributor.id}`,{
+            headers:{
+                "Authorization": "Bearer " + token
+            }
+        })
+       
+        return {
+            success:true,
+            status:response.status,
+            message:response.data.data.message
+        }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
+        return {
+        success: false,
+        status: error?.response?.status || 500, 
+        errorMessage: (error?.response?.status >= 500 || !error.response) 
+        ? "Une Erreur est survenue" 
+        : error?.response?.data?.message || "Erreur inconnue"
+        }
+    }
+}
+
 
 
 
