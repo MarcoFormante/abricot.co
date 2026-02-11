@@ -1,19 +1,23 @@
 'use client'
 import { useState } from "react";
 import { Button } from "../Button/Button";
-import { ModalContainer } from "../Modale/ModalContainer";
+import { ModaleContainer } from "../Modale/ModaleContainer";
 import { NewTask } from "../Modale/NewTask";
 import { NewTaskAI } from "../Modale/NewTaskAi";
-
 import { useRouter } from "next/navigation";
+import { EditProject } from "../Modale/EditProject";
 
-export function ProjectHeader({id,name,description}:{
+
+
+export function ProjectHeader({id,name,description,members,isUserProject}:{
   id:string,
   name:string,
-  description:string
+  description:string,
+  members:any[],
+  isUserProject:boolean
 }){
 
-  const [showModale,setShowModal] = useState({type:""})
+  const [showModale,setShowModale] = useState({type:""})
   const router = useRouter()
 
   const navigateBack = ()=>{
@@ -43,9 +47,9 @@ export function ProjectHeader({id,name,description}:{
               <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%]">
                 {name}
               </h1>
-              <button className="cursor-pointer text-[#D3590B] text-[14px] underline">
+             {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#D3590B] text-[14px] underline">
                 Modifier
-              </button>
+              </button>}
             </div>
             <p className="leading-[100%] text-[18px] text-[#6B7280]">{description}</p>
           </div>
@@ -55,23 +59,24 @@ export function ProjectHeader({id,name,description}:{
           <div className="w-[141px] h-[50px]">
 
           { showModale?.type && 
-            <ModalContainer 
-              setShowModal={setShowModal} 
+            <ModaleContainer 
+              setShowModale={setShowModale} 
               showModale={showModale}
               >
               {
                 showModale.type === "newTask" 
-                ? <NewTask/>
-                : <NewTaskAI/>
+                ? <NewTask members={members} closeModale={()=>setShowModale({type:""})}/>
+                : showModale.type === "newAiTask" ? <NewTaskAI/>
+                : <EditProject closeModale={()=>setShowModale({type:""})}  members={members} project={{name,description,members,id}}/>
               }
-            </ModalContainer>
+            </ModaleContainer>
           }
            
-            <Button type={"btn-softBlack"} label="Créer une tâche" onClick={()=>setShowModal({type:"newTask"})} />
+            <Button type={"btn-softBlack"} label="Créer une tâche" onClick={()=>setShowModale({type:"newTask"})} />
           </div>
           <div className="w-[90px] h-[50px]">
             <Button
-            onClick={()=>setShowModal({type:"AI"})}
+              onClick={()=>setShowModale({type:"newAiTask"})}
               type={"btn-orange"}
               label={
                 <div className="flex justify-center items-center gap-[10px]">
