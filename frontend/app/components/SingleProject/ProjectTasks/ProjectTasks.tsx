@@ -6,62 +6,81 @@ import { Input } from "../../Input/Input";
 import { EditTask } from "../../Modale/EditTask";
 import { ModalContainer } from "../../Modale/ModalContainer";
 import { ProjectTaskItem } from "./ProjectTaskItem";
+import { useUser } from "@/app/context/UserContext";
 
-export function ProjectTasks({tasks}:{tasks:[any]}){
-    const [showModal,setShowModal] = useState({type:""})
+
+export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],projectMembers:any[],isUserProject:any}){
+    const [projectTasks,setProjectsTasks] = useState<any[]>([])
+    const [showModal,setShowModal] = useState<{type:string,task?:any}>({type:""})
     const [searchValue,setSearchValue] = useState("")
     const [filter,setFilter] = useState({type:"",value:""})
+    const userInfo = useUser()
+    
 
     const onFilterChange = (type:string,value:string)=>{
         setFilter({type,value})
     }
     
-
     const getFilteredTasks = useCallback(() => {
         let newFilteredTasks = []
 
         switch (filter.type) {
             case "":
-                newFilteredTasks = tasks
+                newFilteredTasks = projectTasks
                 break;
 
             case "date":
-                newFilteredTasks = tasks.filter((f)=>{
+                newFilteredTasks = projectTasks.filter((f)=>{
                     return new Date(f.dueDate) < new Date(filter.value)
                 })
                 
                 break;
 
             case "search":
-                    newFilteredTasks = tasks.filter((f)=>{
+                    newFilteredTasks = projectTasks.filter((f)=>{
                     return f.title.toLowerCase().includes(filter.value.toLowerCase())
                 })
                 break;
 
             case "status":
                 if (!filter.value) {
-                    newFilteredTasks = tasks
+                    newFilteredTasks = projectTasks
                 }else{
-                    newFilteredTasks =  tasks.filter((f)=>{
+                    newFilteredTasks = projectTasks.filter((f)=>{
                         return f.status === filter.value
                     })
                 }
                 break;
         
             default:
-                 newFilteredTasks = tasks
+                 newFilteredTasks = projectTasks
                 break;
         }
 
         return newFilteredTasks
-    },[filter,tasks])
+    },[filter,projectTasks])
 
     const filteredTasks = getFilteredTasks()
+
+
+    const onEditTask = (task:any)=>{
+        setShowModal({type:"editTask",task})
+    }
+
+
+    const onDeleteTask = (id:string)=>{
+        setProjectsTasks(projectTasks.filter((t:any)=> t.id !== id))
+    }
+
+    useEffect(() => {
+        setProjectsTasks(tasks);
+    }, [tasks]);
     
+
     
 
     return (
-    <section className=" mt-[34px] border border-[#E5E7EB] bg-[#FFFFFF] py-[40px] max-w-[1240px] m-auto"> 
+    <section className="mt-[34px] border border-[#E5E7EB] bg-[#FFFFFF] py-[40px] max-w-[1240px] m-auto"> 
         <div className="px-[59px] flex justify-between items-center">
             <div className="flex flex-col gap-[8px] ">
                 <h2 className="text-[18px] text-[#1F1F1F]">Tâches</h2>
@@ -84,29 +103,47 @@ export function ProjectTasks({tasks}:{tasks:[any]}){
                         <option value="IN_PROGRESS" className="text-[#6B7280]">En cours</option>
                         <option value="DONE" className="text-[#6B7280]">Terminée</option>
                     </select>
-                    <div className='relative w-[283px] flex h-[63px]'>
-                        <Input 
-                            type={"search"} 
-                            name='searchTask' 
-                            placeholder={"Rechercher une tâche"}
-                            value={searchValue}
-                            onChange={(e)=>setSearchValue(e.target.value)}
-                        />
-                        <span className='searchSvg' onClick={()=>onFilterChange("search",searchValue)}></span>
+                    <div >
+                        <form className='relative w-[283px] flex h-[63px]' onSubmit={(e)=>{
+                            e.preventDefault()
+                            onFilterChange("search",searchValue)
+                            }}>
+                            <Input 
+                                type={"search"} 
+                                name='searchTask' 
+                                placeholder={"Rechercher une tâche"}
+                                value={searchValue}
+                                onChange={(e)=>{
+                                    if (!e.target.value) {
+                                        onFilterChange("search","")
+                                    }else{
+                                        setSearchValue(e.target.value)
+                                    }
+                                }}
+                            />
+                        <span role="button" className='searchSvg' onClick={()=>onFilterChange("search",searchValue)}></span>
+                        </form>
                     </div> 
                 </div>
             </div>
         </div>
-
-    { showModal?.type && 
-        <ModalContainer setShowModal={setShowModal} showModale={showModal}>
-            <EditTask/>
-        </ModalContainer>
-        }
+            { showModal?.type === "editTask" && 
+                  <ModalContainer setShowModal={setShowModal} showModale={showModal}>
+                    <EditTask task={showModal.task} members={projectMembers} setShowModal={setShowModal} />
+                  </ModalContainer>
+                  }
+   
         <div className="mt-[41px] min-h-[30vh]">
             <ul className="px-[59px] flex flex-col gap-[17px]">
                 {filteredTasks && filteredTasks.map((task)=>
-                    <ProjectTaskItem key={task.id} task={task} />
+                    <ProjectTaskItem 
+                        key={task.id} 
+                        task={task} 
+                        onEdit={()=>onEditTask(task)} 
+                        onDeleteTask={()=>onDeleteTask(task.id)}
+                        isUserProject={isUserProject}
+                        userIsContributor={projectMembers.find((c)=> c.user.id === userInfo.id )}
+                    />
                 )}
             </ul>
         </div>
