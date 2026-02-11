@@ -1,7 +1,7 @@
 'use client'
-import { ChangeEventHandler, useState } from "react"
+import { ChangeEventHandler, useEffect, useState } from "react"
 
-export function Input({label,type,name,placeholder,gap,required,onChange,value}:{
+export function Input({label,type,name,placeholder,gap,required,onChange,value,styles}:{
     label?:string,
     type: "text" | "password" | "search" | "date" | "email",
     name:string,
@@ -9,15 +9,21 @@ export function Input({label,type,name,placeholder,gap,required,onChange,value}:
     gap?:string,
     required?:boolean,
     onChange?:ChangeEventHandler<HTMLInputElement>,
-    value?:string 
+    value?:string,
+    styles?:string
 }){
     
     const [inputValue,setInputValue] = useState(value)
+    useEffect(()=>{
+        if (!value) {
+            setInputValue("")
+        }
+    },[value])
 
     return(
         <div className={`flex flex-col w-full gap-[${gap}]`}>
             <label hidden={!label} htmlFor={name} className="font-normal text-[14px]">{label || placeholder}</label>
-            <input onChange={onChange} onInput={(e)=>setInputValue(e.currentTarget.value)} required={required} placeholder={placeholder} id={name} name={name} type={type} value={inputValue ?? ""} className={`h-13.25 pl-[17px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] pl-1.5 w-full text-[#6B7280] ${type === "search" ? "pl-[32px] text-[14px] h-[63px] " : ""}`} />
+            <input onChange={onChange} onInput={(e)=>setInputValue(e.currentTarget.value)} required={required} placeholder={placeholder} id={name} name={name} type={type} value={inputValue ?? ""} className={`h-13.25 pl-[17px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] pl-1.5 w-full text-[#6B7280] ${type === "search" ? "pl-[32px] text-[14px] h-[63px] " : ""} ${styles ? styles : ""}`} />
         </div>
     )   
 }
