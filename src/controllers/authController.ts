@@ -371,6 +371,8 @@ export const updateProfile = async (
       updateData.email = email.toLowerCase();
     }
 
+     const token = generateToken(authReq.user.id, updateData.email);
+
     // Mettre à jour l'utilisateur
     const updatedUser = await prisma.user.update({
       where: { id: authReq.user.id },
@@ -384,7 +386,7 @@ export const updateProfile = async (
       },
     });
 
-    sendSuccess(res, "Profil mis à jour avec succès", { user: updatedUser });
+    sendSuccess(res, "Profil mis à jour avec succès", { user: updatedUser ,token});
   } catch (error) {
     console.error("Erreur lors de la mise à jour du profil:", error);
     sendServerError(res, "Erreur lors de la mise à jour du profil");
