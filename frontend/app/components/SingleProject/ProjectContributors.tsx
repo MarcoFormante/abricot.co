@@ -1,11 +1,11 @@
 import { CircleTag } from "../Collaborators/CircleTag";
 import { NameTag } from "../Collaborators/NameTag";
 
-export function ProjectContributors({members,ownerName}:{
-  members:[any],
-  ownerName:string
+export function ProjectContributors({members,owner}:{
+  members:any[],
+  owner:any
 }){
-
+  
     return (
       <section className="px-[112px]">
         <div className="bg-[#F3F4F6] mt-[49px] py-[21px] px-[50px] rounded-[10px] flex justify-between">
@@ -17,16 +17,19 @@ export function ProjectContributors({members,ownerName}:{
           </div>
 
           <div>
-            <div className="flex items-center justify-center flex-wrap gap-y-3 max-w-[700px]">
-              <CircleTag name={ownerName} isOwner={true}/>
-              <NameTag isOwner={true}/>
+            <div className="flex items-center justify-end flex-wrap gap-y-3 max-w-[700px]">
+
             {
-              members && members.map((m,i) => 
-                  <div className="flex" key={m.id}>
-                    <CircleTag name={m.user.name} isOwner={false}/>
-                    <NameTag isOwner={false} name={m.user.name}/>
-                  </div>
-                )
+              members && members.map((m) => 
+                {
+                  return (
+                    <div key={m.id} className="flex">
+                      <CircleTag name={m.user.name} isOwner={m.user.id === owner.id }/>
+                      <NameTag name={m.user.name} isOwner={m.user.id === owner.id}/>
+                    </div>
+                  )
+                }
+              )
             } 
             </div>
           </div>
