@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./tailwind.css";
+import { ScrollToTop } from "./utils/ScrollToTop";
+import { AlertProvider } from "./context/AlertContext";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +28,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-360  m-auto bg-[#F9FAFB]`} >
-        {children}
+        <ScrollToTop/>
+        <AlertProvider>
+          {children}
+        </AlertProvider>
       </body>
     </html>
   );
