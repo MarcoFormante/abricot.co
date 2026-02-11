@@ -1,11 +1,41 @@
+import { useState } from "react";
 import { CircleTag } from "../../Collaborators/CircleTag";
 import { NameTag } from "../../Collaborators/NameTag";
 import { Tag } from "../../Dashboard/Tasks/Tag";
 import { ProjectComments } from "./ProjectComments";
+import { deleteTask } from "@/app/actions/task";
+import { useRouter } from "next/navigation";
 
-export function ProjectTaskItem({task}:{task:any}){
+export function ProjectTaskItem({task, onEdit, onDeleteTask,isUserProject, userIsContributor}:
+  {
+    task:any,
+    onEdit:()=>void,
+    onDeleteTask:()=>void,
+    isUserProject:boolean,
+    userIsContributor:boolean
+  }){
     
-      return (
+    const [showButtons,setShowButtons] = useState(false)
+    const [deleted,setDeleted] = useState(false)
+    const router = useRouter()
+
+    const removeTask = async ()=>{
+        const response = await deleteTask(task.projectId,task.id)
+        
+        if (response?.success) {
+          onDeleteTask()
+          setDeleted(true)
+          router.refresh()
+        }
+    }
+
+    const onEditClick = ()=>{
+        setShowButtons(false)
+        onEdit()
+    }
+    
+    
+      return !deleted && (
                 <li className="pl-[40px] pr-[35px] py-[25px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px]">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col gap-[7px]">
@@ -15,9 +45,16 @@ export function ProjectTaskItem({task}:{task:any}){
                       </div>
                       <p className="text-[#6B7280] text-[14px]">{task.description}</p>
                     </div>
-                      <div>
-                            <button className="w-[57px] h-[57px] cursor-pointer border border-[#E5E7EB] rounded-[10px] text-[#6B7280] font-bold text-[22px] bg-[#FFFFFF]">...</button>
-                      </div>
+                  { (isUserProject || userIsContributor) &&  
+                      <div className="relative">
+                            <button onClick={()=>setShowButtons(!showButtons)} className="w-[57px] h-[57px] cursor-pointer border border-[#E5E7EB] rounded-[10px] text-[#6B7280] font-bold text-[22px] bg-[#FFFFFF]">...</button>
+                            {showButtons && 
+                              <div className="absolute flex flex-col justify-between border border-[#1b1c1d] h-[120px] bg-[#FFFFFF] w-[150px] right-5 p-5 rounded-[10px]">
+                                <button onClick={removeTask} className="block w-full font-semibold text-red-600  cursor-pointer">Supprimer</button>
+                               { <button onClick={onEditClick}  className={`block w-full font-semibold   cursor-pointer text-green-600`}>Modifier</button>}
+                              </div>
+                            }
+                      </div>}
                   </div>
                   <div>
                     <p className="flex items-center gap-[4px] text-[#6B7280] text-[12px] mt-[32px]">Échéance : 
@@ -33,16 +70,20 @@ export function ProjectTaskItem({task}:{task:any}){
                   </div>
                   <div className="mt-[30px]">
                     <div className="flex items-center gap-[8px] text-[#6B7280] text-[12px]">Assigné à : 
-                      {task.assignees.map((a:any) => 
-                        <span className="flex" key={a.id}>
-                          <CircleTag name={a.user.name} isOwner={false}/>
-                          <NameTag name={a.user.name} isOwner={false}/>
-                        </span>
+                      {task.assignees.map((a:any) => {
+                        return (
+                           <span className="flex" key={a.id}>
+                            <CircleTag name={a.user.name} isOwner={false}/>
+                            <NameTag name={a.user.name} isOwner={ false}/>
+                          </span>
+                        )
+                      }
+                       
                       ) }
                     </div>
                   </div>
                   <hr className="mt-[24px]  border-[#E5E7EB]" />
-                      <ProjectComments comments={task.comments}/>
+                      <ProjectComments comments={task.comments} task={task}/>
                 </li>
     )
 }
