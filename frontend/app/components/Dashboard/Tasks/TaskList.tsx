@@ -19,7 +19,7 @@ export function TaskList({tasks}:{tasks:any[]}){
     /**
      * Filters tasks based on the search value input.
      * If no search value is provided, displays all tasks.
-     * Otherwise, filters tasks by matching the search term against task titles (case-insensitive).
+     * Otherwise, filters tasks by matching the search term against task titles.
      * @param e - The form or pointer event triggered by user interaction (form submission or click)
      * @returns void
      */
@@ -53,7 +53,7 @@ export function TaskList({tasks}:{tasks:any[]}){
                                 placeholder={"Rechercher une tâche"}
                                 onChange={onInputChange}
                             />
-                            <span className='searchSvg' onClick={filterBySearchValue}></span>
+                            <button className='searchSvg' onClick={filterBySearchValue}></button>
                         </div>
                     </form>
                 </div>
@@ -66,7 +66,7 @@ export function TaskList({tasks}:{tasks:any[]}){
                     </ul>
                     :
                     <div>
-                        AUCUNE TÂCHE ASSIGNÉE
+                        AUCUNE TÂCHE TROUVÉE
                     </div>
                 }
             </div>
