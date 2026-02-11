@@ -297,6 +297,11 @@ export const getProjects = async (
             tasks: true,
           },
         },
+        tasks:{
+          where:{
+            status:"DONE"
+          },
+        }
       },
       orderBy: {
         updatedAt: "desc",
@@ -309,13 +314,14 @@ export const getProjects = async (
         const role = await getUserProjectRole(authReq.user!.id, project.id);
         return {
           ...project,
+          completedTasks:project.tasks ?? [],
           userRole: role,
         };
       })
     );
 
     sendSuccess(res, "Projets récupérés avec succès", {
-      projects: projectsWithRoles,
+      projects: projectsWithRoles
     });
   } catch (error) {
     console.error("Erreur lors de la récupération des projets:", error);
@@ -746,26 +752,26 @@ export const searchUsers = async (
     }
 
     const users = await prisma.user.findMany({
-      where: {
-        OR: [
-          {
-            email: {
-              contains: searchQuery,
-            },
-          },
-          {
-            name: {
-              contains: searchQuery,
-            },
-          },
-        ],
-      },
+      // where: {
+      //   OR: [
+      //     {
+      //       email: {
+      //         contains: searchQuery,
+      //       },
+      //     },
+      //     {
+      //       name: {
+      //         contains: searchQuery,
+      //       },
+      //     },
+      //   ],
+      // },
       select: {
         id: true,
         email: true,
         name: true,
       },
-      take: 10, // Limiter à 10 résultats
+      // take: 10, // Limiter à 10 résultats
       orderBy: [{ name: "asc" }, { email: "asc" }],
     });
 
