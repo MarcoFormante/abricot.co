@@ -1,5 +1,7 @@
 import Link from "next/link"
 import scss from "./Button.module.scss"
+import { ButtonType } from "@/app/types/globals"
+
 
 export function Button(
     {
@@ -8,17 +10,11 @@ export function Button(
         type,
         onClick,
         isLink,
-        href
+        href,
+        disabled
     }
-    :
-    {
-        label:string | React.ReactNode,
-        style?:string,
-        type: "btn-white" | "btn-grey" | "btn-softBlack" | "btn-black" | "btn-orange" ,
-        onClick?:()=>void,
-        isLink?:boolean,
-        href?:string
-    }
+    : ButtonType
+    
 ){
 
     if (isLink) {
@@ -30,7 +26,7 @@ export function Button(
     }
 
     return (
-        <button className={`${scss.btn} ${scss[type]} ${style}`} onClick={onClick}>
+        <button disabled={disabled} className={`${scss.btn} ${scss[type]} ${style}`} onClick={onClick}>
             {label}
         </button>
     )
