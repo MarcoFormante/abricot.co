@@ -69,6 +69,7 @@ export interface CreateTaskRequest {
   priority?: "LOW" | "MEDIUM" | "HIGH" | "URGENT";
   dueDate?: string; // ISO date string
   assigneeIds?: string[]; // IDs des utilisateurs assignés à la tâche
+  status?: "TODO" | "IN_PROGRESS" | "DONE"
 }
 
 export interface UpdateTaskRequest {
