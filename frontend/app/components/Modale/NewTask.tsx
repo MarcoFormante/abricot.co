@@ -1,15 +1,25 @@
 'use client'
 import { Input } from '../Input/Input';
 import { Tag } from '../Dashboard/Tasks/Tag';
-import { Button } from '../Button/Button';
-import {useState } from 'react';
+import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { createTask } from '@/app/actions/task';
+import { Submit } from '../Submit/Submit';
 
 
-export function NewTask(){
+export function NewTask({members,closeModale}:
+    {
+        members:any[],
+        closeModale:()=>void
+    }){
+         
     const [newDate,setNewDate] = useState("")
-    const [collab,setCollab] = useState<any[]>([])
+    const [selectedUsers,setSelectedUser] = useState<any[]>([])
+    const params = useParams()
+    const router = useRouter()
+    
 
-    function onSubmit(event: React.FormEvent) {
+    async function onSubmit(event: React.FormEvent) {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
         const title = formData.get('title')
@@ -22,14 +32,21 @@ export function NewTask(){
 
         const formValues = {
             title: formData.get('title'),
-            desc: formData.get('desc'),
-            date: formData.get('date'),
-            collabs: formData.get('collaborators'),
-            status: formData.get('status[]')
+            description: formData.get('desc'),
+            dueDate: new Date(formData.get('date') as string).toISOString(),
+            assigneeIds: selectedUsers,
+            status: formData.get('status[]') ?? "TODO" ,
+            id:params.id
         }
-
-        console.log(formValues);
+        const response = await createTask(formValues)
+        
+        if (response.success) {
+            document.body.style.overflowY = "visible"
+             closeModale()
+            router.refresh()
+        }
     }
+
 
     const onDateChange = (value:string)=>{
         const date = new Date(value)
@@ -38,51 +55,69 @@ export function NewTask(){
         })
         setNewDate(isoDate)
     }
-
-
-    const onChange = (value:any) => {
-       
-        setCollab(prev => [...prev,value])
-    }
-
-    console.log(collab);
-    
-
+  
+  
+      const onSelectChange = (value:string) => {
+          if (!value) {
+              return
+          }
+  
+          if (!selectedUsers.includes(value)) {
+              setSelectedUser(prev => [...prev,value])
+          }else{
+              setSelectedUser(selectedUsers.filter((email)=> email !== value))
+          }
+      }
+     
+      
 
     return (
         <div className="flex flex-col gap-[46px]">
             <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Créer une tâche</h5>
+
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
                 <Input type='text' name='title' label='Title*' gap='6px' required/>
                 <Input type='text' name='desc' label='Description*' gap='6px' required/>
-                <div className='relative'>
+                <div className='relative cursor-pointer'>
                     <Input type={"date"} name='date' label='Échéance*' required  onChange={(e) => onDateChange(e.target.value)} />
-                    <input name='isoDate' id='isoDate' disabled className='absolute top-[50%] left-0.5 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0' type={"text"} value={newDate}/>
+                    <div className='absolute pointer-events-none top-[50%] left-2 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0'>{newDate}</div>
                 </div>
                 
-                <div>
+                <div className='relative'>
                     <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
-                    <select onChange={(e) => onChange(e.target.value)} multiple name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[6px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]">
-                        <option value="" className="text-[#6B7280]">{collab.length} collaborators</option>
-                        <option value="c" className="text-[#6B7280]">Ciccio</option>
-                        <option value="d" className="text-[#6B7280]">Marco</option>
-                    </select>
+                    <div className="absolute top-[50%] pointer-events-none left-[17px] text-[#6B7280] ">{selectedUsers.length ? selectedUsers.length + " collaborateurs" : "Choisir un ou plusieurs collaborateurs"}</div>
+                    <select value=""  onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container cursor-pointer h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
+                        <option value=""></option>
+                        {
+                            (members && members?.length) && 
+                                members.map((m)=> 
+                                <option 
+                                    data-selected={selectedUsers.includes(m.user.id)}  
+                                    key={m.id} 
+                                    value={m.user.id} 
+                                    className="text-[#6B7280]"
+                                >
+                                    {m.user.name}
+                                </option> 
+                            )
+                        }
+                    </select>   
                 </div>
 
                 <div>
                     <span className='text-[14px]'>Statut :</span>
                     <div className='flex items-center gap-[8px] mt-[15px]'>
-                        <input type="radio" name="status[]" id="to-do" value={"to-do"} />
+                         <input type="radio" name="status[]" id="to-do" value={"TODO"}  />
                         <label htmlFor="to-do">
                             <Tag type='TODO'/>
                         </label>
                         
-                        <input type="radio" name="status[]" id="in-progress" value={"in-progress"} />
+                        <input type="radio" name="status[]" id="in-progress" value={"IN_PROGRESS"}  />
                         <label htmlFor="in-progress">
                             <Tag type='IN_PROGRESS'/>
                         </label>
 
-                        <input type="radio" name="status[]" id="done" value={"done"} />
+                        <input type="radio" name="status[]" id="done" value={"DONE"}/>
                         <label htmlFor="done">
                             <Tag type='DONE'/>
                         </label>
@@ -90,7 +125,7 @@ export function NewTask(){
                 </div>
 
                 <div className='w-[181px] h-[50px] mt-[32px]'>
-                    <Button type={"btn-grey"} label={"+ Ajouter une tâche"} />
+                    <Submit type={"btn-grey"} label={"+ Ajouter une tâche"} />
                 </div>
             </form>
         </div>
