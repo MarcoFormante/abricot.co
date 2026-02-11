@@ -4,11 +4,11 @@ import { Logo } from "../Logo/Logo";
 import styles from "./Header.module.scss";
 import { MenuItem } from "./MenuItem";
 import { usePathname } from "next/navigation";
+import { useUser } from "@/app/context/UserContext";
 
 export function Header(){
     const pathname = usePathname()
-    console.log(pathname === "/mon-compte");
-    
+    const user = useUser()
 
     return (
         <header className="bg-[#FFFFFF] px-25">
@@ -39,8 +39,11 @@ export function Header(){
                         />
                     </li>
                     <li>
-                        <Link href={"/mon-compte"} className={`w-[65px] h-[65px]  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
-                            AD
+                        <Link href={"/mon-compte"} className={`w-[65px] h-[65px] capitalize  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
+                            {(user.name.split(" ")[0][0] && user.name.split(" ")[1]) ?
+                              user.name.split(" ")[0][0] + user.name.split(" ")[1][0] :
+                              "USER"
+                            }
                         </Link>
                     </li>
                 </ul>
