@@ -4,14 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import { SwitchButton } from "../../Button/SwitchButton";
 import { Input } from "../../Input/Input";
 import { EditTask } from "../../Modale/EditTask";
-import { ModalContainer } from "../../Modale/ModalContainer";
+import { ModaleContainer } from "../../Modale/ModaleContainer";
 import { ProjectTaskItem } from "./ProjectTaskItem";
 import { useUser } from "@/app/context/UserContext";
 
 
 export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],projectMembers:any[],isUserProject:any}){
     const [projectTasks,setProjectsTasks] = useState<any[]>([])
-    const [showModal,setShowModal] = useState<{type:string,task?:any}>({type:""})
+    const [showModale,setShowModale] = useState<{type:string,task?:any}>({type:""})
     const [searchValue,setSearchValue] = useState("")
     const [filter,setFilter] = useState({type:"",value:""})
     const userInfo = useUser()
@@ -64,7 +64,7 @@ export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],p
 
 
     const onEditTask = (task:any)=>{
-        setShowModal({type:"editTask",task})
+        setShowModale({type:"editTask",task})
     }
 
 
@@ -127,10 +127,10 @@ export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],p
                 </div>
             </div>
         </div>
-            { showModal?.type === "editTask" && 
-                  <ModalContainer setShowModal={setShowModal} showModale={showModal}>
-                    <EditTask task={showModal.task} members={projectMembers} setShowModal={setShowModal} />
-                  </ModalContainer>
+            { showModale?.type === "editTask" && 
+                  <ModaleContainer setShowModale={setShowModale} showModale={showModale}>
+                    <EditTask task={showModale.task} members={projectMembers} setShowModale={setShowModale} />
+                  </ModaleContainer>
                   }
    
         <div className="mt-[41px] min-h-[30vh]">
