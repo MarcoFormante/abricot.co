@@ -37,10 +37,8 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
         }else{
            const response = await register(formData)
             if (!response?.success) {
-                
-                
                 setFormErrors(response?.errorMessage || "Une erreur est survenue")
-                 setAlert({type:"error",message:response?.errors})
+                setAlert({type:"error",message:response?.errors})
             }else{
                 setAlert({type:"success",message:response?.message})
                 router.push("/mon-compte")

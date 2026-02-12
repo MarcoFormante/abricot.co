@@ -66,7 +66,7 @@ export function TaskList({tasks}:{tasks:any[]}){
                     </ul>
                     :
                     <div>
-                        AUCUNE TÂCHE TROUVÉE
+                       <p className="text-center font-semibold text-xl">{"Aucune tache trouvée"}</p>
                     </div>
                 }
             </div>

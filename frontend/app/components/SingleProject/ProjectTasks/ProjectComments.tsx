@@ -4,6 +4,7 @@ import { deleteTaskComment, sendMessage, updateTaskComment } from "@/app/actions
 import { useRouter } from "next/navigation";
 import { Comment } from "./Comment";
 import { CommentInterface, TaskInterface } from "@/app/types/globals";
+import { useAlert } from "@/app/context/AlertContext";
 
 export function ProjectComments({comments,task}:
   {
@@ -15,6 +16,7 @@ export function ProjectComments({comments,task}:
     const [commentToEdit,setCommentToEdit] = useState("")
     const [wantsEdited,setWantsEdited] = useState<{id:string}| null>(null)
     const router = useRouter()
+    const setAlert = useAlert()
 
     
     const onSendMessage = async (e:React.FormEvent)=>{
@@ -27,29 +29,39 @@ export function ProjectComments({comments,task}:
       const response = await sendMessage(comment,projectId,taskId)
       
       if (response?.success) {
-        console.log("comment Sent");
         setComment("")
+        setAlert({type:"success",message:"Commentaire envoyé"})
         router.refresh()
+      }else{
+          const errors = response?.errors || response?.errorMessage
+          if (errors) {
+              setAlert({type:"error",message:errors})
+          }
       }
     }
 
 
       const onEditComment = async (e:React.FormEvent,commentId:string)=>{
-      e.preventDefault()
-      if (!commentToEdit) {
-        return
-      }
-      const taskId = task.id ?? ""
-      const projectId = task?.project?.id ?? ""
-      const response = await updateTaskComment(commentId,projectId,taskId,commentToEdit)
+        e.preventDefault()
+        if (!commentToEdit) {
+          return
+        }
+        const taskId = task.id ?? ""
+        const projectId = task?.project?.id ?? ""
+        const response = await updateTaskComment(commentId,projectId,taskId,commentToEdit)
       
-      if (response?.success) {
-        setCommentToEdit("")
-        setWantsEdited(null)
-        router.refresh()
-      }
-    }
-
+        if (response?.success) {
+          setCommentToEdit("")
+          setWantsEdited(null)
+          setAlert({type:"success",message:"Commentaire modifié"})
+          router.refresh()
+        }else{
+            const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
+        }   
+      } 
 
 
 
@@ -61,12 +73,19 @@ export function ProjectComments({comments,task}:
           setComment("")
           setCommentToEdit("")
           setWantsEdited(null)
+          setAlert({type:"success",message:"Commentaire supprimé"})
           router.refresh()
-      }
+      }else{
+            const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
+      }   
     }
-
     
-
+  /**
+   * Toggle edit comment
+   */
     const closeEdit = ()=>{
       setCommentToEdit("")
       setWantsEdited(null)

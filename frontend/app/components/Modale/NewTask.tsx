@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { createTask } from '@/app/actions/task';
 import { Submit } from '../Submit/Submit';
 import { MemberInterface, TaskInterface } from '@/app/types/globals';
+import { useAlert } from '@/app/context/AlertContext';
 
 
 export function NewTask({members,closeModale}:
@@ -18,8 +19,14 @@ export function NewTask({members,closeModale}:
     const [selectedUsers,setSelectedUser] = useState<string[]>([])
     const params = useParams()
     const router = useRouter()
+    const setAlert = useAlert()
     
 
+    /**
+     * Create New Task
+     * @param event FormEvent
+     * @returns void
+     */
     async function onSubmit(event: React.FormEvent) {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
@@ -28,6 +35,7 @@ export function NewTask({members,closeModale}:
         const date = formData.get('date')
 
         if (!title && !desc && !date) {
+            setAlert({type:"error",message:"Veuillez renseigner le titre, la description et la date."})
             return
         }
 
@@ -43,12 +51,22 @@ export function NewTask({members,closeModale}:
         
         if (response.success) {
             document.body.style.overflowY = "visible"
-             closeModale()
+            closeModale()
+            setAlert({type:"success",message:response.message})
             router.refresh()
+        }else{
+          const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
         }
     }
 
-
+    /**
+     * Handle due Date
+     * @param value string  Date value
+     * @return void
+     */
     const onDateChange = (value:string)=>{
         const date = new Date(value)
         const isoDate = date.toLocaleDateString("fr-FR",{
@@ -58,17 +76,22 @@ export function NewTask({members,closeModale}:
     }
   
   
-      const onSelectChange = (value:string) => {
-          if (!value) {
-              return
-          }
-  
-          if (!selectedUsers.includes(value)) {
-              setSelectedUser(prev => [...prev,value])
-          }else{
-              setSelectedUser(selectedUsers.filter((email)=> email !== value))
-          }
-      }
+    /**
+     * Handle Selected User
+     * @param value string  Email of the user
+     * @return void
+     */
+    const onSelectChange = (value:string) => {
+        if (!value) {
+            return
+        }
+
+        if (!selectedUsers.includes(value)) {
+            setSelectedUser(prev => [...prev,value])
+        }else{
+            setSelectedUser(selectedUsers.filter((email)=> email !== value))
+        }
+    }
      
       
 
@@ -108,7 +131,7 @@ export function NewTask({members,closeModale}:
                 <div>
                     <span className='text-[14px]'>Statut :</span>
                     <div className='flex items-center gap-[8px] mt-[15px]'>
-                         <input type="radio" name="status[]" id="to-do" value={"TODO"}  />
+                        <input type="radio" name="status[]" id="to-do" value={"TODO"}  />
                         <label htmlFor="to-do">
                             <Tag type='TODO'/>
                         </label>

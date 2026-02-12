@@ -22,22 +22,26 @@ export function Comment({
     closeEdit:()=>void
 }){
  
-  
+    /**
+     * Check is the message was modified so add the correct due Date 
+     * @return date:string, isModified:boolean 
+     */
     const { date, isModified } = useMemo(() => {
-      const created = new Date(comment.createdAt);
-      const updated = new Date(comment.updatedAt);
-      const modified = updated > created;
+        const created = new Date(comment.createdAt);
+        const updated = new Date(comment.updatedAt);
+        const modified = updated > created;
 
-      return {
-        date: modified ? updated : created,
-        isModified: modified
-      };
+        return {
+          date: (modified ? updated : created).toLocaleDateString("fr-FR",{day:"numeric",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}),
+          isModified: modified
+        };
+
     }, [comment.createdAt, comment.updatedAt]);
       
 
     return (
         <li key={comment.id} className="mt-5 border border-[#e5e7eb] rounded-[10px] p-5">
-                <span className="float-right text-[13px] text-gray-400">{isModified ? "Modifié" : "Envoyé"} le {date.toLocaleDateString("fr-FR",{day:"numeric",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})}</span>
+                <span className="float-right text-[13px] text-gray-400">{isModified ? "Modifié" : "Envoyé"} le {date}</span>
                 <p className="font-semibold text-[16px]">{comment.author.name} </p>
 
                 { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2 ">{comment.content}</p>}
@@ -62,7 +66,7 @@ export function Comment({
                   </button>
                 </div>
 
-                {wantsEdited?.id === comment.id && 
+              {wantsEdited?.id === comment.id && 
                 <div>
                   <form className="mt-[20px] mb-5" onSubmit={(e)=>onEditComment(e,comment.id)}>
                     <div className="w-full relative">
@@ -79,7 +83,8 @@ export function Comment({
                       </div>
                     </div>
                   </form>
-                </div>}
+                </div>
+              }
         </li>    
     )
 }

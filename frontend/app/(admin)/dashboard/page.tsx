@@ -10,7 +10,7 @@ export default async function Dashboard() {
     const userParsed = JSON.parse(userInfo as string)
 
     const response = await getDashboardTasks()
-    const tasks = response.tasks
+    const tasks = response?.tasks
     
     
     return (

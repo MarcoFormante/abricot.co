@@ -39,10 +39,12 @@ export function Header(){
                         />
                     </li>
                     <li>
-                        <Link href={"/mon-compte"} className={`w-[65px] h-[65px] capitalize  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
-                            {(user.name.split(" ")[0][0] && user.name.split(" ")[1]) ?
-                              user.name.split(" ")[0][0] + user.name.split(" ")[1][0] :
-                              "USER"
+                        <Link href={"/mon-compte"} className={`w-[65px] h-[65px] uppercase  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
+                            {
+                            user?.name.split(" ")[0][0] && 
+                                <span>{user?.name.split(" ")[1]}</span> ?
+                                <span>{user?.name.split(" ")[0][0] + user?.name.split(" ")[1][0]}</span> :
+                                "USER"
                             }
                         </Link>
                     </li>

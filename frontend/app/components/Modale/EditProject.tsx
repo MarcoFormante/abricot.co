@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/UserContext";
 import { ContributorInterface, MemberInterface, ProjectInterface, UserInterface } from "@/app/types/globals";
+import { useAlert } from "@/app/context/AlertContext";
 
-export  function EditProject({closeModale,project,members}:
+export function EditProject({closeModale,project,members}:
     {
         closeModale:()=>void,
         project:Pick<ProjectInterface,"name"|"description" |"members"| "id">,
@@ -18,59 +19,87 @@ export  function EditProject({closeModale,project,members}:
     const [selectedUsers,setSelectedUser] = useState<string[]>(members?.map((m) => m.user.email))
     const router = useRouter()
     const userInfo = useUser()
+    const setAlert = useAlert()
     
+    /**
+     * Edit Project
+     * @param e FormData
+     * @return void
+     */
     const onSubmit = async (e:React.FormEvent)=>{
         e.preventDefault()
         const formdata = new FormData(e.currentTarget as HTMLFormElement)
         formdata.append("projectId",project.id)
         const response = await updateProject(formdata)
-
+        console.log(response);
+        
         if (response?.success) {
             closeModale()
             document.body.style.overflowY = "visible"
+            setAlert({type:"success",message:response.message})
             router.refresh()
+        }else{
+            const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
         }        
     }
 
+    /**
+     * Get user Data
+     * check if selected user exists inside data or push in to the filteredUsers array
+     * @return void
+     */
     useEffect(()=>{
         const getUsersData = async () => {
             const data = await getUsers()
-            const filteredUsers= members.map((m:MemberInterface)=>m.user)
-            data.filter((u:UserInterface)=>{
-               if (!selectedUsers.includes(u.email)) {
-                    filteredUsers.push(u)
-               }
-            })
-            setUsers([...filteredUsers])
+            if (data && data.length) {
+                const filteredUsers= members.map((m:MemberInterface)=>m.user)
+                data.filter((u:UserInterface)=>{
+                if (!selectedUsers.includes(u.email)) {
+                        filteredUsers.push(u)
+                }
+                })
+                setUsers([...filteredUsers])
+            }
         }
         getUsersData()
     },[])
 
 
+    /**
+     * Edit project members
+     * @param value string  User's Email
+     * @returns 
+     */
     const onChange = async (value:string) => {
-        
         if (!value ) {
             return
         }
         if (!selectedUsers.includes(value)) {
             setSelectedUser(prev => [...prev,value])
             const response = await addContributorToProject(value,project.id)
-            console.log(response);
             
-            if (!response.success) {
-            //    gestire Errore 
+            if (response?.success) {
+                setAlert({type:"success",message:"L'utilisateur a été ajouté au projet avec succès."})
+                router.refresh()
             }
-            router.refresh()
         }else{
             const userToRemove = users.find((u:UserInterface)=> u.email === value) 
             const response = await removeContributor(userToRemove as ContributorInterface,project.id)
-            console.log(response);
             
-            if (!response.success) {
-            //    gestire Errore 
+            if (response.success) {
+                setAlert({type:"success",message:"Contributeur retiré avec succès."})
+                setSelectedUser(selectedUsers.filter((email)=> email !== value))
+                router.refresh()
+
+            }else{
+                const errors = response?.errors || response?.errorMessage
+                if (errors) {
+                    setAlert({type:"error",message:errors})
+                }
             }
-            router.refresh()
-            setSelectedUser(selectedUsers.filter((email)=> email !== value))
         }
     }
     

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/UserContext";
 import { Submit } from "../Submit/Submit";
 import { UserInterface } from "@/app/types/globals";
+import { useAlert } from "@/app/context/AlertContext";
 
 
 export  function NewProject({closeModale}:{closeModale:()=>void}){
@@ -13,7 +14,13 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
     const [selectedUsers,setSelectedUser] = useState<string[]>([])
     const router = useRouter()
     const userInfo = useUser()
+    const setAlert = useAlert()
     
+    /**
+     * Create New Project
+     * @param e FormEvent
+     * @return void 
+     */
     const onSubmit = async (e:React.FormEvent)=>{
         e.preventDefault()
         const formdata = new FormData(e.currentTarget as HTMLFormElement)
@@ -21,11 +28,20 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
         if (response?.success) {
             closeModale()
             document.body.style.overflowY = "visible"
+            setAlert({type:"success",message:"Project créé"})
             router.push("/projets/" + response.projectId)
-        }        
+        }else{
+          const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
+        }
     }
 
-
+    /**
+     * Get users from DB
+     *@return void
+     */ 
     useEffect(()=>{
         const getUsersData = async () => {
             const data = await getUsers()
@@ -35,11 +51,15 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
     },[])
 
 
+    /**
+     * Handle  select project members
+     * @param value string  Email of the user
+     * @returns 
+     */
     const onChange = (value:string) => {
         if (!value) {
             return
         }
-
         if (!selectedUsers.includes(value)) {
             setSelectedUser(prev => [...prev,value])
         }else{

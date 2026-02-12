@@ -6,7 +6,7 @@ export default async function MonCompte(){
     
     return (
         <main className="px-25 pb-[78px]">
-            <UserForm user={userProfile.user}/>
+            <UserForm user={userProfile?.user}/>
         </main>
     )
 }

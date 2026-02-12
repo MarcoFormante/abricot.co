@@ -20,8 +20,8 @@ export async function createTask(task:TaskInterface){
 
         return {
             success:true,
-            status:response.status,
-            message:response.data.data.message
+            status:response?.status,
+            message:response?.data?.message
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){

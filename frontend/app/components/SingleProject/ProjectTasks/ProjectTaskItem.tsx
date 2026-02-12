@@ -6,6 +6,7 @@ import { ProjectComments } from "./ProjectComments";
 import { deleteTask } from "@/app/actions/task";
 import { useRouter } from "next/navigation";
 import { TaskInterface, TaskUserAssigned } from "@/app/types/globals";
+import { useAlert } from "@/app/context/AlertContext";
 
 export function ProjectTaskItem(
   {
@@ -26,16 +27,24 @@ export function ProjectTaskItem(
     const [showButtons,setShowButtons] = useState(false)
     const [deleted,setDeleted] = useState(false)
     const router = useRouter()
+    const setAlert = useAlert()
 
 
     const removeTask = async ()=>{
         const response = await deleteTask(task.projectId ?? "",task.id ?? "")
         if (response?.success) {
-          onDeleteTask()
-          setDeleted(true)
-          router.refresh()
-        }
+            onDeleteTask()
+            setDeleted(true)
+            setAlert({type:"success",message:"La tâche a été supprimée avec succès."})
+            router.refresh()
+          }else{
+              const errors = response?.errors || response?.errorMessage
+              if (errors) {
+                  setAlert({type:"error",message:errors})
+              }
+          }
     }
+
 
     const onEditClick = ()=>{
         setShowButtons(false)
@@ -43,7 +52,7 @@ export function ProjectTaskItem(
     }
     
     
-      return !deleted && (
+    return !deleted && (
                 <li className="pl-[40px] pr-[35px] py-[25px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px]">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col gap-[7px]">

@@ -21,7 +21,7 @@ export function AlertProvider({ children }: { children: React.ReactNode }) {
 
     const timeout = setTimeout(() => {
       setAlert(null);
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [alert]);

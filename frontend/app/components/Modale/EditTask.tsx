@@ -6,6 +6,7 @@ import { editTask } from '@/app/actions/task';
 import { useRouter } from "next/navigation";
 import { Submit } from '../Submit/Submit';
 import { MemberInterface, TaskInterface, TaskUserAssigned } from '@/app/types/globals';
+import { useAlert } from '@/app/context/AlertContext';
 
 export function EditTask({task,members,setShowModale}:
     {
@@ -17,7 +18,13 @@ export function EditTask({task,members,setShowModale}:
     const [newDate,setNewDate] = useState(task?.dueDate)
     const [selectedUsers,setSelectedUser] = useState<string[]>(task?.assignees?.map((a:TaskUserAssigned)=> a.user.id) as string[])
     const router = useRouter()
+    const setAlert = useAlert()
 
+    /**
+     * Edit Task
+     * @param event FormEvent
+     * @return void
+     */
     async function onSubmit(event: React.FormEvent) {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
@@ -44,18 +51,32 @@ export function EditTask({task,members,setShowModale}:
         if (response.success) {
             setShowModale({type:""})
             document.body.style.overflowY = "visible"
+            setAlert({type:"success",message:response.message})
             router.refresh()
+        }else{
+          const errors = response?.errors || response?.errorMessage
+            if (errors) {
+                setAlert({type:"error",message:errors})
+            }
         }
     }
 
-
+    /**
+     * Handle Date
+     * @param value string   Due date
+     * @return void
+     */
     const onDateChange = (value:string)=>{
         const date = new Date(value)
         const isoDate = new Date(date).toISOString()
         setNewDate(isoDate)
     }
   
-  
+    /**
+     * Select users
+     * @param value string  users's Email
+     * @return void
+     */
       const onSelectChange = (value:string) => {
           if (!value) {
               return
@@ -86,7 +107,7 @@ export function EditTask({task,members,setShowModale}:
                     <select value="" onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
                         <option value=""></option>
                         {
-                             (members && members?.length) && 
+                            (members && members?.length) && 
                                 members?.map((m:MemberInterface)=> 
                                 <option 
                                     data-selected={selectedUsers?.includes(m.user.id)}  
@@ -97,8 +118,6 @@ export function EditTask({task,members,setShowModale}:
                                 </option> 
                             )
                         }
-
-                       
                     </select>   
                 </div>
 

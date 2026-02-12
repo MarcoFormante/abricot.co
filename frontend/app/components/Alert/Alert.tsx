@@ -7,7 +7,7 @@ export function Alert({alert,setAlert}:{
   
 }){
     return alert && alert.message && (
-        <div className={`alert rounded-[10px]  top-0 left-[50%] translate-x-[-50%] max-w-[1440px] m-auto fixed p-5 border bg-[#FFFFFF] w-full text-white ${alert.type === "error" ? "bg-red-800" : "bg-green-600"}`}>
+        <div className={`alert rounded-[10px] z-20  top-0 left-[50%] translate-x-[-50%] max-w-[1440px] m-auto fixed p-5 border bg-[#FFFFFF] w-full text-white ${alert.type === "error" ? "bg-red-800" : "bg-green-600"}`}>
             <button className="cursor-pointer float-right" aria-label="Fermer" onClick={()=>setAlert(null)}>X</button>
             <div>
                 {Array.isArray(alert.message) ? 

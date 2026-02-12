@@ -6,16 +6,16 @@ import { useAlert } from "@/app/context/AlertContext";
 import { Submit } from "../Submit/Submit";
 import { UserInterface } from "@/app/types/globals";
 
+
 export function UserForm({user}:{user:UserInterface}){
-    const setAlert = useAlert()    
+    const setAlert = useAlert()
     const [userProfile,setUserprofile] = useState({
-      name:user.name.split(" ")[0]?.trim() ?? "",
-      surname:user.name.split(" ")[1]?.trim() ?? "",
-      email:user.email.trim(),
+      name:user?.name.split(" ")[0]?.trim() ?? "",
+      surname:user?.name.split(" ")[1]?.trim() ?? "",
+      email:user?.email.trim(),
       newPassword:"",
       currentPassword:""
     })
-
 
     /**
      * Update user profile data
@@ -43,10 +43,7 @@ export function UserForm({user}:{user:UserInterface}){
             currentPassword,
             newPassword,
         }
-
         const response = await updateUserProfile(userData)
-  
-        
         if (response?.success) {
             setUserprofile({
             name,
@@ -57,14 +54,17 @@ export function UserForm({user}:{user:UserInterface}){
           })
           setAlert({type:"success",message:"Profile mise à jour"})
         }else{
-          
           setAlert({type:"error",message:response?.errors || response?.errorMessage})
         }
     }
 
+    const notification = userProfile.name.toLowerCase() === "user" ? "Veuillez modifier le nom et le prénom" : null;
+    
+
 
     return (
     <div className="mt-[57px] bg-[#FFFFFF] px-[49px] py-[40px] rounded-[10px]">
+      {notification && <p className="text-red-700 text-2xl float-right">{notification}</p>}
         <div>
             <h1 className="text-[18px] text-[#1F1F1F] font-semibold">Mon compte</h1>
             <p className="mt-[8px] text-[#6B7280]">{userProfile.name + " " + userProfile.surname}</p>

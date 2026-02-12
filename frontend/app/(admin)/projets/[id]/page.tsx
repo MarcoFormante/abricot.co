@@ -5,6 +5,7 @@ import { ProjectContributors } from "@/app/components/SingleProject/ProjectContr
 import { ProjectTasks } from "@/app/components/SingleProject/ProjectTasks/ProjectTasks";
 import {getProjectByID} from "@/app/actions/project";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 export default async function SingleProject({
   params,
@@ -16,10 +17,14 @@ export default async function SingleProject({
 
   const userInfo =(await cookies()).get("user_info")?.value
   const userParsed = JSON.parse(userInfo as string)
+
+  if (!project.data) {
+    notFound()
+  }
   
   return (
     <main className="pb-[78px]">
-      {project && (
+      {project?.data && (
         <>
             <ProjectHeader 
               id={param.id} 

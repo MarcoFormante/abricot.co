@@ -140,11 +140,11 @@ export async function updateProject(formdata:FormData){
                 "Authorization": "Bearer " + token
             }
         })
-
+        
         return {
             success:true,
             status:response.status,
-            message:response.data.data.message
+            message:response?.data?.message
         }
        
 
@@ -181,11 +181,12 @@ export async function addContributorToProject(contributor:string,projectId:strin
         return {
             success:true,
             status:response.status,
-            message:response.data.data.message
+            message:response?.data?.data?.message
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+        console.log(error);
         
         return {
             success: false,
@@ -206,7 +207,6 @@ export async function addContributorToProject(contributor:string,projectId:strin
  * @returns 
  */
 export async function removeContributor(contributor:ContributorInterface,projectId:string){
-     console.log(contributor);
      
      const token = (await cookies()).get("auth_token")?.value || ""
     
@@ -219,8 +219,8 @@ export async function removeContributor(contributor:ContributorInterface,project
        
         return {
             success:true,
-            status:response.status,
-            message:response.data.data.message
+            status:response?.status,
+            message:response?.data?.message
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

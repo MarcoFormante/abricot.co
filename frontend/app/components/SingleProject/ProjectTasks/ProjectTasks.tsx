@@ -33,6 +33,10 @@ export function ProjectTasks(
         setFilter({type,value})
     }
     
+    /**
+     * Handle Filter to get Tasks
+     * filter by date, search & status
+     */
     const getFilteredTasks = useCallback(() => {
         let newFilteredTasks = []
 
@@ -75,6 +79,10 @@ export function ProjectTasks(
     const filteredTasks = getFilteredTasks()
 
 
+    /**
+     * Show Modale for task editing
+     * @param task 
+     */
     const onEditTask = (task:TaskInterface)=>{
         setShowModale({type:"editTask",task})
     }
@@ -146,18 +154,21 @@ export function ProjectTasks(
             }
    
         <div className="mt-[41px] min-h-[30vh]">
-            <ul className="px-[59px] flex flex-col gap-[17px]">
-                {filteredTasks && filteredTasks.map((task)=>
-                    <ProjectTaskItem 
-                        key={task.id} 
-                        task={task} 
-                        onEdit={()=>onEditTask(task)} 
-                        onDeleteTask={()=>onDeleteTask(task?.id || "")}
-                        isUserProject={isUserProject}
-                        userIsContributor={(projectMembers.find((c)=> c.user.id === userInfo?.id) ? true : false)}
-                    />
-                )}
-            </ul>
+           { filteredTasks.length ? 
+                <ul className="px-[59px] flex flex-col gap-[17px]">
+                    {filteredTasks.map((task)=>
+                        <ProjectTaskItem 
+                            key={task.id} 
+                            task={task} 
+                            onEdit={()=>onEditTask(task)} 
+                            onDeleteTask={()=>onDeleteTask(task?.id || "")}
+                            isUserProject={isUserProject}
+                            userIsContributor={(projectMembers.find((c)=> c.user.id === userInfo?.id) ? true : false)}
+                        />
+                    )}
+                </ul>
+                : <p className="text-center font-semibold text-xl">{"Aucune tache trouvée"}</p>
+            }
         </div>
     </section>
         
