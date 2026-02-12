@@ -6,8 +6,8 @@ import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 export function ListItem({task}:{task:TaskInterface}) {
 
   return (
-    <li className="border border-[#E5E7EB] rounded-[10px] bg-[#FFFFFF] pt-[32.23px] h-[162px] px-[40px]">
-      <div className="flex justify-between h-[112px]">
+    <li className="border border-[#E5E7EB] rounded-[10px] bg-[#FFFFFF] pt-[32.23px] md:h-[162px] px-[40px] max-md:pb-5  max-md:pt-5 max-sm:px-3">
+      <div className="flex justify-between md:h-[112px] max-md:flex-col">
         <div className="flex flex-col gap-[32px]">
           <div className="flex flex-col gap-[7px]">
             <h3 className="text-[18px] font-semibold">{task.title}</h3>
@@ -21,9 +21,9 @@ export function ListItem({task}:{task:TaskInterface}) {
               commentsLength={task?.comments?.length || 0}
            />
         </div>
-        <div className="flex flex-col justify-between items-end">
+        <div className="flex flex-col justify-between md:items-end max-md:gap-1 max-md:mt-[32px]">
           <Tag type={task?.status} />
-          <div className="w-[121px] h-[50px]">
+          <div className="w-[121px] h-[50px] max-md:self-end">
             <Button type={"btn-softBlack"} label="Voir" isLink={true} href={"/projets/" + task?.projectId} />
           </div>
         </div>

@@ -9,7 +9,7 @@ export function CreateProjectButton(){
     const [showModale,setShowModale] = useState({type:""})
 
     return (
-      <div className="h-[50px] self-end">
+      <div className="h-[50px] self-center sm:self-end">
        {showModale && showModale.type === "newProject" && 
         <ModaleContainer showModale={showModale} setShowModale={setShowModale}>
             <NewProject closeModale={()=> setShowModale({type:""})} />

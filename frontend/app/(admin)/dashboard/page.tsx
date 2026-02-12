@@ -14,8 +14,8 @@ export default async function Dashboard() {
     
     
     return (
-        <main className="pt-[89px] px-25 pb-[78px]">
-            <div className="flex justify-between">
+        <main className="pt-[89px] px-5 lg:px-25 pb-[78px] max-sm:px-2">
+            <div className="flex flex-col justify-center gap-8 lg:flex-row lg:justify-between">
                 <AdminMainTitle title={"Tableau de bord"} text={`Bonjour ${userParsed.name}, voici un aperçu de vos projets et tâches`}/>
                 <CreateProjectButton />
             </div>

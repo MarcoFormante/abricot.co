@@ -39,14 +39,14 @@ export function TaskList({tasks}:{tasks:any[]}){
 
     return (
         <section className='mt-[30px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px]'>
-            <div className='pt-[40px]  px-[59px] flex justify-between '>
+            <div className='pt-[40px]  px-[59px] max-md:px-10 max-sm:px-3 flex justify-between max-lg:flex-col max-lg:gap-5 '>
                 <div className='flex flex-col gap-[8px]'>
                     <h2 className='font-semibold text-[18px]'>Mes tâches assignées</h2>
                     <p className='text-[#6B7280]'>Par ordre de priorité</p>
                 </div>
-                <div>
-                    <form onSubmit={filterBySearchValue}>
-                        <div className='relative w-[357px] flex h-[63px]'>
+                <div className='self-center max-md:w-full md:self-end '>
+                    <form onSubmit={filterBySearchValue} className=' max-md:w-full'>
+                        <div className='relative max-md:w-full flex h-[63px] md:w-[357px]'>
                             <Input 
                                 type={"search"} 
                                 name='searchTask' 
@@ -59,7 +59,7 @@ export function TaskList({tasks}:{tasks:any[]}){
                 </div>
             </div>
 
-            <div className='px-[59px] mt-[41px] pb-[40px]'>
+            <div className='px-[59px] max-md:px-10 max-sm:px-4 mt-[41px] pb-[40px]'>
                { filteredTasks && filteredTasks?.length ?
                     <ul className='flex flex-col gap-[17px]'>
                         {filteredTasks.map((task:any)=> <ListItem key={task.id} task={task}/> )}

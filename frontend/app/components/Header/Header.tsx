@@ -11,7 +11,7 @@ export function Header(){
     const user = useUser()
 
     return (
-        <header className="bg-[#FFFFFF] px-25">
+        <header className="bg-[#FFFFFF] px-5 lg:px-25 max-sm:px-2">
             <nav>
                 <ul className={styles.navListContainer}>
                     <li>
@@ -23,7 +23,7 @@ export function Header(){
                              />
                         </Link>
                     </li>
-                    <li className={styles.navCenterItem}>
+                    {/* <li className={styles.navCenterItem}>
                         <MenuItem
                            label="Tableau de bord"
                            imgClass="svgTbord"
@@ -37,7 +37,7 @@ export function Header(){
                            href="/projets"
                            pathname={pathname}
                         />
-                    </li>
+                    </li> */}
                     <li>
                         <Link href={"/mon-compte"} className={`w-[65px] h-[65px] uppercase  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
                             {
