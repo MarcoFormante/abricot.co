@@ -6,6 +6,10 @@ export function Submit(props:ButtonType){
      const status = useFormStatus()
 
     return (
-        <Button {...props} label={status.pending ? "En cours" : props?.label}  disabled={status?.pending || false} />
+        <Button 
+        {...props} 
+        label={status.pending ? "En cours" : props?.label}  
+        disabled={status?.pending || false} 
+        />
     )
 }

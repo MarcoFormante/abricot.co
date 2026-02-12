@@ -4,9 +4,9 @@ import { Input } from "../Input/Input";
 import { updateUserProfile } from "@/app/actions/auth";
 import { useAlert } from "@/app/context/AlertContext";
 import { Submit } from "../Submit/Submit";
+import { UserInterface } from "@/app/types/globals";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function UserForm({user}:{user:any}){
+export function UserForm({user}:{user:UserInterface}){
     const setAlert = useAlert()    
     const [userProfile,setUserprofile] = useState({
       name:user.name.split(" ")[0]?.trim() ?? "",

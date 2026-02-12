@@ -5,14 +5,14 @@ import axiosInstance from "../lib/axiosInstance"
 
 /**
  * Send Task Comment
- * @param comment 
- * @param projectId 
- * @param taskId  
+ * @param comment  string
+ * @param projectId  string
+ * @param taskId  string
  * @returns success:boolean,comment: object
  */
-export async function sendMessage(comment,projectId,taskId){
+export async function sendMessage(comment:string,projectId:string,taskId:string){
     const token = (await cookies()).get("auth_token")?.value || ""
-
+    
     try {
          const response = await axiosInstance.post(`projects/${projectId}/tasks/${taskId}/comments`,{content:comment},{
             headers:{
@@ -33,7 +33,7 @@ export async function sendMessage(comment,projectId,taskId){
                 errorMessage: (error?.response?.status >= 500 || !error.response) 
                 ? "Une Erreur est survenue" 
                 : error?.response?.data?.message || "Erreur inconnue",
-                errors:error?.response?.data?.data?.errors ?? null
+                 errors:error?.response?.data?.data?.errors ?? null
             }
     }
    
@@ -42,12 +42,12 @@ export async function sendMessage(comment,projectId,taskId){
 
 /**
  * Delete Comment
- * @param commentId 
- * @param projectId 
- * @param taskId 
+ * @param commentId string
+ * @param projectId string
+ * @param taskId string
  * @returns success:boolean,status:number
  */
-export async function deleteTaskComment(commentId,projectId,taskId){
+export async function deleteTaskComment(commentId:string,projectId:string,taskId:string){
     const token = (await cookies()).get("auth_token")?.value || ""
 
     try {
@@ -70,10 +70,9 @@ export async function deleteTaskComment(commentId,projectId,taskId){
                 errorMessage: (error?.response?.status >= 500 || !error.response) 
                 ? "Une Erreur est survenue" 
                 : error?.response?.data?.message || "Erreur inconnue",
-                errors:error?.response?.data?.data?.errors ?? null
-            }
+                 errors:error?.response?.data?.data?.errors ?? null
+        }
     }
-
 }
 
 
@@ -81,13 +80,13 @@ export async function deleteTaskComment(commentId,projectId,taskId){
 
 /**
  * Update Comment
- * @param commentId 
- * @param projectId 
- * @param taskId 
- * @param comment 
+ * @param commentId string
+ * @param projectId string
+ * @param taskId string
+ * @param comment string
  * @returns success:boolean, status:number
  */
-export async function updateTaskComment(commentId,projectId,taskId,comment){
+export async function updateTaskComment(commentId:string,projectId:string,taskId:string,comment:string){
     const token = (await cookies()).get("auth_token")?.value || ""
 
     try {
@@ -100,6 +99,7 @@ export async function updateTaskComment(commentId,projectId,taskId,comment){
         return {
             success:true,
             status:response.status,
+            message:response.data.data.message
         }
 
 

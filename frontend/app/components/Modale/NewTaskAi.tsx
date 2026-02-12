@@ -1,10 +1,7 @@
 import { FormEvent, useState } from "react";
 import { AiInput } from "../Input/AiInput";
+import { AiTasks } from "@/app/types/globals";
 
-type AiTasks = Array<{
-    title:string,
-    desc:string,
-}> 
     
 
 export function NewTaskAI(){

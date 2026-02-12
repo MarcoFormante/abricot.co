@@ -6,6 +6,7 @@ import { NewTask } from "../Modale/NewTask";
 import { NewTaskAI } from "../Modale/NewTaskAi";
 import { useRouter } from "next/navigation";
 import { EditProject } from "../Modale/EditProject";
+import { MemberInterface } from "@/app/types/globals";
 
 
 
@@ -13,7 +14,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
   id:string,
   name:string,
   description:string,
-  members:any[],
+  members:MemberInterface[],
   isUserProject:boolean
 }){
 

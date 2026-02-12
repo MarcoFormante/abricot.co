@@ -21,12 +21,14 @@ export async function getUsers(){
 
      // eslint-disable-next-line @typescript-eslint/no-explicit-any
      } catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 }

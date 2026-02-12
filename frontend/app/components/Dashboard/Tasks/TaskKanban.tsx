@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { TaskInterface } from "@/app/types/globals";
 import { KanbanItem } from "./KanbanItem/KanbanItem";
 
 export function TaskKanban({tasks}:{tasks:[]}){
@@ -9,7 +10,7 @@ export function TaskKanban({tasks}:{tasks:[]}){
         done:[]
     }
     
-    tasks.forEach((t:any)=>{
+    tasks.forEach((t:TaskInterface)=>{
         if (t.status === "TODO") {
             filteredTasks.toDo.push(t)
         }else if(t.status === "IN_PROGRESS"){

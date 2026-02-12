@@ -1,6 +1,6 @@
 import { Input } from "../../Input/Input";
 
-export function Form({ children,onSubmit,isRegisterPage }: 
+export function Form({ children,onSubmit}: 
     { 
         children: React.ReactNode 
         onSubmit:React.FormEventHandler<HTMLFormElement>,

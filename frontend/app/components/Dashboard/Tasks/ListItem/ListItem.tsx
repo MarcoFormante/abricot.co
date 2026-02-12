@@ -1,9 +1,9 @@
+import { TaskInterface } from "@/app/types/globals";
 import { Button } from "../../../Button/Button";
 import { Tag } from "../Tag";
 import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function ListItem({task}:{task:any}) {
+export function ListItem({task}:{task:TaskInterface}) {
 
   return (
     <li className="border border-[#E5E7EB] rounded-[10px] bg-[#FFFFFF] pt-[32.23px] h-[162px] px-[40px]">
@@ -16,15 +16,15 @@ export function ListItem({task}:{task:any}) {
             </p>
           </div>
            <TaskItemProjectDetails 
-              projectName={task.project.name} 
-              dueDate={new Date(task.dueDate)}
-              commentsLength={task.comments.length}
+              projectName={task?.project?.name || ""} 
+              dueDate={new Date(task?.dueDate || "")}
+              commentsLength={task?.comments?.length || 0}
            />
         </div>
         <div className="flex flex-col justify-between items-end">
-          <Tag type={task.status} />
+          <Tag type={task?.status} />
           <div className="w-[121px] h-[50px]">
-            <Button type={"btn-softBlack"} label="Voir" isLink={true} href={"/projets/" + task.projectId} />
+            <Button type={"btn-softBlack"} label="Voir" isLink={true} href={"/projets/" + task?.projectId} />
           </div>
         </div>
       </div>

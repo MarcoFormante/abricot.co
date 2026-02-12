@@ -5,16 +5,17 @@ import { getUsers } from "@/app/actions/members";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/UserContext";
+import { ContributorInterface, MemberInterface, ProjectInterface, UserInterface } from "@/app/types/globals";
 
 export  function EditProject({closeModale,project,members}:
     {
         closeModale:()=>void,
-        project:any,
-        members:any,
+        project:Pick<ProjectInterface,"name"|"description" |"members"| "id">,
+        members:MemberInterface[],
     }){
 
-    const [users,setUsers] = useState<any>([])
-    const [selectedUsers,setSelectedUser] = useState<any[]>(members?.map((m) => m.user.email))
+    const [users,setUsers] = useState<UserInterface[]>([])
+    const [selectedUsers,setSelectedUser] = useState<string[]>(members?.map((m) => m.user.email))
     const router = useRouter()
     const userInfo = useUser()
     
@@ -34,8 +35,8 @@ export  function EditProject({closeModale,project,members}:
     useEffect(()=>{
         const getUsersData = async () => {
             const data = await getUsers()
-            const filteredUsers:any = members.map((m)=>m.user)
-            data.filter((u)=>{
+            const filteredUsers= members.map((m:MemberInterface)=>m.user)
+            data.filter((u:UserInterface)=>{
                if (!selectedUsers.includes(u.email)) {
                     filteredUsers.push(u)
                }
@@ -46,8 +47,7 @@ export  function EditProject({closeModale,project,members}:
     },[])
 
 
-    const onChange = async (value:any) => {
-        console.log(value);
+    const onChange = async (value:string) => {
         
         if (!value ) {
             return
@@ -62,8 +62,8 @@ export  function EditProject({closeModale,project,members}:
             }
             router.refresh()
         }else{
-            const userToRemove = users.find((u:any)=> u.email === value) 
-            const response = await removeContributor(userToRemove,project.id)
+            const userToRemove = users.find((u:UserInterface)=> u.email === value) 
+            const response = await removeContributor(userToRemove as ContributorInterface,project.id)
             console.log(response);
             
             if (!response.success) {
@@ -79,8 +79,8 @@ export  function EditProject({closeModale,project,members}:
         <div className="flex flex-col gap-[40px]">
             <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Modifier un projet</h5>
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
-                <Input type='text' name='name' label='Nom*' gap='6px' required value={project?.name}/>
-                <Input type='text' name='description' label='Description*' gap='6px' required  value={project?.description}/>
+                <Input type='text' name='name' label='Nom*' gap='6px' required value={project?.name || ""}/>
+                <Input type='text' name='description' label='Description*' gap='6px' required  value={project?.description || ""}/>
 
                     <div className="relative">
                         <label htmlFor="collaborators" className='text-[14px]'>Contributeurs</label>
@@ -89,8 +89,8 @@ export  function EditProject({closeModale,project,members}:
                             <option value=""></option>
 
                             {(users && users?.length) && 
-                                users.map((user:any)=>{
-                                    const isOwner = user.id === userInfo.id
+                                users.map((user:UserInterface)=>{
+                                    const isOwner = user.id === userInfo?.id
                                     return !isOwner && (
                                         <option 
                                             data-selected={selectedUsers.includes(user.email)} 

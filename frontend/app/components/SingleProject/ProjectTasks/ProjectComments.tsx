@@ -3,11 +3,12 @@ import { Input } from "../../Input/Input";
 import { deleteTaskComment, sendMessage, updateTaskComment } from "@/app/actions/comments";
 import { useRouter } from "next/navigation";
 import { Comment } from "./Comment";
+import { CommentInterface, TaskInterface } from "@/app/types/globals";
 
 export function ProjectComments({comments,task}:
   {
-    comments:any[]
-    task:any
+    comments:CommentInterface[]
+    task:TaskInterface
   }){
     const [showComments,setShowComments] = useState(false)
     const [comment,setComment] = useState("")
@@ -21,8 +22,8 @@ export function ProjectComments({comments,task}:
       if (!comment) {
         return
       }
-      const taskId = task.id
-      const projectId = task.project.id
+      const taskId = task.id ?? ""
+      const projectId = task?.project?.id || ""
       const response = await sendMessage(comment,projectId,taskId)
       
       if (response?.success) {
@@ -38,12 +39,11 @@ export function ProjectComments({comments,task}:
       if (!commentToEdit) {
         return
       }
-      const taskId = task.id
-      const projectId = task.project.id
+      const taskId = task.id ?? ""
+      const projectId = task?.project?.id ?? ""
       const response = await updateTaskComment(commentId,projectId,taskId,commentToEdit)
       
       if (response?.success) {
-        console.log("comment Sent");
         setCommentToEdit("")
         setWantsEdited(null)
         router.refresh()
@@ -53,15 +53,11 @@ export function ProjectComments({comments,task}:
 
 
 
-
     const deleteComment = async (commentId:string)=> {
-      const taskId = task.id
-      const projectId = task.project.id
-
-        const response = await deleteTaskComment(commentId,projectId,taskId)
-
-        if (response?.success) {
-          console.log("comment Sent");
+      const taskId = task.id ?? ""
+      const projectId = task?.project?.id ?? ""
+      const response = await deleteTaskComment(commentId,projectId,taskId)
+      if (response?.success) {
           setComment("")
           setCommentToEdit("")
           setWantsEdited(null)
@@ -69,6 +65,7 @@ export function ProjectComments({comments,task}:
       }
     }
 
+    
 
     const closeEdit = ()=>{
       setCommentToEdit("")

@@ -5,16 +5,17 @@ import { useState } from 'react';
 import { editTask } from '@/app/actions/task';
 import { useRouter } from "next/navigation";
 import { Submit } from '../Submit/Submit';
+import { MemberInterface, TaskInterface, TaskUserAssigned } from '@/app/types/globals';
 
 export function EditTask({task,members,setShowModale}:
     {
-        task:any,
-        members:any,
+        task:TaskInterface,
+        members:MemberInterface[],
         setShowModale:React.Dispatch<React.SetStateAction<{type:string}>>
     }){
         
     const [newDate,setNewDate] = useState(task?.dueDate)
-    const [selectedUsers,setSelectedUser] = useState<any[]>(task?.assignees?.map((a:any)=> a.user.id))
+    const [selectedUsers,setSelectedUser] = useState<string[]>(task?.assignees?.map((a:TaskUserAssigned)=> a.user.id) as string[])
     const router = useRouter()
 
     async function onSubmit(event: React.FormEvent) {
@@ -28,15 +29,16 @@ export function EditTask({task,members,setShowModale}:
             return
         }
         
-        const formValues = {
-            title: formData.get('title'),
-            description: formData.get('desc'),
+        const formValues: Pick<TaskInterface,"title" | "description" | "dueDate" | "assignees" | "status" | "projectId"| "assigneeIds" | "id"> = {
+            title: formData.get('title') as string,
+            description: formData.get('desc') as string,
             dueDate: new Date(newDate).toISOString(),
             assigneeIds: selectedUsers,
-            status: formData.get('status[]') || task.status,
+            status: (formData.get('status[]') || task.status) as "TODO" | "IN_PROGRESS" | "DONE",
             projectId:task.projectId,
-            taskId:task.id
+            id:task.id
         }
+
         const response = await editTask(formValues)
         
         if (response.success) {
@@ -49,9 +51,7 @@ export function EditTask({task,members,setShowModale}:
 
     const onDateChange = (value:string)=>{
         const date = new Date(value)
-        
         const isoDate = new Date(date).toISOString()
-
         setNewDate(isoDate)
     }
   
@@ -87,7 +87,7 @@ export function EditTask({task,members,setShowModale}:
                         <option value=""></option>
                         {
                              (members && members?.length) && 
-                                members?.map((m:any)=> 
+                                members?.map((m:MemberInterface)=> 
                                 <option 
                                     data-selected={selectedUsers?.includes(m.user.id)}  
                                     key={m.id} 

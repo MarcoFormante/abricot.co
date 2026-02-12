@@ -1,10 +1,10 @@
+import { TaskInterface } from "@/app/types/globals";
 import { Button } from "../../../Button/Button";
 import { Tag } from "../Tag";
 import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function KanbanItem({task}:{task:any}) {
-
+export function KanbanItem({task}:{task:TaskInterface}) {
+  
   return (
     <li className="py-[25px] px-[20px] border border-[#E5E7EB] rounded-[10px] flex flex-col gap-[32px] w-[371px]">
       <div className="flex justify-between">
@@ -22,9 +22,9 @@ export function KanbanItem({task}:{task:any}) {
         <div>
           <div>
           <TaskItemProjectDetails 
-              projectName={task.project.name} 
-              dueDate={new Date(task.dueDate)}
-              commentsLength={task.comments.length}
+              projectName={task?.project?.name || ""} 
+              dueDate={new Date(task?.dueDate)}
+              commentsLength={task?.comments?.length || 0}
            />
           </div>
         </div>

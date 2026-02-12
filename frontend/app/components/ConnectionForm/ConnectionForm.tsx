@@ -37,8 +37,10 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
         }else{
            const response = await register(formData)
             if (!response?.success) {
-                setFormErrors(response?.errorMessage || "Une erreur est survenue")
                 
+                
+                setFormErrors(response?.errorMessage || "Une erreur est survenue")
+                 setAlert({type:"error",message:response?.errors})
             }else{
                 setAlert({type:"success",message:response?.message})
                 router.push("/mon-compte")
@@ -53,6 +55,7 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
             <div>
                  <div className="flex flex-col pb-3  text-red-700">
                         {formErrors && Array.isArray(formErrors)
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ? formErrors.map((err:any,i:number)=> <p key={`error${i}`}>{err.message}</p>)
                         : <p>{formErrors}</p>
                     }

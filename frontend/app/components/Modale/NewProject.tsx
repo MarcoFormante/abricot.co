@@ -5,23 +5,26 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/UserContext";
 import { Submit } from "../Submit/Submit";
+import { UserInterface } from "@/app/types/globals";
+
 
 export  function NewProject({closeModale}:{closeModale:()=>void}){
-    const [users,setUsers] = useState<any[]>([])
-    const [selectedUsers,setSelectedUser] = useState<any[]>([])
+    const [users,setUsers] = useState<UserInterface[]>([])
+    const [selectedUsers,setSelectedUser] = useState<string[]>([])
     const router = useRouter()
     const userInfo = useUser()
     
     const onSubmit = async (e:React.FormEvent)=>{
         e.preventDefault()
         const formdata = new FormData(e.currentTarget as HTMLFormElement)
-        const response = await newProject(formdata,[...selectedUsers,userInfo.email])
+        const response = await newProject(formdata,[...selectedUsers,userInfo?.email ?? ""])
         if (response?.success) {
             closeModale()
             document.body.style.overflowY = "visible"
             router.push("/projets/" + response.projectId)
         }        
     }
+
 
     useEffect(()=>{
         const getUsersData = async () => {
@@ -30,6 +33,7 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
         }
         getUsersData()
     },[])
+
 
     const onChange = (value:string) => {
         if (!value) {
@@ -67,10 +71,13 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
             <div className="relative">
                 <label htmlFor="collaborators" className="text-[14px]">Contributeurs</label>
             <div className="absolute h-[0px] top-[50%] left-[17px] text-[#6B7280] ">
+
               {selectedUsers.length
                 ? selectedUsers.length +
                   ` collaborateur${selectedUsers.length === 1 ? "" : "s"}`
-                : "Choisir un ou plusieurs collaborateurs"}
+                : "Choisir un ou plusieurs collaborateurs"
+              }
+
             </div>
             <select
               value={""}
@@ -85,7 +92,7 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
                 users?.length &&
                 users.map((user) => {
                   const isSelected = selectedUsers.includes(user.email);
-                  const isOwner = user.email === userInfo.email;
+                  const isOwner = user.email === userInfo?.email;
                   return !isOwner && (
                     <option
                       data-selected={isSelected}

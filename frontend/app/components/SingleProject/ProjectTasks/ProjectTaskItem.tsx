@@ -5,10 +5,18 @@ import { Tag } from "../../Dashboard/Tasks/Tag";
 import { ProjectComments } from "./ProjectComments";
 import { deleteTask } from "@/app/actions/task";
 import { useRouter } from "next/navigation";
+import { TaskInterface, TaskUserAssigned } from "@/app/types/globals";
 
-export function ProjectTaskItem({task, onEdit, onDeleteTask,isUserProject, userIsContributor}:
+export function ProjectTaskItem(
   {
-    task:any,
+    task, 
+    onEdit, 
+    onDeleteTask,
+    isUserProject, 
+    userIsContributor
+  }:
+  {
+    task:TaskInterface,
     onEdit:()=>void,
     onDeleteTask:()=>void,
     isUserProject:boolean,
@@ -19,9 +27,9 @@ export function ProjectTaskItem({task, onEdit, onDeleteTask,isUserProject, userI
     const [deleted,setDeleted] = useState(false)
     const router = useRouter()
 
+
     const removeTask = async ()=>{
-        const response = await deleteTask(task.projectId,task.id)
-        
+        const response = await deleteTask(task.projectId ?? "",task.id ?? "")
         if (response?.success) {
           onDeleteTask()
           setDeleted(true)
@@ -70,7 +78,7 @@ export function ProjectTaskItem({task, onEdit, onDeleteTask,isUserProject, userI
                   </div>
                   <div className="mt-[30px]">
                     <div className="flex items-center gap-[8px] text-[#6B7280] text-[12px]">Assigné à : 
-                      {task.assignees.map((a:any) => {
+                      {task?.assignees && task?.assignees?.map((a:TaskUserAssigned) => {
                         return (
                            <span className="flex" key={a.id}>
                             <CircleTag name={a.user.name} isOwner={false}/>
@@ -83,7 +91,7 @@ export function ProjectTaskItem({task, onEdit, onDeleteTask,isUserProject, userI
                     </div>
                   </div>
                   <hr className="mt-[24px]  border-[#E5E7EB]" />
-                      <ProjectComments comments={task.comments} task={task}/>
+                      <ProjectComments comments={task?.comments || []} task={task}/>
                 </li>
     )
 }

@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
+import { ContributorInterface } from "../types/globals"
 
 /**
  * Get all assigned or user projects
@@ -9,7 +10,8 @@ import axiosInstance from "../lib/axiosInstance"
  */
 export async function getProjects(){
     const token = (await cookies()).get("auth_token")?.value || ""
-  try {
+    
+    try {
         const response = await axiosInstance.get(`projects/`,{
             headers:{
                 "Authorization":"Bearer " + token
@@ -24,13 +26,15 @@ export async function getProjects(){
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-     } catch (error:any){
+    } catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 }
@@ -66,12 +70,14 @@ export async function getProjectByID(id:string){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 }
@@ -83,7 +89,7 @@ export async function getProjectByID(id:string){
  * @param contributors array
  * @returns success:boolean, status:number, projectId:string
  */
-export async function newProject(formdata:FormData,contributors:any){
+export async function newProject(formdata:FormData,contributors:Array<string>){
     const token = (await cookies()).get("auth_token")?.value || ""
     const name = formdata.get("name")
     const description = formdata.get("description")
@@ -103,12 +109,14 @@ export async function newProject(formdata:FormData,contributors:any){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
    
@@ -142,12 +150,14 @@ export async function updateProject(formdata:FormData){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 }
@@ -176,12 +186,14 @@ export async function addContributorToProject(contributor:string,projectId:strin
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+        
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 
@@ -193,7 +205,8 @@ export async function addContributorToProject(contributor:string,projectId:strin
  * @param projectId string 
  * @returns 
  */
-export async function removeContributor(contributor:any,projectId:string){
+export async function removeContributor(contributor:ContributorInterface,projectId:string){
+     console.log(contributor);
      
      const token = (await cookies()).get("auth_token")?.value || ""
     
@@ -212,12 +225,14 @@ export async function removeContributor(contributor:any,projectId:string){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+
         return {
-        success: false,
-        status: error?.response?.status || 500, 
-        errorMessage: (error?.response?.status >= 500 || !error.response) 
-        ? "Une Erreur est survenue" 
-        : error?.response?.data?.message || "Erreur inconnue"
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
         }
     }
 }

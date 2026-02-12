@@ -1,5 +1,6 @@
 import {  useMemo } from "react";
 import { Input } from "../../Input/Input"
+import { CommentInterface } from "@/app/types/globals";
 
 export function Comment({
     comment,
@@ -11,7 +12,7 @@ export function Comment({
     commentToEdit,
     closeEdit
 }:{
-    comment:any,
+    comment:CommentInterface,
     wantsEdited:{id:string} | null,
     setWantsEdited:React.Dispatch<React.SetStateAction<{id:string}|null>>,
     setCommentToEdit:React.Dispatch<React.SetStateAction<string>>,

@@ -5,16 +5,17 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createTask } from '@/app/actions/task';
 import { Submit } from '../Submit/Submit';
+import { MemberInterface, TaskInterface } from '@/app/types/globals';
 
 
 export function NewTask({members,closeModale}:
     {
-        members:any[],
+        members:MemberInterface[],
         closeModale:()=>void
     }){
          
     const [newDate,setNewDate] = useState("")
-    const [selectedUsers,setSelectedUser] = useState<any[]>([])
+    const [selectedUsers,setSelectedUser] = useState<string[]>([])
     const params = useParams()
     const router = useRouter()
     
@@ -30,13 +31,13 @@ export function NewTask({members,closeModale}:
             return
         }
 
-        const formValues = {
-            title: formData.get('title'),
-            description: formData.get('desc'),
+        const formValues:TaskInterface = {
+            title: formData.get('title') as string,
+            description: formData.get('desc') as string,
             dueDate: new Date(formData.get('date') as string).toISOString(),
             assigneeIds: selectedUsers,
-            status: formData.get('status[]') ?? "TODO" ,
-            id:params.id
+            status: (formData.get('status[]') ?? "TODO") as string,
+            id:params.id as string
         }
         const response = await createTask(formValues)
         

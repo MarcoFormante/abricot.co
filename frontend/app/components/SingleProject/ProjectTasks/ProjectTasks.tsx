@@ -7,11 +7,23 @@ import { EditTask } from "../../Modale/EditTask";
 import { ModaleContainer } from "../../Modale/ModaleContainer";
 import { ProjectTaskItem } from "./ProjectTaskItem";
 import { useUser } from "@/app/context/UserContext";
+import { MemberInterface, TaskInterface } from "@/app/types/globals";
 
 
-export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],projectMembers:any[],isUserProject:any}){
-    const [projectTasks,setProjectsTasks] = useState<any[]>([])
-    const [showModale,setShowModale] = useState<{type:string,task?:any}>({type:""})
+export function ProjectTasks(
+    {
+        tasks,
+        projectMembers,
+        isUserProject
+    }:
+    {
+        tasks:TaskInterface[],
+        projectMembers:MemberInterface[],
+        isUserProject:boolean
+    }
+){
+    const [projectTasks,setProjectsTasks] = useState<TaskInterface[]>([])
+    const [showModale,setShowModale] = useState<{type:string,task?:TaskInterface}>({type:""})
     const [searchValue,setSearchValue] = useState("")
     const [filter,setFilter] = useState({type:"",value:""})
     const userInfo = useUser()
@@ -63,13 +75,13 @@ export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],p
     const filteredTasks = getFilteredTasks()
 
 
-    const onEditTask = (task:any)=>{
+    const onEditTask = (task:TaskInterface)=>{
         setShowModale({type:"editTask",task})
     }
 
 
     const onDeleteTask = (id:string)=>{
-        setProjectsTasks(projectTasks.filter((t:any)=> t.id !== id))
+        setProjectsTasks(projectTasks.filter((t:TaskInterface)=> t.id !== id))
     }
 
     useEffect(() => {
@@ -128,10 +140,10 @@ export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],p
             </div>
         </div>
             { showModale?.type === "editTask" && 
-                  <ModaleContainer setShowModale={setShowModale} showModale={showModale}>
-                    <EditTask task={showModale.task} members={projectMembers} setShowModale={setShowModale} />
-                  </ModaleContainer>
-                  }
+                <ModaleContainer setShowModale={setShowModale} showModale={showModale}>
+                  <EditTask task={showModale?.task || {} as TaskInterface} members={projectMembers} setShowModale={setShowModale} />
+                </ModaleContainer>
+            }
    
         <div className="mt-[41px] min-h-[30vh]">
             <ul className="px-[59px] flex flex-col gap-[17px]">
@@ -140,9 +152,9 @@ export function ProjectTasks({tasks,projectMembers,isUserProject}:{tasks:any[],p
                         key={task.id} 
                         task={task} 
                         onEdit={()=>onEditTask(task)} 
-                        onDeleteTask={()=>onDeleteTask(task.id)}
+                        onDeleteTask={()=>onDeleteTask(task?.id || "")}
                         isUserProject={isUserProject}
-                        userIsContributor={projectMembers.find((c)=> c.user.id === userInfo.id )}
+                        userIsContributor={(projectMembers.find((c)=> c.user.id === userInfo?.id) ? true : false)}
                     />
                 )}
             </ul>

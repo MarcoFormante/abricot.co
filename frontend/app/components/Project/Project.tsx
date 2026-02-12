@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import { CircleTag } from "../Collaborators/CircleTag";
 import { NameTag } from "../Collaborators/NameTag";
 import { ProjectProgress } from "./Progress/ProjectProgress";
+import { MemberInterface, ProjectInterface } from "@/app/types/globals";
 
-export function Project({project}:{
-  project:any
-}) {
+export function Project({project}:{project:ProjectInterface}) {
 
-  
   return (
     <li className="border border-[#E5E7EB] h-[351px] rounded-[10px] px-[34px] py-[30px]  bg-[#FFFFFF]">
       <Link href={`projets/${project.id}`}>
@@ -23,6 +20,7 @@ export function Project({project}:{
         </div>
 
         <ProjectProgress  totalTasks={project._count.tasks} tasksDone={project.completedTasks.length || 0}/>
+        
         <div className="flex flex-col gap-[15px]">
           <span className="text-[#6B7280] text-[10px] h-[12px] flex items-center gap-[8px]">
             <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +33,7 @@ export function Project({project}:{
               <CircleTag name={project.owner.name} isOwner/>
               <NameTag isOwner/>
               <div className="flex items-center">
-                {project.members && project.members.map((m:any,i:number)=> 
+                {project.members && project.members.map((m:MemberInterface,i:number)=> 
                   {
                     if (i === 0) {
                         return <CircleTag key={m.id} name={m.user.name} isOwner={false}/>
