@@ -1,10 +1,10 @@
-import { MemberInterface } from "@/app/types/globals";
+import { MemberInterface, UserInterface } from "@/app/types/globals";
 import { CircleTag } from "../Collaborators/CircleTag";
 import { NameTag } from "../Collaborators/NameTag";
 
 export function ProjectContributors({members,owner}:{
   members:MemberInterface[],
-  owner:any
+  owner:UserInterface
 }){
   
     return (
