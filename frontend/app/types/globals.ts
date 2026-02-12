@@ -43,7 +43,7 @@ export interface TaskInterface {
 
 export type TaskStatusType = 'TODO' | 'IN_PROGRESS' | 'DONE' | string
    
-export type AiTasks = Array<{title:string,desc:string}> 
+export type AiTasks = Array<{id:string, title:string,description:string}> 
 
 export interface MemberInterface {
   id: string;
@@ -99,4 +99,11 @@ export interface TaskUserAssigned {
   assignedAt: string;
   id: string;
   user: UserInterface;
+}
+
+
+export interface AiTask {
+    id?:string;
+    title?:string;
+    description?:string;
 }

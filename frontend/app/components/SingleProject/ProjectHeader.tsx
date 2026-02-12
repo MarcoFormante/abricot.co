@@ -19,6 +19,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
 }){
 
   const [showModale,setShowModale] = useState({type:""})
+  const [maxAiRequests,setMaxAiRequests] = useState(20)
   const router = useRouter()
 
   const navigateBack = ()=>{
@@ -67,7 +68,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
               {
                 showModale.type === "newTask" 
                 ? <NewTask members={members} closeModale={()=>setShowModale({type:""})}/>
-                : showModale.type === "newAiTask" ? <NewTaskAI/>
+                : showModale.type === "newAiTask" ? <NewTaskAI members={members} setMaxAiRequests={setMaxAiRequests} maxAiRequests={maxAiRequests} />
                 : <EditProject closeModale={()=>setShowModale({type:""})}  members={members} project={{name,description,members,id}}/>
               }
             </ModaleContainer>

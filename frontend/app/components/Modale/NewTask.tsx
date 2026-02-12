@@ -5,14 +5,16 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createTask } from '@/app/actions/task';
 import { Submit } from '../Submit/Submit';
-import { MemberInterface, TaskInterface } from '@/app/types/globals';
+import { AiTask, MemberInterface, TaskInterface } from '@/app/types/globals';
 import { useAlert } from '@/app/context/AlertContext';
 
 
-export function NewTask({members,closeModale}:
+export function NewTask({members,closeModale,aiTask,deleteAiTaskAfterSuccess}:
     {
         members:MemberInterface[],
-        closeModale:()=>void
+        closeModale:()=>void,
+        aiTask?:AiTask,
+        deleteAiTaskAfterSuccess?:()=>void
     }){
          
     const [newDate,setNewDate] = useState("")
@@ -53,6 +55,9 @@ export function NewTask({members,closeModale}:
             document.body.style.overflowY = "visible"
             closeModale()
             setAlert({type:"success",message:response.message})
+            if (aiTask?.id && deleteAiTaskAfterSuccess) {
+                deleteAiTaskAfterSuccess()
+            }
             router.refresh()
         }else{
           const errors = response?.errors || response?.errorMessage
@@ -100,8 +105,8 @@ export function NewTask({members,closeModale}:
             <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Créer une tâche</h5>
 
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
-                <Input type='text' name='title' label='Title*' gap='6px' required/>
-                <Input type='text' name='desc' label='Description*' gap='6px' required/>
+                <Input type='text' name='title' label='Title*' gap='6px' required  value={aiTask?.title ?? ""}/>
+                <Input type='text' name='desc' label='Description*' gap='6px' required value={aiTask?.description ?? ""}/>
                 <div className='relative cursor-pointer'>
                     <Input type={"date"} name='date' label='Échéance*' required  onChange={(e) => onDateChange(e.target.value)} />
                     <div className='absolute pointer-events-none top-[50%] left-2 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0'>{newDate}</div>

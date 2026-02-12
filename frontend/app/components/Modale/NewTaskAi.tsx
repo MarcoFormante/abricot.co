@@ -1,70 +1,129 @@
 import { FormEvent, useState } from "react";
 import { AiInput } from "../Input/AiInput";
-import { AiTasks } from "@/app/types/globals";
+import { AiTask, AiTasks, MemberInterface } from "@/app/types/globals";
+import { createTasksWithAI } from "@/app/actions/task";
+import { useAlert } from "@/app/context/AlertContext";
+import { NewTask } from "./NewTask";
 
-    
 
-export function NewTaskAI(){
+export function NewTaskAI({
+    members,
+    setMaxAiRequests,
+    maxAiRequests
+}:{
+    members:MemberInterface[],
+    setMaxAiRequests:(num:number)=>void,
+    maxAiRequests:number
+}){
     const [tasks,setTasks] = useState([] as AiTasks)
+    const [isLoading,setLoading] = useState(false)
+    const [taskToEdit,setTaskToEdit] = useState<AiTask | null>(null)
+    const setAlert = useAlert()
+
+
 
     const onDelete = (id:number)=>{
         const filteredTasks = tasks.filter((t,i) => i !== id)
         setTasks(filteredTasks)
-        
     }
 
-    const onSubmit = (e:FormEvent)=>{
+    
+    const onSubmit = async (e:FormEvent)=>{
         e.preventDefault()
-
+        setTasks([])
+        if (isLoading) {
+            return 
+        }
         const formData = new FormData(e.target as HTMLFormElement)
         const text = formData.get("aiText")
-
         if (!text) {
             return
         }
-
-        setTasks([
-            {
-                title:"Nom de la tache",
-                desc:"Description de la tâche",
-            },
-             {
-                title:"Nom de la tache",
-                desc:"Description de la tâche",
-            },
-             {
-                title:"Nom de la tache",
-                desc:"Description de la tâche",
-            }
-        ])
+        setLoading(true)
+        const AIResponse = await createTasksWithAI(text as string)
+        if (AIResponse?.success) {
+            setMaxAiRequests(maxAiRequests - 1)
+            setTasks(AIResponse.data?.tasks)
+            setLoading(false)
+        }else{
+            const alertMessage = AIResponse?.status == 429 ? "Limite quotidienne atteinte. Réessayez demain." : "Une Erreur est survenue" 
+            setAlert({type:"error",message:alertMessage})
+            setLoading(false)
+        }
     }
 
-    return(
-        <div className="flex flex-col gap-[46px]">
-            <div className="flex items-center gap-[8px]">
-                <svg
-                    width="19"
-                    height="19"
-                    viewBox="0 0 19 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M8.24333 0.574802C8.60336 -0.19163 9.69352 -0.19163 10.0535 0.574802L12.351 5.46554C12.4501 5.67658 12.6199 5.84634 12.8309 5.94548L17.7216 8.2429C18.4881 8.60293 18.4881 9.69309 17.7216 10.0531L12.8309 12.3505C12.6199 12.4497 12.4501 12.6194 12.351 12.8305L10.0535 17.7212C9.69352 18.4876 8.60336 18.4876 8.24333 17.7212L5.9459 12.8305C5.84677 12.6194 5.677 12.4497 5.46597 12.3505L0.575229 10.0531C-0.191203 9.69309 -0.191203 8.60293 0.575229 8.2429L5.46597 5.94547C5.677 5.84634 5.84677 5.67658 5.9459 5.46554L8.24333 0.574802Z"
-                        fill="#FF8B42"
-                    />
-                </svg>
-                <h5 className="font-semibold text-[24px] text-[#1F1F1F]">{!tasks.length ? "Créer une tâche" : "Vos tâches..."}</h5>
-            </div>
+    const closeNewTask = ()=>{
+        setTaskToEdit(null)
+    }
 
-            <div className={`h-[460px] ${tasks.length && "overflow-y-scroll"}`}>
-                {tasks && 
+    const deleteAiTaskAfterSuccess = () =>{
+        if (taskToEdit?.id) {
+            setTasks(tasks.filter((t)=>t.id !== taskToEdit?.id))
+        }
+    }
+
+
+
+    return(
+        <div>
+            { taskToEdit?.id && 
+                <div>
+                    <button title="Retour à la creation des taches avec l'AI"
+                     onClick={closeNewTask} 
+                     className="w-[32px] h-[32px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer"
+                     >
+                        <svg
+                        aria-hidden="true"
+                        width="16"
+                        height="8"
+                        viewBox="0 0 16 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                            d="M0.146447 3.32845C-0.0488155 3.52372 -0.0488155 3.8403 0.146447 4.03556L3.32843 7.21754C3.52369 7.4128 3.84027 7.4128 4.03553 7.21754C4.2308 7.02228 4.2308 6.7057 4.03553 6.51043L1.20711 3.68201L4.03553 0.85358C4.2308 0.658318 4.2308 0.341735 4.03553 0.146473C3.84027 -0.0487893 3.52369 -0.0487893 3.32843 0.146473L0.146447 3.32845ZM0.5 3.68201V4.18201H15.5V3.68201V3.18201H0.5V3.68201Z"
+                            fill="black"
+                        />
+                        </svg>
+                    </button>
+                     <NewTask 
+                      members={members}
+                      aiTask={taskToEdit} 
+                      closeModale={closeNewTask} 
+                      deleteAiTaskAfterSuccess={deleteAiTaskAfterSuccess}
+                      />
+                </div>
+               
+            }
+            { !taskToEdit?.id && <div className="flex flex-col gap-[46px]">
+                <div className="flex items-center gap-[8px]">
+                    <svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 19 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M8.24333 0.574802C8.60336 -0.19163 9.69352 -0.19163 10.0535 0.574802L12.351 5.46554C12.4501 5.67658 12.6199 5.84634 12.8309 5.94548L17.7216 8.2429C18.4881 8.60293 18.4881 9.69309 17.7216 10.0531L12.8309 12.3505C12.6199 12.4497 12.4501 12.6194 12.351 12.8305L10.0535 17.7212C9.69352 18.4876 8.60336 18.4876 8.24333 17.7212L5.9459 12.8305C5.84677 12.6194 5.677 12.4497 5.46597 12.3505L0.575229 10.0531C-0.191203 9.69309 -0.191203 8.60293 0.575229 8.2429L5.46597 5.94547C5.677 5.84634 5.84677 5.67658 5.9459 5.46554L8.24333 0.574802Z"
+                            fill="#FF8B42"
+                        />
+                    </svg>
+                    <h5 className="font-semibold text-[24px] text-[#1F1F1F]">{!tasks.length ? "Créer une tâche" : "Vos tâches..."}</h5>
+                </div>
+                {isLoading && 
+                    <div className={"loading"}></div>
+                }
+                <div className={`h-[460px] ${tasks.length && "overflow-y-scroll"}`}>
+                
+        
+                {tasks && !taskToEdit && 
                     <ul className="flex flex-col gap-[24px]">
                         {tasks.map((t,i)=>
-                            <li key={t.title + i} className="py-[25px] pl-[40px] flex flex-col gap-[32px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px]">
+                            <li key={t.id} className="py-[25px] pl-[40px] flex flex-col gap-[32px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px]">
                                 <div className="flex flex-col gap-[2px]">
                                     <h6 className="font-semibold text-[18px] text-[#000000]">{t.title}</h6>
-                                    <p className="text-[#6B7280] text-[14px]">{t.desc}</p>
+                                    <p className="text-[#6B7280] text-[14px]">{t.description}</p>
                                 </div>
                                 <div className="flex items-center gap-[15px]">
                                     <button onClick={()=>onDelete(i)} className="cursor-pointer flex items-center text-[#6B7280] text-[12px] gap-[8.5px]">
@@ -76,7 +135,7 @@ export function NewTaskAI(){
 
                                     <span aria-hidden="true" className="h-[11px] border border-[#9CA3AF] rounded-[80px]"></span>
 
-                                    <button className="cursor-pointer flex items-center text-[#6B7280] text-[12px] gap-[8.5px]">
+                                    <button onClick={()=>setTaskToEdit(t as AiTask )} className="cursor-pointer flex items-center text-[#6B7280] text-[12px] gap-[8.5px]">
                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M6.84794 2.94394L0.538902 9.25297C0.451971 9.33995 0.397399 9.45403 0.384248 9.57629L0.00327009 13.004C-0.0050645 13.0793 0.00257643 13.1555 0.025694 13.2277C0.0488115 13.2999 0.0868858 13.3663 0.137432 13.4228C0.187978 13.4792 0.24986 13.5244 0.319037 13.5553C0.388215 13.5862 0.463133 13.6022 0.538902 13.6022C0.558705 13.6022 0.578492 13.6011 0.598178 13.5989L4.02806 13.2179C4.15032 13.2048 4.2644 13.1502 4.35138 13.0633L10.6583 6.7548L6.84794 2.94394Z" fill="#6B7280"/>
                                             <path d="M13.1294 1.99777L11.605 0.473317C11.3018 0.170252 10.8907 0 10.462 0C10.0334 0 9.62225 0.170252 9.31909 0.473317L7.61035 2.18206L11.4207 5.99292L13.1299 4.28363C13.4329 3.98041 13.6031 3.56925 13.603 3.14059C13.6029 2.71193 13.4325 2.30085 13.1294 1.99777Z" fill="#6B7280"/>
@@ -94,7 +153,8 @@ export function NewTaskAI(){
                 <label className="out-screen" htmlFor="ai-text">Décrivez les tâches que vous souhaitez ajouter...</label>
                 <AiInput/>
             </form>
-           
-        </div>
+            <p className="text-center text-sm">Requêtes restantes : {maxAiRequests}</p>
+        </div>}
+         </div>
     )
 }

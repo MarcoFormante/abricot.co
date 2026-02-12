@@ -113,3 +113,34 @@ export async function deleteTask(projectID:string,taskID:string){
         }
     }
 }
+
+
+
+export async function createTasksWithAI(text:string){
+    try {
+        const response = await fetch("http://localhost:3000/api/ai", {
+        method: "POST",
+        body: JSON.stringify({ prompt: text }),
+        headers: { "Content-Type": "application/json" },
+        });
+        console.log(response);
+        
+        if (!response.ok) {
+            return {
+                success:false,
+                status:response.status
+            }
+        }
+
+        return {
+            success:true,
+            data: await response.json()
+        }
+    } catch (error:any) {
+         return {
+            success:false,
+            status:error?.status
+        }
+    }
+   
+}

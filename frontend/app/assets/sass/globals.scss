@@ -97,3 +97,25 @@ option[data-selected=true]{
 option:hover{
   background-color: brown;
 }
+
+
+.loading{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border-bottom: 5px solid black;
+  border-left: 5px solid black;
+  position: absolute;
+  top: 35%;
+  left: 37%;
+  animation: spin 0.5s linear infinite forwards ;
+}
+
+@keyframes spin {
+  from{
+     rotate: 0deg;
+  }
+  to{
+    rotate: 360deg;
+  }
+}
