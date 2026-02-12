@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "@/app/assets/sass/globals.css"
 import "./tailwind.css";
 import { ScrollToTop } from "./utils/ScrollToTop";
 import { AlertProvider } from "./context/AlertContext";
