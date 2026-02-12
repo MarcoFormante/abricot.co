@@ -21,9 +21,9 @@ export function ListItem({task}:{task:TaskInterface}) {
               commentsLength={task?.comments?.length || 0}
            />
         </div>
-        <div className="flex flex-col justify-between md:items-end max-md:gap-1 max-md:mt-[32px]">
+        <div className="flex flex-col justify-between md:items-end max-md:gap-5 max-md:gap-1 max-sm:mt-[12px] max-md:mt-[32px]">
           <Tag type={task?.status} />
-          <div className="w-[121px] h-[50px] max-md:self-end">
+          <div className=" w-full min-[490px]:w-[121px] h-[50px] max-md:self-end">
             <Button type={"btn-softBlack"} label="Voir" isLink={true} href={"/projets/" + task?.projectId} />
           </div>
         </div>
