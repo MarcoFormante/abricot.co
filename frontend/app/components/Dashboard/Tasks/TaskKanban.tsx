@@ -22,8 +22,8 @@ export function TaskKanban({tasks}:{tasks:[]}){
 
 
     return (
-        <section className="flex gap-[22px] mt-[51px]">
-            <div className="bg-[#FFFFFF] border border-[#FFE0E0] w-[419px] min-h-[30vh] pt-[40px] px-[24px] rounded-[10px]">
+        <section className="flex gap-[22px] mt-[51px] max-[1421px]:flex-wrap max-[1421px]:justify-center">
+            <div className="bg-[#FFFFFF] border border-[#FFE0E0] w-[419px] min-h-[30vh] pt-[40px] px-[24px] rounded-[10px] max-sm:px-[12px]">
                 <div>
                     <h3 className="text-[18px] font-semibold max-w-max inline">À faire</h3>
                     <span className="bg-[#E5E7EB] text-[#6B7280] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]"> {filteredTasks?.toDo?.length}</span>

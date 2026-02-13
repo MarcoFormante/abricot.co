@@ -6,8 +6,8 @@ import { TaskItemProjectDetails } from "../TaskItemProjectDetails";
 export function KanbanItem({task}:{task:TaskInterface}) {
   
   return (
-    <li className="py-[25px] px-[20px] border border-[#E5E7EB] rounded-[10px] flex flex-col gap-[32px] w-[371px]">
-      <div className="flex justify-between">
+    <li className="py-[25px] px-[20px] border border-[#E5E7EB] rounded-[10px] flex flex-col gap-[32px] md:w-[371px] ">
+      <div className="flex justify-between max-md:flex-col max-md:gap-5">
         <div className="flex flex-col gap-[1px]">
           <h4 className="text-[18px] font-semibold max-w-max inline">
             {task.title}
@@ -31,7 +31,7 @@ export function KanbanItem({task}:{task:TaskInterface}) {
       </div>
 
       <div>
-        <div className="w-[121px] h-[50px]">
+        <div className="sm:w-[121px] h-[50px]">
            <Button type={"btn-softBlack"} label="Voir" isLink={true} href={"/projets/" + task.projectId} />
         </div>
       </div>
