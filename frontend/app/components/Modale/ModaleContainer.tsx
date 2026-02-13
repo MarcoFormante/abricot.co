@@ -21,7 +21,7 @@ export function ModaleContainer({children,setShowModale,showModale}:{
     
 
     return (
-        <div className="fixed w-full h-full top-0 left-0 z-10 flex justify-center items-center bg-[#5555558f]">
+        <div className="fixed w-full h-full top-0 left-0 z-50 flex justify-center items-center bg-[#5555558f]">
             <div className="w-[598px] h-[799px] bg-[#FFFFFF] rounded-[10px] px-[73px] pt-[79px] max-md:px-5 max-md:w-full max-md:h-full text-[#000000] relative max-md:pt-[24px]">
                 {children}
                  <button className="absolute top-[37.5px] right-[39.17px] cursor-pointer" onClick={onCloseModale}>
