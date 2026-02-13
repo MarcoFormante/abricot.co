@@ -11,7 +11,7 @@ export async function POST(req:NextRequest) {
     
   try {
     const { prompt } = await req.json();
-    const ai = new GoogleGenAI({apiKey:"AIzaSyAo0PrDpB1uZuzrVQLEn4NqQKOAm1FOOBo"});
+    const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
 
     const systemInstruction = `
       Tu es un extracteur de tâches. Ton rôle est de lire le texte de l'utilisateur et d'extraire les tâches à créer.
@@ -26,7 +26,7 @@ export async function POST(req:NextRequest) {
     `;
 
      const response = await ai.models.generateContent({
-        model: "gemini-2.5-pro",
+        model: "gemini-3-flash-preview",
         contents:  prompt,
         config: {
         systemInstruction: systemInstruction,
@@ -36,6 +36,7 @@ export async function POST(req:NextRequest) {
     
     return NextResponse.json(JSON.parse(response.text as string));
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error:any) {
     
     return NextResponse.json({ error: "Erreur API" }, { status: error?.status || 500 });

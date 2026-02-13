@@ -8,7 +8,7 @@ export default async function Projets(){
     const data = await getProjects()
     
     return(
-        <main className="pt-[89px] px-5 lg:px-25 pb-[78px] max-sm:px-2">
+        <main className="pt-[89px] px-5 lg:px-25 pb-[78px] max-sm:px-2 max-md:pt-[40px]">
             <div className="flex flex-col justify-center gap-8 lg:flex-row lg:justify-between">
                 <AdminMainTitle title={"Mes projets"} text={"Gérez vos projets "}/>
                 <CreateProjectButton />
