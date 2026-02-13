@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
- 
-  // if (request.headers.has("next-action")) {
-  //   return NextResponse.next();
-  // }
+export async function proxy(request: NextRequest) {
 
+  const token = request.cookies.get("auth_token")
+  const userInfo = request.cookies.get("user_info")
+  const authPaths = ['/','/inscription']
+
+    if ((!userInfo && !token) && !authPaths.includes(request.nextUrl.pathname)) {
+       return NextResponse.redirect(new URL('/', request.url))
+    }
+  
   const headers = new Headers(request.headers);
   headers.set("x-current-path", request.nextUrl.pathname);
 
