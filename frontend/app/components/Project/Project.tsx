@@ -7,7 +7,7 @@ import { MemberInterface, ProjectInterface } from "@/app/types/globals";
 export function Project({project}:{project:ProjectInterface}) {
 
   return (
-    <li className="border border-[#E5E7EB] h-[351px] rounded-[10px] px-[34px] py-[30px]  bg-[#FFFFFF]">
+    <li className="border border-[#E5E7EB] h-[351px] rounded-[10px] px-[34px] py-[30px] bg-[#FFFFFF] w-[380px] max-[1370px]:w-[350px] max-[1280px]:w-[380px] max-lg:w-[350px] max-md:w-[80%] max-sm:w-full">
       <Link href={`projets/${project.id}`}>
       <div className="flex flex-col gap-[56px]">
         <div className="flex flex-col gap-[2px]">

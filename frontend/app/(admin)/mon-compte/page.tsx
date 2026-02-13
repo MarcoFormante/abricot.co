@@ -5,7 +5,7 @@ export default async function MonCompte(){
     const userProfile = await getUserProfile()
     
     return (
-        <main className="px-25 pb-[78px]">
+        <main className="px-0 md:px-25 pb-[78px]">
             <UserForm user={userProfile?.user}/>
         </main>
     )
