@@ -10,6 +10,7 @@ export function Header(){
     const pathname = usePathname()
     const user = useUser()
 
+    
     return (
         <header className="bg-[#FFFFFF] px-5 lg:px-25 max-sm:px-2">
             <nav>
