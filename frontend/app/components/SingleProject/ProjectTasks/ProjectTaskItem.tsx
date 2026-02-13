@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircleTag } from "../../Collaborators/CircleTag";
 import { NameTag } from "../../Collaborators/NameTag";
 import { Tag } from "../../Dashboard/Tasks/Tag";
@@ -50,6 +50,16 @@ export function ProjectTaskItem(
         setShowButtons(false)
         onEdit()
     }
+
+    useEffect(()=>{
+      if (showButtons) {
+          const timeout = setTimeout(()=>{
+            setShowButtons(false)
+          },3000)
+
+          return () => clearTimeout(timeout)
+      }
+    },[showButtons])
     
     
     return !deleted && (
@@ -66,7 +76,7 @@ export function ProjectTaskItem(
                       <div className="relative max-md:self-end max-md:mt-2 ">
                             <button onClick={()=>setShowButtons(!showButtons)} className="w-[57px] h-[57px] max-md:w-[42px] max-md:h-[42px] cursor-pointer border border-[#E5E7EB] rounded-[10px] text-[#6B7280] font-bold text-[22px] bg-[#FFFFFF] max-md:float-right ">...</button>
                             {showButtons && 
-                              <div className="absolute flex flex-col justify-between border border-[#1b1c1d] h-[120px] bg-[#FFFFFF] w-[150px] right-5 p-5 rounded-[10px]">
+                              <div className="absolute flex flex-col justify-between border border-[#1b1c1d] h-[120px] bg-[#FFFFFF] w-[150px] right-5 p-5 top-5 rounded-[10px]">
                                 <button onClick={removeTask} className="block w-full font-semibold text-red-600  cursor-pointer">Supprimer</button>
                                { <button onClick={onEditClick}  className={`block w-full font-semibold   cursor-pointer text-green-600`}>Modifier</button>}
                               </div>

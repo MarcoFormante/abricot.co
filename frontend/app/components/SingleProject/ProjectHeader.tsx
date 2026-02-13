@@ -57,7 +57,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
           </div>
         </div>
 
-        <div className="flex gap-[12px]">
+        <div className="flex gap-[12px] max-md:self-center">
           <div className="w-[141px] h-[50px]">
 
           { showModale?.type && 

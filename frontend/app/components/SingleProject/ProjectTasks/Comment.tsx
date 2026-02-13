@@ -44,7 +44,7 @@ export function Comment({
                 <span className="float-right text-[13px] text-gray-400">{isModified ? "Modifié" : "Envoyé"} le {date}</span>
                 <p className="font-semibold text-[16px]">{comment.author.name} </p>
 
-                { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2  max-md:pr-0">{comment.content}</p>}
+                { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2  max-md:pr-0 break-all">{comment.content}</p>}
 
                 <div className="float-right flex gap-4 self-end">
                   <button className="cursor-pointer" aria-label="supprimer le commentaire" onClick={()=>deleteComment(comment.id)}>
