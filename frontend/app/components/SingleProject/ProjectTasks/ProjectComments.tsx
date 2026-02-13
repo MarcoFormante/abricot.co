@@ -95,7 +95,7 @@ export function ProjectComments({comments,task}:
     
     return (
       <div className="flex justify-between items-baseline mt-[24px]" >
-        <div className="w-full pr-10">
+        <div className="w-full pr-10 max-md:pr-0">
             <h4 className="text-[14px] text-[#1F1F1F]">Commentaires ({comments?.length})</h4>
             <ul className="flex flex-col">
 

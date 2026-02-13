@@ -63,7 +63,7 @@ export function UserForm({user}:{user:UserInterface}){
 
 
     return (
-    <div className="mt-[57px] bg-[#FFFFFF] px-[49px] py-[40px] rounded-[10px]">
+    <div className="mt-[57px] bg-[#FFFFFF] px-[49px] py-[40px] rounded-[10px] max-md:mt-0 max-sm:px-2 ">
       {notification && <p className="text-red-700 text-2xl float-right">{notification}</p>}
         <div>
             <h1 className="text-[18px] text-[#1F1F1F] font-semibold">Mon compte</h1>

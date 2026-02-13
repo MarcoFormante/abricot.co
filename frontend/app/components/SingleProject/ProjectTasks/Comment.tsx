@@ -40,13 +40,13 @@ export function Comment({
       
 
     return (
-        <li key={comment.id} className="mt-5 border border-[#e5e7eb] rounded-[10px] p-5">
+        <li key={comment.id} className="mt-5 border border-[#e5e7eb] rounded-[10px] p-5 max-md:flex max-md:flex-col max-md:gap-1 max-sm:px-3  max-sm:pt-3">
                 <span className="float-right text-[13px] text-gray-400">{isModified ? "Modifié" : "Envoyé"} le {date}</span>
                 <p className="font-semibold text-[16px]">{comment.author.name} </p>
 
-                { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2 ">{comment.content}</p>}
+                { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2  max-md:pr-0">{comment.content}</p>}
 
-                <div className="float-right flex gap-4">
+                <div className="float-right flex gap-4 self-end">
                   <button className="cursor-pointer" aria-label="supprimer le commentaire" onClick={()=>deleteComment(comment.id)}>
                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g id="SVGRepo_bgCarrier" strokeWidth="0"/>

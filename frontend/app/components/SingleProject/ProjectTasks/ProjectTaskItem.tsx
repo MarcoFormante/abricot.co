@@ -53,18 +53,18 @@ export function ProjectTaskItem(
     
     
     return !deleted && (
-                <li className="pl-[40px] pr-[35px] py-[25px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px]">
-                  <div className="flex items-start justify-between">
+                <li className="pl-[40px] pr-[35px] py-[25px] border border-[#E5E7EB] bg-[#FFFFFF] rounded-[10px] max-md:px-5 max-md:pt-1 max-sm:px-2">
+                  <div className="flex items-start justify-between max-md:flex-col-reverse">
                     <div className="flex flex-col gap-[7px]">
-                      <div className="flex gap-[8px]">
+                      <div className="flex gap-[8px] max-md:flex-col-reverse">
                         <h3 className="text-[18px] font-semibold text-[#000000]">{task.title}</h3>
                         <Tag type={task.status}/>
                       </div>
                       <p className="text-[#6B7280] text-[14px]">{task.description}</p>
                     </div>
                   { (isUserProject || userIsContributor) &&  
-                      <div className="relative">
-                            <button onClick={()=>setShowButtons(!showButtons)} className="w-[57px] h-[57px] cursor-pointer border border-[#E5E7EB] rounded-[10px] text-[#6B7280] font-bold text-[22px] bg-[#FFFFFF]">...</button>
+                      <div className="relative max-md:self-end max-md:mt-2 ">
+                            <button onClick={()=>setShowButtons(!showButtons)} className="w-[57px] h-[57px] max-md:w-[42px] max-md:h-[42px] cursor-pointer border border-[#E5E7EB] rounded-[10px] text-[#6B7280] font-bold text-[22px] bg-[#FFFFFF] max-md:float-right ">...</button>
                             {showButtons && 
                               <div className="absolute flex flex-col justify-between border border-[#1b1c1d] h-[120px] bg-[#FFFFFF] w-[150px] right-5 p-5 rounded-[10px]">
                                 <button onClick={removeTask} className="block w-full font-semibold text-red-600  cursor-pointer">Supprimer</button>
@@ -86,7 +86,7 @@ export function ProjectTaskItem(
                     </p>
                   </div>
                   <div className="mt-[30px]">
-                    <div className="flex items-center gap-[8px] text-[#6B7280] text-[12px]">Assigné à : 
+                    <div className="flex items-center gap-[8px] text-[#6B7280] text-[12px] flex-wrap">Assigné à : 
                       {task?.assignees && task?.assignees?.map((a:TaskUserAssigned) => {
                         return (
                            <span className="flex" key={a.id}>

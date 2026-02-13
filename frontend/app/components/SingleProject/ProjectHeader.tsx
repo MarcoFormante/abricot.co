@@ -27,8 +27,8 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
   }
 
     return (
-      <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end">
-        <div className="flex gap-[16px]">
+      <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end max-lg:px-5 max-lg:mt-5 max-lg:flex-col max-lg:gap-10 max-sm:px-2">
+        <div className="flex gap-[16px] max-lg:flex-col w-full">
           <button onClick={navigateBack} className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
             <svg
               aria-hidden="true"
@@ -45,7 +45,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
             </svg>
           </button>
           <div className="flex flex-col gap-[20px]">
-            <div className="flex items-center gap-[14px] mt-[4px]">
+            <div className="flex items-center gap-[14px] mt-[4px]  max-sm:items-start max-sm:flex-col-reverse">
               <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%]">
                 {name}
               </h1>
@@ -53,7 +53,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
                 Modifier
               </button>}
             </div>
-            <p className="leading-[100%] text-[18px] text-[#6B7280]">{description}</p>
+            <p className="leading-[100%] text-[18px] text-[#6B7280] max-lg:pr-2">{description}</p>
           </div>
         </div>
 

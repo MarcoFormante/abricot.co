@@ -22,7 +22,7 @@ export function ModaleContainer({children,setShowModale,showModale}:{
 
     return (
         <div className="fixed w-full h-full top-0 left-0 z-10 flex justify-center items-center bg-[#5555558f]">
-            <div className="w-[598px] h-[799px] bg-[#FFFFFF] rounded-[10px] px-[73px] pt-[79px] text-[#000000] relative">
+            <div className="w-[598px] h-[799px] bg-[#FFFFFF] rounded-[10px] px-[73px] pt-[79px] max-md:px-5 max-md:w-full max-md:h-full text-[#000000] relative">
                 {children}
                  <button className="absolute top-[37.5px] right-[39.17px] cursor-pointer" onClick={onCloseModale}>
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

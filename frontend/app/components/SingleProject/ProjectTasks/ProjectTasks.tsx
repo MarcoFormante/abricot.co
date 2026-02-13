@@ -101,34 +101,40 @@ export function ProjectTasks(
 
     return (
     <section className="mt-[34px] border border-[#E5E7EB] bg-[#FFFFFF] py-[40px] max-w-[1240px] m-auto"> 
-        <div className="px-[59px] flex justify-between items-center">
+        <div className="px-[59px] flex justify-between items-center max-lg:flex-col max-lg:items-start max-lg:gap-2 max-lg:px-5 max-md:flex-col max-sm:px-2">
             <div className="flex flex-col gap-[8px] ">
                 <h2 className="text-[18px] text-[#1F1F1F]">Tâches</h2>
                 <p className="text-[#6B7280]">Par ordre de priorité</p>
             </div>
-            <div className="flex items-center gap-[16px]">
+            <div className="flex items-center gap-[16px] max-md:flex-col max-md:items-start">
                 <div className="flex items-center">
-                    <SwitchButton svgName={"listeSvg"} label={"Liste"} isActive={true}  />
+                    <SwitchButton  svgName={"listeSvg"} label={"Liste"} isActive={filter?.type === ""} onClick={()=>onFilterChange("","")}  />
                  
                     <label htmlFor="dueDate" className="relative">
-                        <SwitchButton svgName={"date"} label={"Calendrier"} isActive={false}  />
+                        <SwitchButton svgName={"date"} label={"Calendrier"} isActive={filter?.type === "date"}  />
                         <input type="date" name="dueDate" id="dueDate" className="dueDate-input absolute top-3 left-0 " onChange={(e)=>onFilterChange("date",e.target.value)} />
                     </label>
                     
                 </div>
-                <div className="flex items-center gap-[16px]">
-                    <select onChange={(e)=>onFilterChange("status",e.target.value)} name="status" id="status" className="min-h-[63px] h-[63px] max-w-[152px] pl-[32px] text-[14px]  w-[152px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]">
+                <div className="flex items-center gap-[16px] max-sm:flex-wrap w-full ">
+                    <select 
+                        onChange={(e)=>onFilterChange("status",e.target.value)} 
+                        name="status"
+                        id="status"
+                        className={`min-h-[63px] h-[63px] max-w-[152px] pl-[32px] text-[14px]  w-[152px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280] ${filter?.type === "status" ? "border-2 border-[#ffe8d9] focus:outline-[#ffe8d9] " : ""}`}
+                    >
                         <option value="" className="text-[#6B7280]">Status</option>
                         <option value="TODO" className="text-[#6B7280]">à faire</option>
                         <option value="IN_PROGRESS" className="text-[#6B7280]">En cours</option>
                         <option value="DONE" className="text-[#6B7280]">Terminée</option>
                     </select>
-                    <div >
-                        <form className='relative w-[283px] flex h-[63px]' onSubmit={(e)=>{
+                    <div className="w-full">
+                        <form className='relative w-[283px] max-md:w-full flex h-[63px]' onSubmit={(e)=>{
                             e.preventDefault()
                             onFilterChange("search",searchValue)
                             }}>
                             <Input 
+                                styles={filter?.type === "search" ? "outline-[#ffe8d9] border-2 border-[#ffe8d9]  " :""}
                                 type={"search"} 
                                 name='searchTask' 
                                 placeholder={"Rechercher une tâche"}
@@ -141,7 +147,7 @@ export function ProjectTasks(
                                     }
                                 }}
                             />
-                        <span role="button" className='searchSvg' onClick={()=>onFilterChange("search",searchValue)}></span>
+                            <span role="button" className='searchSvg' onClick={()=> searchValue && onFilterChange("search",searchValue)}></span>
                         </form>
                     </div> 
                 </div>
@@ -155,7 +161,7 @@ export function ProjectTasks(
    
         <div className="mt-[41px] min-h-[30vh]">
            { filteredTasks.length ? 
-                <ul className="px-[59px] flex flex-col gap-[17px]">
+                <ul className="px-[59px] flex flex-col gap-[17px] max-lg:px-5 max-sm:px-2">
                     {filteredTasks.map((task)=>
                         <ProjectTaskItem 
                             key={task.id} 
