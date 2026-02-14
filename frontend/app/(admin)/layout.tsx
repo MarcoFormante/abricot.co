@@ -4,6 +4,18 @@ import "../assets/sass/globals.css"
 import { cookies } from "next/headers";
 import { UserProvider } from "../context/UserContext";
 import { AlertProvider } from "../context/AlertContext";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
+
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Abricot.co', 
+    default: 'Abricot.co',
+  },
+  description:"App innovante"
+};
+
 
 export default async function AdminLayout({
   children,
@@ -11,8 +23,19 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }>) {
 
- const userInfo =(await cookies()).get("user_info")?.value
-  const user = userInfo ? JSON.parse(userInfo) : null
+  let user = {
+    id:"",
+    name:"",
+    email:""
+  }
+
+  try {
+    const userInfo =(await cookies()).get("user_info")?.value
+    user = userInfo ? JSON.parse(userInfo) : null
+
+  } catch (error) {
+      redirect("/")
+  }
 
   return (
      <UserProvider user={user}>

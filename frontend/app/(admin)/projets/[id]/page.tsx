@@ -6,6 +6,12 @@ import { ProjectTasks } from "@/app/components/SingleProject/ProjectTasks/Projec
 import {getProjectByID} from "@/app/actions/project";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: 'Details du projet',
+};
 
 export default async function SingleProject({
   params,
@@ -13,10 +19,16 @@ export default async function SingleProject({
   params: Promise<{ id: string }>;
 }) {
   const param = await params;
-  const project = await getProjectByID(param.id);
+  const project = await getProjectByID("sd");
+  let userParsed
 
-  const userInfo =(await cookies()).get("user_info")?.value
-  const userParsed = JSON.parse(userInfo as string)
+  try {
+    const userInfo =(await cookies()).get("user_info")?.value
+    userParsed = JSON.parse(userInfo as string)
+  } catch (error) {
+    notFound()
+  }
+  
 
   if (!project.data) {
     notFound()

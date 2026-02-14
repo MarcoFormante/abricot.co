@@ -3,6 +3,12 @@ import { AdminMainTitle } from "@/app/components/Dashboard/AdminMainTitle/AdminM
 import { Project } from "@/app/components/Project/Project";
 import { getProjects } from "@/app/actions/project";
 import { CreateProjectButton } from "@/app/components/Dashboard/CreateProjectButton/CreateProjectButton";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: 'Mes Projets',
+};
 
 export default async function Projets(){
     const data = await getProjects()

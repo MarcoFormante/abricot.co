@@ -1,5 +1,12 @@
 import { getUserProfile } from "@/app/actions/auth";
 import { UserForm } from "@/app/components/monCompte/UserForm";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: 'Mon Compte',
+};
+
 
 export default async function MonCompte(){
     const userProfile = await getUserProfile()
