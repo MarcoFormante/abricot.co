@@ -17,9 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Abricot.co",
-  description: "Plateforme innovante pour la gestion de vos projets"
+  title: {
+    template: '%s | Abricot.co', 
+    default: 'Abricot.co',
+  },
+  description:"App innovante"
 };
+
 
 export default function RootLayout({
   children,
