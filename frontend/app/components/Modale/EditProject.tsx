@@ -31,7 +31,6 @@ export function EditProject({closeModale,project,members}:
         const formdata = new FormData(e.currentTarget as HTMLFormElement)
         formdata.append("projectId",project.id)
         const response = await updateProject(formdata)
-        console.log(response);
         
         if (response?.success) {
             closeModale()
