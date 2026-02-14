@@ -1,6 +1,7 @@
 import {  useMemo } from "react";
 import { Input } from "../../Input/Input"
-import { CommentInterface } from "@/app/types/globals";
+import { CommentInterface, UserInterface } from "@/app/types/globals";
+import { CircleTag } from "../../Collaborators/CircleTag";
 
 export function Comment({
     comment,
@@ -10,7 +11,10 @@ export function Comment({
     deleteComment,
     onEditComment,
     commentToEdit,
-    closeEdit
+    closeEdit,
+    isCreator,
+    isUserCreator,
+    userInfo
 }:{
     comment:CommentInterface,
     wantsEdited:{id:string} | null,
@@ -19,33 +23,39 @@ export function Comment({
     deleteComment:(id:string)=>void,
     onEditComment:(e:React.FormEvent,id:string)=>void,
     commentToEdit:string,
-    closeEdit:()=>void
+    closeEdit:()=>void,
+    isCreator:boolean,
+    isUserCreator:boolean,
+    userInfo:UserInterface | null
 }){
  
     /**
-     * Check is the message was modified so add the correct due Date 
+     * Check if the message was modified so add the correct due Date 
      * @return date:string, isModified:boolean 
      */
-    const { date, isModified } = useMemo(() => {
+    const { date } = useMemo(() => {
         const created = new Date(comment.createdAt);
         const updated = new Date(comment.updatedAt);
         const modified = updated > created;
 
         return {
-          date: (modified ? updated : created).toLocaleDateString("fr-FR",{day:"numeric",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}),
-          isModified: modified
+          date: (modified ? updated : created).toLocaleDateString("fr-FR",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}),
         };
 
     }, [comment.createdAt, comment.updatedAt]);
       
 
     return (
-        <li key={comment.id} className="mt-5 border border-[#e5e7eb] rounded-[10px] p-5 max-md:flex max-md:flex-col max-md:gap-1 max-sm:px-3  max-sm:pt-3">
-                <span className="float-right text-[13px] text-gray-400">{isModified ? "Modifié" : "Envoyé"} le {date}</span>
-                <p className="font-semibold text-[16px]">{comment.author.name} </p>
+        <li key={comment.id} className="flex mt-[24px] gap-[14px]">
+             <CircleTag name={comment.author.name} isOwner={isCreator}/>
+              <div className=" border border-[#e5e7eb] rounded-[10px] h-[83px] px-[14px] py-[18px] max-md:flex max-md:flex-col max-md:gap-1 max-sm:px-3  max-sm:pt-3 w-full">
+                <div className="flex items-center justify-between">
+                  <p className="text-[14px] font-normal text-[#000000]">{comment.author.name} </p>
+                  <span className=" text-[10px] text-[#6B7280]"> {date.replace(" à",",")}</span>
+                </div>
+                { wantsEdited?.id !== comment.id && <p className="text-[#000000] text-[10px] pr-50 mt-[16px]  max-md:pr-0 break-all">{comment.content}</p>}
 
-                { wantsEdited?.id !== comment.id && <p className="text-[#6b7280] text-[14px] pr-50 pb-2  max-md:pr-0 break-all">{comment.content}</p>}
-
+           {  isUserCreator || comment.author.id === userInfo?.id &&  
                 <div className="float-right flex gap-4 self-end">
                   <button className="cursor-pointer" aria-label="supprimer le commentaire" onClick={()=>deleteComment(comment.id)}>
                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,7 +74,7 @@ export function Comment({
                       <path d="M13.1294 1.99777L11.605 0.473317C11.3018 0.170252 10.8907 0 10.462 0C10.0334 0 9.62225 0.170252 9.31909 0.473317L7.61035 2.18206L11.4207 5.99292L13.1299 4.28363C13.4329 3.98041 13.6031 3.56925 13.603 3.14059C13.6029 2.71193 13.4325 2.30085 13.1294 1.99777Z" fill="#6B7280"/>
                     </svg>
                   </button>
-                </div>
+                </div>}
 
               {wantsEdited?.id === comment.id && 
                 <div>
@@ -85,6 +95,7 @@ export function Comment({
                   </form>
                 </div>
               }
+               </div>
         </li>    
     )
 }

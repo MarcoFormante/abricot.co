@@ -121,7 +121,7 @@ export function ProjectTasks(
                         onChange={(e)=>onFilterChange("status",e.target.value)} 
                         name="status"
                         id="status"
-                        className={`min-h-[63px] h-[63px] max-w-[152px] pl-[32px] text-[14px]  w-[152px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280] ${filter?.type === "status" ? "border-2 border-[#ffe8d9] focus:outline-[#ffe8d9] " : ""}`}
+                        className={`cursor-pointer min-h-[63px] h-[63px] max-w-[152px] pl-[32px] text-[14px]  w-[152px] min-w-[152px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280] ${filter?.type === "status" ? "border-2 border-[#ffe8d9] focus:outline-[#ffe8d9] " : ""}`}
                     >
                         <option value="" className="text-[#6B7280]">Status</option>
                         <option value="TODO" className="text-[#6B7280]">à faire</option>
@@ -132,7 +132,8 @@ export function ProjectTasks(
                         <form className='relative w-[283px] max-md:w-full flex h-[63px]' onSubmit={(e)=>{
                             e.preventDefault()
                             onFilterChange("search",searchValue)
-                            }}>
+                        }}
+                        >
                             <Input 
                                 styles={filter?.type === "search" ? "outline-[#ffe8d9] border-2 border-[#ffe8d9]  " :""}
                                 type={"search"} 
