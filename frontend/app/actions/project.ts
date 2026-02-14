@@ -3,6 +3,7 @@
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
 import { ContributorInterface } from "../types/globals"
+import { NotAuthReturn } from "../utils/utils"
 
 /**
  * Get all assigned or user projects
@@ -27,7 +28,7 @@ export async function getProjects(){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -53,9 +54,8 @@ export async function getProjectByID(id:string){
                 "Authorization":"Bearer " + token
             }     
         })
-        const projectData = response.data
+        const projectData = response?.data
         
-
         const responseTasks = await axiosInstance.get(`projects/${id}/tasks`,{
             headers:{
                 "Authorization":"Bearer " + token
@@ -63,14 +63,14 @@ export async function getProjectByID(id:string){
         })
 
         return {
-            data:projectData.data.project,
+            data:projectData?.data?.project,
             success:true,
-            tasks:responseTasks.data.data.tasks
+            tasks:responseTasks?.data?.data?.tasks
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -109,7 +109,7 @@ export async function newProject(formdata:FormData,contributors:Array<string>){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -150,7 +150,7 @@ export async function updateProject(formdata:FormData){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -186,8 +186,7 @@ export async function addContributorToProject(contributor:string,projectId:strin
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-        console.log(error);
-        
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -225,7 +224,7 @@ export async function removeContributor(contributor:ContributorInterface,project
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 

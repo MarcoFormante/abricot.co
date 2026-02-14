@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
+import { NotAuthReturn } from "../utils/utils"
 
 /**
  * Send Task Comment
@@ -27,6 +28,8 @@ export async function sendMessage(comment:string,projectId:string,taskId:string)
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
+        NotAuthReturn(error?.response?.status)
+        
         return {
                 success: false,
                 status: error?.response?.status || 500, 
@@ -64,6 +67,7 @@ export async function deleteTaskComment(commentId:string,projectId:string,taskId
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
+        NotAuthReturn(error?.response?.status)
         return {
                 success: false,
                 status: error?.response?.status || 500, 
@@ -105,7 +109,7 @@ export async function updateTaskComment(commentId:string,projectId:string,taskId
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
-
+        NotAuthReturn(error?.response?.status)
         return {
                 success: false,
                 status: error?.response?.status || 500, 

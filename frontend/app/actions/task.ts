@@ -2,6 +2,7 @@
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
 import { TaskInterface } from "../types/globals"
+import { NotAuthReturn } from "../utils/utils"
 
 /**
  * Create Task
@@ -25,7 +26,8 @@ export async function createTask(task:TaskInterface){
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
+ 
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -62,6 +64,7 @@ export async function editTask(task:TaskInterface){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+        NotAuthReturn(error?.response?.status)
 
         return {
             success: false,
@@ -102,6 +105,7 @@ export async function deleteTask(projectID:string,taskID:string){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
+        NotAuthReturn(error?.response?.status)
 
         return {
             success: false,
@@ -123,7 +127,6 @@ export async function createTasksWithAI(text:string){
         body: JSON.stringify({ prompt: text }),
         headers: { "Content-Type": "application/json" },
         });
-        console.log(response);
         
         if (!response.ok) {
             return {
@@ -136,7 +139,11 @@ export async function createTasksWithAI(text:string){
             success:true,
             data: await response.json()
         }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
+
+        NotAuthReturn(error?.response?.status)
+
          return {
             success:false,
             status:error?.status

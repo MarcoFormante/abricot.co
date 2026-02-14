@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
+import { NotAuthReturn } from "../utils/utils"
 
 /**
  * Get Users
@@ -21,7 +22,7 @@ export async function getUsers(){
 
      // eslint-disable-next-line @typescript-eslint/no-explicit-any
      } catch (error:any){
-
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 

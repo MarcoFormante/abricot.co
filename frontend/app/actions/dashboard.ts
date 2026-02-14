@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
-import { redirect } from "next/navigation"
+import { NotAuthReturn } from "../utils/utils"
 
 /**
  * Get Assigned Tasks for Dashboard page
@@ -27,8 +27,8 @@ export default async function getDashboardTasks(){
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
-        console.log(error.response.status);
-        return redirect("/")
+        NotAuthReturn(error?.response?.status)
+
         return {
             success: false,
             status: error?.response?.status || 500, 
