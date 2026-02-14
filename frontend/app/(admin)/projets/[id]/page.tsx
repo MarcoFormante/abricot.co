@@ -19,16 +19,11 @@ export default async function SingleProject({
   params: Promise<{ id: string }>;
 }) {
   const param = await params;
-  const project = await getProjectByID("sd");
-  let userParsed
+  const project = await getProjectByID(param?.id);
 
-  try {
-    const userInfo =(await cookies()).get("user_info")?.value
-    userParsed = JSON.parse(userInfo as string)
-  } catch (error) {
-    notFound()
-  }
-  
+  const userInfo =(await cookies()).get("user_info")?.value
+  const userParsed = JSON.parse(userInfo as string)
+ 
 
   if (!project.data) {
     notFound()
