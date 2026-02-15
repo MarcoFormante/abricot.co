@@ -1,4 +1,4 @@
-import jwt, { SignOptions } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types";
 
 /**
@@ -20,7 +20,7 @@ export const generateToken = (userId: string, email: string): string => {
     throw new Error("JWT_SECRET is not defined in environment variables");
   }
 
-  // @ts-ignore - Ignorer l'erreur TypeScript pour jwt.sign
+  // @ts-expect-error - Ignorer l'erreur TypeScript pour jwt.sign
   return jwt.sign(payload, secret, { expiresIn });
 };
 

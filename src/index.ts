@@ -11,8 +11,6 @@ import authRoutes from "./routes/authRoutes";
 import projectRoutes from "./routes/projectRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
 import { searchUsers } from "./controllers/projectController";
-import taskRoutes from "./routes/taskRoutes";
-import commentRoutes from "./routes/commentRoutes";
 
 // Middleware
 import { authenticateToken } from "./middleware/auth";
@@ -135,9 +133,7 @@ app.use("*", (req, res) => {
 app.use(
   (
     error: any,
-    req: express.Request,
     res: express.Response,
-    next: express.NextFunction
   ) => {
     console.error("Erreur serveur:", error);
 

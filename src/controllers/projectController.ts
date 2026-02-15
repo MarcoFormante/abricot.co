@@ -12,7 +12,6 @@ import {
 } from "../utils/validation";
 import {
   hasProjectAccess,
-  isProjectAdmin,
   isProjectOwner,
   canModifyProject,
   canDeleteProject,

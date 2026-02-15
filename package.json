@@ -4,15 +4,16 @@
   "description": "API REST avec authentification utilisateur - Node.js + Express + TypeScript + Prisma",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
+    "build": "tsc & next build",
+    "start": "node dist/index.js & next start",
+    "dev": "concurrently \"tsx watch src/index.ts\" \"next dev\"",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "seed": "ts-node scripts/seed.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint"
   },
   "keywords": [
     "nodejs",
@@ -27,8 +28,10 @@
   "dependencies": {
     "@google/genai": "^1.41.0",
     "@prisma/client": "^5.7.1",
+    "@prisma/config": "^7.4.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "axios": "^1.13.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.6",
     "dotenv": "^17.2.1",
@@ -36,19 +39,31 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "next": "^16.1.6",
     "prisma": "^5.7.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "sass": "^1.97.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.10.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^9.2.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.4",
     "nodemon": "^3.0.2",
+    "tailwindcss": "^4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "tsx": "^4.21.0",
+    "typescript": "^5"
   }
 }
