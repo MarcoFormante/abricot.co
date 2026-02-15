@@ -26,7 +26,7 @@ export function TaskKanban({tasks}:{tasks:[]}){
             <div className="bg-[#FFFFFF] border border-[#FFE0E0] w-[419px] min-h-[30vh] pt-[40px] px-[24px] rounded-[10px] max-sm:px-[12px]">
                 <div>
                     <h3 className="text-[18px] font-semibold max-w-max inline manrope-600">À faire</h3>
-                    <span className="bg-[#E5E7EB] text-[#6B7280] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]"> {filteredTasks?.toDo?.length}</span>
+                    <span className="bg-[#E5E7EB] text-[#5F6772] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]"> {filteredTasks?.toDo?.length}</span>
                 </div>
 
                 {/** TO DO LIST */}
@@ -41,7 +41,7 @@ export function TaskKanban({tasks}:{tasks:[]}){
             <div className="bg-[#FFFFFF] border border-[#FFE0E0] w-[419px] min-h-[30vh] pt-[40px] px-[24px] rounded-[10px]">
                 <div>
                     <h3 className="text-[18px] font-semibold max-w-max inline manrope-600">En cours</h3>
-                    <span className="bg-[#E5E7EB] text-[#6B7280] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]">{filteredTasks?.inProgress.length}</span>
+                    <span className="bg-[#E5E7EB] text-[#5F6772] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]">{filteredTasks?.inProgress.length}</span>
                 </div>
 
                    {/** IN_PROGRESS LIST */}
@@ -56,7 +56,7 @@ export function TaskKanban({tasks}:{tasks:[]}){
              <div className="bg-[#FFFFFF] border border-[#FFE0E0] w-[419px] min-h-[30vh] pt-[40px] px-[24px] rounded-[10px]">
                 <div>
                     <h3 className="text-[18px] font-semibold max-w-max inline manrope-600">Terminées</h3>
-                    <span className="bg-[#E5E7EB] text-[#6B7280] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]">{filteredTasks?.done.length}</span>
+                    <span className="bg-[#E5E7EB] text-[#5F6772] py-[4px] px-[16px] w-[41px] h-[25px] rounded-[50px] ml-[8px] text-[14px]">{filteredTasks?.done.length}</span>
                 </div>
 
                   {/** DONE LIST */}

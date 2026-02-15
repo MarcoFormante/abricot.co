@@ -10,6 +10,10 @@ export async function proxy(request: NextRequest) {
   if ((!userInfo || !token) && !authPaths.includes(request.nextUrl.pathname)) {
        return NextResponse.redirect(new URL('/', request.url))
   }
+
+  if (!userInfo?.value.startsWith("{") && !authPaths.includes(request.nextUrl.pathname)) {
+      return NextResponse.redirect(new URL('/', request.url))
+  }
   
   const headers = new Headers(request.headers);
   headers.set("x-current-path", request.nextUrl.pathname);

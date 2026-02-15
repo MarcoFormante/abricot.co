@@ -11,9 +11,9 @@ export function ProjectContributors({members,owner}:{
       <section className="px-[112px] max-lg:px-5 max-sm:px-2">
         <div className="bg-[#F3F4F6] mt-[49px] py-[21px] px-[50px] rounded-[10px] flex justify-between max-sm:px-2 max-[1200px]:flex-col max-md:gap-2 max-lg:px-5" >
           <div>
-            <p className="text-[#1F1F1F] text-[18px] manrope-600">
+            <p className="text-[#686F7D] text-[18px] manrope-600">
               Contributeurs
-              <span className="text-[#6B7280] ml-[8px]">{`${members.length} personnes`}</span>
+              <span className="text-[#686F7D] ml-[8px]">{`${members.length} personnes`}</span>
             </p>
           </div>
           <div>

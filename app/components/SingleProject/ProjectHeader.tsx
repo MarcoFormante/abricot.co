@@ -49,7 +49,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
               <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600">
                 {name}
               </h1>
-             {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#D3590B] text-[14px] underline">
+             {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#BD4F0A] text-[14px] underline">
                 Modifier
               </button>}
             </div>

@@ -13,13 +13,13 @@
 }
 
 .btn-grey {
-  background-color: #E5E7EB;
-  color: #9CA3AF;
+  background-color: #EEEEF2;
+  color: #626D7A;
 }
 
 .btn-white {
   background-color: #FFFFFF;
-  color: #D3590B;
+  color: #B34B09;
   border-color: #D3590B;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .btn-orange {
-  background-color: #D3590B;
+  background-color: #C2510A;
   color: #FFFFFF;
 }
 
@@ -48,7 +48,7 @@
   gap: 16px;
   cursor: pointer;
   background-color: #FFFFFF;
-  color: #D3590B;
+  color: #B34B09;
   font-size: 14px;
 }
 .switchBtn.switchActive {

@@ -37,7 +37,7 @@ export function Header(){
                              />
                         </Link>
                     </li>
-                    <li className={`flex items-center text-[#D3590B] ${menuIsOpen ? "max-lg:flex-col max-lg:gap-20" : "max-lg:hidden"}`}>
+                    <li className={`flex items-center text-[#BD4F0A] ${menuIsOpen ? "max-lg:flex-col max-lg:gap-20" : "max-lg:hidden"}`}>
                         <MenuItem
                            label="Tableau de bord"
                            imgClass="svgTbord"
@@ -55,7 +55,7 @@ export function Header(){
                         />
                     </li>
                     <li>
-                        <Link href={"/mon-compte"} onClick={closeMenu} className={`w-[65px] h-[65px] uppercase  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#D3590B] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
+                        <Link href={"/mon-compte"} onClick={closeMenu} className={`w-[65px] h-[65px] uppercase  block flex justify-center items-center rounded-[32.5px] text-[14px] text-[#0F0F0F] ${pathname === "/mon-compte" ? "bg-[#C2510A] text-[#FFFFFF]" : "bg-[#FFE8D9]"}`}>
                             {
                             user?.name.split(" ")[0][0] && 
                                 <span>{user?.name.split(" ")[1]}</span> ?

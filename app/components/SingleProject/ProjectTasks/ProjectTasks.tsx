@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useCallback, useEffect, useState } from "react";
+import {  useCallback, useEffect, useState } from "react";
 import { SwitchButton } from "../../Button/SwitchButton";
 import { Input } from "../../Input/Input";
 import { EditTask } from "../../Modale/EditTask";
@@ -25,14 +25,7 @@ export function ProjectTasks(
     }
 ){
 
-    if (!tasks) {
-        return <Loader/>
-    }
-
-    if (tasks.length === 0) {
-         return <p className="text-center font-semibold text-xl mt-20">{"Aucune tache trouvée"}</p>
-    }
-
+    
     const [projectTasks,setProjectsTasks] = useState<TaskInterface[]>([])
     const [showModale,setShowModale] = useState<{type:string,task?:TaskInterface}>({type:""})
     const [searchValue,setSearchValue] = useState("")
@@ -90,7 +83,8 @@ export function ProjectTasks(
     const filteredTasks = getFilteredTasks()
 
 
-    /**
+
+     /**
      * Show Modale for task editing
      * @param task 
      */
@@ -107,6 +101,17 @@ export function ProjectTasks(
         setProjectsTasks(tasks);
     }, [tasks]);
     
+
+
+
+    if (!tasks) {
+        return <Loader/>
+    }
+
+    if (tasks.length === 0) {
+         return <p className="text-center font-semibold text-xl mt-20">{"Aucune tache trouvée"}</p>
+    }
+
 
     
 

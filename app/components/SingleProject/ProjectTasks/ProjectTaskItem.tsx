@@ -58,8 +58,14 @@ export function ProjectTaskItem(
           },3000)
 
           return () => clearTimeout(timeout)
+      }else{
+        return
       }
     },[showButtons])
+
+    useEffect(()=>{
+
+    },[])
     
     
     return !deleted && (

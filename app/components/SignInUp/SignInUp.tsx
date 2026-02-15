@@ -20,7 +20,7 @@ export function SignInUp({isRegisterPage}:{
                 <p className="text-[14px]">
                     {isRegisterPage ? "Déjà inscrit ?" : "Pas encore de compte ?"}
                     <Link 
-                        className="text-[#D3590B] underline underline-offset-3 ml-2 font-inter" 
+                        className="text-[#BD4F0A] underline underline-offset-3 ml-2 font-inter" 
                         href={isRegisterPage ? "/" :  "/inscription"}>
                         {isRegisterPage ? "Se connecter" :" Créer un compte" }
                     </Link></p> 
