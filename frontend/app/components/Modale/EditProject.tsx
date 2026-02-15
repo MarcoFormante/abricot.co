@@ -105,7 +105,7 @@ export function EditProject({closeModale,project,members}:
     
     return (
         <div className="flex flex-col gap-[40px]">
-            <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Modifier un projet</h5>
+            <h5 className="font-semibold text-[24px] text-[#1F1F1F] manrope-600">Modifier un projet</h5>
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
                 <Input type='text' name='name' label='Nom*' gap='6px' required value={project?.name || ""}/>
                 <Input type='text' name='description' label='Description*' gap='6px' required  value={project?.description || ""}/>

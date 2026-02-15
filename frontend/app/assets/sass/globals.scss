@@ -1,7 +1,4 @@
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 .searchSvg{
     background-image: url("../search.svg");
@@ -120,11 +117,21 @@ option:hover{
   }
 }
 
-//MOBILE
 
-.hero-img-container{
-  @media screen and (max-width: 1300px) {
-     
-  }
+
+
+@mixin manrope($weight){
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: $weight;
+  font-style: normal;
 }
 
+
+.manrope-700{
+  @include manrope(700)
+}
+
+.manrope-600{
+  @include manrope(600)
+}

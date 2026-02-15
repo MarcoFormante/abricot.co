@@ -68,7 +68,7 @@ export function NewTaskAI({
         <div>
             { taskToEdit?.id && 
                 <div>
-                    <button title="Retour à la creation des taches avec l'AI"
+                    <button title="Retour à la creation des taches avec l'AI manrope-600"
                      onClick={closeNewTask} 
                      className="w-[32px] h-[32px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer"
                      >

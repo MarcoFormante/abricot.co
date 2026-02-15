@@ -103,7 +103,7 @@ export function ProjectTasks(
     <section className="mt-[34px] border border-[#E5E7EB] bg-[#FFFFFF] py-[40px] max-w-[1240px] m-auto"> 
         <div className="px-[59px] flex justify-between items-center max-lg:flex-col max-lg:items-start max-lg:gap-2 max-lg:px-5 max-md:flex-col max-sm:px-2">
             <div className="flex flex-col gap-[8px] ">
-                <h2 className="text-[18px] text-[#1F1F1F]">Tâches</h2>
+                <h2 className="text-[18px] text-[#1F1F1F] manrope-600">Tâches</h2>
                 <p className="text-[#6B7280]">Par ordre de priorité</p>
             </div>
             <div className="flex items-center gap-[16px] max-md:flex-col max-md:items-start">

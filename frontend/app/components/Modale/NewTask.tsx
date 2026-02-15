@@ -102,7 +102,7 @@ export function NewTask({members,closeModale,aiTask,deleteAiTaskAfterSuccess}:
 
     return (
         <div className="flex flex-col gap-[46px] max-md:gap-[12px]">
-            <h5 className="font-semibold text-[24px] text-[#1F1F1F]">Créer une tâche</h5>
+            <h5 className="font-semibold text-[24px] text-[#1F1F1F] manrope-600">Créer une tâche</h5>
 
             <form onSubmit={onSubmit} className='flex flex-col gap-[24px]'>
                 <Input type='text' name='title' label='Title*' gap='6px' required  value={aiTask?.title ?? ""}/>

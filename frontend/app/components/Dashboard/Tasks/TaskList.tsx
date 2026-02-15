@@ -41,7 +41,7 @@ export function TaskList({tasks}:{tasks:any[]}){
         <section className='mt-[30px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px]'>
             <div className='pt-[40px]  px-[59px] max-md:px-10 max-sm:px-3 flex justify-between max-lg:flex-col max-lg:gap-5 '>
                 <div className='flex flex-col gap-[8px]'>
-                    <h2 className='font-semibold text-[18px]'>Mes tâches assignées</h2>
+                    <h2 className='font-semibold text-[18px] manrope-600'>Mes tâches assignées</h2>
                     <p className='text-[#6B7280]'>Par ordre de priorité</p>
                 </div>
                 <div className='self-center max-md:w-full md:self-end '>

@@ -11,7 +11,7 @@ export function Project({project}:{project:ProjectInterface}) {
       <Link href={`projets/${project.id}`}>
       <div className="flex flex-col gap-[56px]">
         <div className="flex flex-col gap-[2px]">
-          <h2 className="font-semibold text-[18px]">{project.name}</h2>
+          <h2 className="font-semibold text-[18px] manrope-600">{project.name}</h2>
           <p className="text-[14px] text-[#6B7280] max-h-[42px]">
             {
               project.description

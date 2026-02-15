@@ -1,7 +1,4 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 .searchSvg {
   background-image: url("../search.svg");
   width: 14px;
@@ -111,4 +108,17 @@ option:hover {
   to {
     rotate: 360deg;
   }
+}
+.manrope-700 {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.manrope-600 {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }/*# sourceMappingURL=globals.css.map */

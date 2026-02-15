@@ -1,2 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-inter: var(--font-inter), ui-sans-serif, system-ui;
+  
+  --font-manrope: var(--font-manrope), sans-serif;
+}
+
+
+

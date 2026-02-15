@@ -67,7 +67,7 @@ export function ProjectTaskItem(
                   <div className="flex items-start justify-between max-md:flex-col-reverse">
                     <div className="flex flex-col gap-[7px]">
                       <div className="flex gap-[8px] max-md:flex-col-reverse">
-                        <h3 className="text-[18px] font-semibold text-[#000000]">{task.title}</h3>
+                        <h3 className="text-[18px] font-semibold text-[#000000] manrope-600">{task.title}</h3>
                         <Tag type={task.status}/>
                       </div>
                       <p className="text-[#6B7280] text-[14px]">{task.description}</p>

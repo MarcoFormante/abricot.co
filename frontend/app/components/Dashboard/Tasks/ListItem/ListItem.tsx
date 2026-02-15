@@ -10,7 +10,7 @@ export function ListItem({task}:{task:TaskInterface}) {
       <div className="flex justify-between md:h-[112px] max-md:flex-col">
         <div className="flex flex-col gap-[32px]">
           <div className="flex flex-col gap-[7px]">
-            <h3 className="text-[18px] font-semibold">{task.title}</h3>
+            <h3 className="text-[18px] font-semibold manrope-600">{task.title}</h3>
             <p className="text-[14px] text-[#6B7280]">
               {task.description}
             </p>

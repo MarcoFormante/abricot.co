@@ -46,7 +46,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
           </button>
           <div className="flex flex-col gap-[20px]">
             <div className="flex items-center gap-[14px] mt-[4px]  max-sm:items-start max-sm:flex-col-reverse">
-              <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%]">
+              <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600">
                 {name}
               </h1>
              {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#D3590B] text-[14px] underline">

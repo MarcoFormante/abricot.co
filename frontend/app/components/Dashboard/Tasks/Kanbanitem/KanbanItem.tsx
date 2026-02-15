@@ -9,7 +9,7 @@ export function KanbanItem({task}:{task:TaskInterface}) {
     <li className="py-[25px] px-[20px] border border-[#E5E7EB] rounded-[10px] flex flex-col gap-[32px] md:w-[371px] ">
       <div className="flex justify-between max-md:flex-col max-md:gap-5">
         <div className="flex flex-col gap-[1px]">
-          <h4 className="text-[18px] font-semibold max-w-max inline">
+          <h4 className="text-[18px] font-semibold max-w-max inline manrope-600">
             {task.title}
           </h4>
           <p className="text-[14px] text-[#6B7280]">{task.description}</p>

@@ -15,7 +15,7 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
     /**
      * Handle Login and Register action
      * @param e Form Event
-     * @returns 
+     * @returns void
      */
     const submitForm = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -49,7 +49,7 @@ export function ConnectionForm({isRegisterPage}:{isRegisterPage:boolean}){
 
     return (
         <div className="w-70.5 flex flex-col gap-7.5">
-            <h1 className="text-[#D3590B] font-bold text-[40px] text-center">{isRegisterPage ? "Inscription" : "Connexion"}</h1>
+            <h1 className="text-[#D3590B] font-bold text-[40px] text-center manrope-700">{isRegisterPage ? "Inscription" : "Connexion"}</h1>
             <div>
                  <div className="flex flex-col pb-3  text-red-700">
                         {formErrors && Array.isArray(formErrors)
