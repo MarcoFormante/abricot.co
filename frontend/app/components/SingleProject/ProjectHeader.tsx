@@ -29,7 +29,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
     return (
       <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end max-lg:px-5 max-lg:mt-5 max-lg:flex-col max-lg:gap-10 max-sm:px-2">
         <div className="flex gap-[16px] max-lg:flex-col w-full">
-          <button onClick={navigateBack} className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
+          <button onClick={navigateBack} aria-label="retour" className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
             <svg
               aria-hidden="true"
               width="16"

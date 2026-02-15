@@ -53,7 +53,7 @@ export function TaskList({tasks}:{tasks:any[]}){
                                 placeholder={"Rechercher une tâche"}
                                 onChange={onInputChange}
                             />
-                            <button className='searchSvg' onClick={filterBySearchValue}></button>
+                            <button className='searchSvg' aria-label="Rechercher" onClick={filterBySearchValue}></button>
                         </div>
                     </form>
                 </div>

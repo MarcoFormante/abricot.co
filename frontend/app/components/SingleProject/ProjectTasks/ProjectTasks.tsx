@@ -117,6 +117,7 @@ export function ProjectTasks(
                     
                 </div>
                 <div className="flex items-center gap-[16px] max-sm:flex-wrap w-full ">
+                    <label htmlFor="status" className="outScreen">Rechercher avec le Status</label>
                     <select 
                         onChange={(e)=>onFilterChange("status",e.target.value)} 
                         name="status"

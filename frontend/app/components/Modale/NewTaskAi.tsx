@@ -151,7 +151,7 @@ export function NewTaskAI({
             </div>
 
             <form onSubmit={onSubmit}>
-                <label className="out-screen" htmlFor="ai-text">Décrivez les tâches que vous souhaitez ajouter...</label>
+                <label className="outScreen" htmlFor="aiText">Décrivez les tâches que vous souhaitez ajouter...</label>
                 <AiInput/>
             </form>
             <p className="text-center text-sm">Requêtes restantes : {maxAiRequests}</p>

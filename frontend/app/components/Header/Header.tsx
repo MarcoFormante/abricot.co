@@ -29,6 +29,7 @@ export function Header(){
                 <ul className={`flex items-center h-[94px] justify-between max-lg:w-full max-lg:items-center ${menuIsOpen ? "max-lg:fixed max-lg:left-0 max-lg:top-0 max-lg:w-full max-lg:h-[100vh] max-lg:bg-[#FFFFFF] max-lg:z-10 max-lg:flex-col max-lg:flex max-lg:items-center-safe  max-lg:justify-center-safe max-lg:gap-20 " : "flex items-center h-[94px] justify-between max-lg:w-full max-lg:items-center"}`}>
                     <li>
                         <Link href={"/dashboard"} onClick={closeMenu}>
+                            <p className="hidden">Abricot</p>
                             <Logo 
                                 fill={"#D3590B"}
                                 width="147"
@@ -64,7 +65,7 @@ export function Header(){
                         </Link>
                     </li>
                 </ul>
-                <button className={`cursor-pointer z-30 lg:hidden ${menuIsOpen ? "absolute right-5 top-5" : ""}`} onClick={()=>setMenuIsOpen(!menuIsOpen)}>
+                <div role="button" className={`cursor-pointer z-30 lg:hidden ${menuIsOpen ? "absolute right-5 top-5" : ""}`} onClick={()=>setMenuIsOpen(!menuIsOpen)}>
                   {  !menuIsOpen ?
                         <div className="flex flex-col w-8 h-8 justify-around">
                             <span className="border"></span>
@@ -78,7 +79,7 @@ export function Header(){
                             </svg>
                         </div>
                     }
-                </button>
+                </div>
             </nav>
           
         </header>

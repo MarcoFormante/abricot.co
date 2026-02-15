@@ -28,6 +28,9 @@ export function Comment({
     isUserCreator:boolean,
     userInfo:UserInterface | null
 }){
+
+  console.log(isUserCreator,comment.author.id === userInfo?.id);
+  
  
     /**
      * Check if the message was modified so add the correct due Date 
@@ -55,7 +58,7 @@ export function Comment({
                 </div>
                 { wantsEdited?.id !== comment.id && <p className="text-[#000000] text-[10px] pr-50 mt-[16px]  max-md:pr-0 break-all">{comment.content}</p>}
 
-           {  isUserCreator || comment.author.id === userInfo?.id &&  
+           {  comment.author.id === userInfo?.id &&  
                 <div className="float-right flex gap-4 self-end">
                   <button className="cursor-pointer" aria-label="supprimer le commentaire" onClick={()=>deleteComment(comment.id)}>
                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +83,7 @@ export function Comment({
                 <div>
                   <form className="mt-[20px] mb-5" onSubmit={(e)=>onEditComment(e,comment.id)}>
                     <div className="w-full relative">
-                      <label htmlFor="editComment">Modifier le commentaire</label>
+                      <label htmlFor="comment">Modifier le commentaire</label>
                       <textarea  rows={4} value={commentToEdit} onChange={(e)=>setCommentToEdit(e.target.value)} name="comment" id="comment" className="border border-[#e5e7eb] rounded-[10px] p-5 w-full text-[10px] min-h-[83px] pr-25" placeholder="Ajouter un commentaire..."></textarea>
                       <div className="absolute  right-[20px] top-[45%] flex items-center gap-2">
                         <button aria-label="envoyer" className="cursor-pointer rounded-[5px] ">

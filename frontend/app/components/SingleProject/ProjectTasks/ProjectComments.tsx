@@ -129,6 +129,7 @@ export function ProjectComments({comments,task}:
               <form className="mt-[20px] mb-5 w-full" onSubmit={onSendMessage}>
                 <div className="flex w-full gap-[14px]">
                   <CircleTag name={userInfo?.name} isOwner={userInfo?.id === task.creatorId}/>
+                  <label htmlFor="comment" className="outScreen">Envoyer un message</label>
                   <textarea onChange={(e)=>setComment(e.target.value)} rows={4} value={comment} name="comment" id="comment" className="border border-[#e5e7eb] rounded-[10px] p-5 w-full text-[10px] min-h-[83px]" placeholder="Ajouter un commentaire..."></textarea>
                 </div> 
                 <div className="w-[209px] h-[50px] float-right mt-4">
@@ -139,7 +140,7 @@ export function ProjectComments({comments,task}:
             }
         </div>
 
-        <button className="cursor-pointer w-[32px] h-[32px] relative top-2" onClick={()=>setShowComments(!showComments)}>
+        <button aria-label="Lire les commentaires" className="cursor-pointer w-[32px] h-[32px] relative top-2" onClick={()=>setShowComments(!showComments)}>
           <svg
             width="17"
             height="10"
