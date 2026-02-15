@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import axiosInstance from "../lib/axiosInstance"
 import { TaskInterface } from "../types/globals"
 import { NotAuthReturn } from "../utils/utils"
+import { error } from "console"
 
 /**
  * Create Task
@@ -129,19 +130,35 @@ export async function createTasksWithAI(text:string){
         });
         
         if (!response.ok) {
-            return {
-                success:false,
-                status:response.status
+            const json = await response.json() 
+            if(json.apiKeyError){
+                    return {
+                    success:false,
+                    status:response.status,
+                    apiKeyError:json.apiKeyError
+                }
+            }else{
+                return {
+                    success:false,
+                    status:response.status,
+                }
             }
+            
         }
 
         return {
             success:true,
-            data: await response.json()
+            data: await response.json(),
         }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
-
+        if (error?.apiKeyError) {
+             return {
+                success:false,
+                status:error?.status,
+                message:error.apiKeyError
+        }
+        }
         NotAuthReturn(error?.response?.status)
 
          return {

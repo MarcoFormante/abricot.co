@@ -46,7 +46,8 @@ export function NewTaskAI({
             setTasks(AIResponse.data?.tasks)
             setLoading(false)
         }else{
-            const alertMessage = AIResponse?.status == 429 ? "Limite quotidienne atteinte. Réessayez demain." : "Une Erreur est survenue" 
+            
+            const alertMessage = AIResponse?.apiKeyError ?  AIResponse?.apiKeyError :   AIResponse?.status == 429 ? "Limite quotidienne atteinte. Réessayez demain." : "Une Erreur est survenue" 
             setAlert({type:"error",message:alertMessage})
             setLoading(false)
         }

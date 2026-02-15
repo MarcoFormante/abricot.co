@@ -10,6 +10,12 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req:NextRequest) {
     
   try {
+    if (!process.env.GEMINI_API_KEY) {
+        throw new Error("Desolé, le API KEY est privé, je vous montre cette partie pendant la soutenance ou vous pouvez créé un compte sur google Ai Studio et recuperer une api key, puis la mettre dans frontend/env.local, variable: GEMINI_API_KEY",{
+          cause:"apikey"
+        });
+        
+    }
     const { prompt } = await req.json();
     const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
 
@@ -38,7 +44,9 @@ export async function POST(req:NextRequest) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error:any) {
-    
+    if(error?.cause){
+       return NextResponse.json({ apiKeyError: error.message }, { status: error?.status || 500 });
+    }
     return NextResponse.json({ error: "Erreur API" }, { status: error?.status || 500 });
   }
 }
