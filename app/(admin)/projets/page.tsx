@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AdminMainTitle } from "@/app/components/Dashboard/AdminMainTitle/AdminMainTitle";
 import { Project } from "@/app/components/Project/Project";
 import { getProjects } from "@/app/actions/project";
 import { CreateProjectButton } from "@/app/components/Dashboard/CreateProjectButton/CreateProjectButton";
 import { Metadata } from "next";
+import { ProjectInterface } from "@/app/types/globals";
 
 
 export const metadata: Metadata = {
   title: 'Mes Projets',
+  description:"Accédez à la liste de vos projets collaboratifs. Gérez vos équipes, suivez l'avancement des tâches et organisez vos priorités en tant qu'administrateur ou contributeur."
 };
 
 export default async function Projets(){
@@ -22,7 +23,7 @@ export default async function Projets(){
 
             <section className="mt-[64px]">
                 <ul className="grid grid-cols-3 max-[1280px]:grid-cols-2 max-[1280px]:place-items-center gap-[14px]  text-[#1F1F1F] max-md:grid-cols-1 ">
-                    {data.projects && data.projects.map((project:any)=>
+                    {data.projects && data.projects.map((project:ProjectInterface)=>
                         <Project key={project.id} project={project}/>
                     )}
                 </ul>

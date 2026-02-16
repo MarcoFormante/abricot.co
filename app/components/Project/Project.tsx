@@ -11,10 +11,10 @@ export function Project({project}:{project:ProjectInterface}) {
       <Link href={`projets/${project.id}`}>
       <div className="flex flex-col gap-[56px]">
         <div className="flex flex-col gap-[2px]">
-          <h2 className="font-semibold text-[18px] manrope-600">{project.name}</h2>
-          <p className="text-[14px] text-[#6B7280] max-h-[42px]">
+          <h2 className="font-semibold text-[18px] manrope-600 pr-[10px] wrap-break-word">{ project?.name?.length > 50 ? project.name.slice(0,50) + "..." : project.name}</h2>
+          <p className="text-[14px] text-[#6B7280] max-h-[42px] pr-[10px] max-w-90% wrap-break-word">
             {
-              project.description
+              (  project?.description && project?.description?.length > 120 )? project?.description.slice(0,120) + "..." : project?.description 
             }
           </p>
         </div>

@@ -10,9 +10,15 @@ import { Metadata } from "next";
 import { Forbidden } from "@/app/components/SingleProject/Forbidden";
 
 
-export const metadata: Metadata = {
-  title: 'Details du projet',
-};
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const param = await params;
+  const project = await getProjectByID(param.id);
+  
+  return {
+    title: project?.data?.name || 'Detail du Projet',
+    description: project?.data?.description || 'Détails et gestion des tâches du projet.',
+  };
+}
 
 export default async function SingleProject({
   params,
