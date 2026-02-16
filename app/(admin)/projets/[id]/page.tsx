@@ -5,8 +5,9 @@ import { ProjectContributors } from "@/app/components/SingleProject/ProjectContr
 import { ProjectTasks } from "@/app/components/SingleProject/ProjectTasks/ProjectTasks";
 import {getProjectByID} from "@/app/actions/project";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { forbidden, notFound } from "next/navigation";
 import { Metadata } from "next";
+import { Forbidden } from "@/app/components/SingleProject/Forbidden";
 
 
 export const metadata: Metadata = {
@@ -23,7 +24,10 @@ export default async function SingleProject({
 
   const userInfo =(await cookies()).get("user_info")?.value
   const userParsed = JSON.parse(userInfo as string)
- 
+
+  if (project.status === 403) {
+      return <Forbidden/>
+  }
 
   if (!project.data) {
     notFound()
