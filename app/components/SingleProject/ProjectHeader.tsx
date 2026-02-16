@@ -29,7 +29,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
     return (
       <div className="mt-[78px] pl-[44px] flex justify-between pr-[113px] items-end max-lg:px-5 max-lg:mt-5 max-lg:flex-col max-lg:gap-10 max-sm:px-2">
         <div className="flex gap-[16px] max-lg:flex-col w-full">
-          <button onClick={navigateBack} aria-label="retour" className="w-[57px] h-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
+          <button onClick={navigateBack} aria-label="retour" className="w-[57px] h-[57px] min-w-[57px] rounded-[10px] border border-[#E5E7EB] bg-[#FFFFFF] flex justify-center items-center cursor-pointer">
             <svg
               aria-hidden="true"
               width="16"
@@ -44,16 +44,16 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
               />
             </svg>
           </button>
-          <div className="flex flex-col gap-[20px]">
-            <div className="flex items-center gap-[14px] mt-[4px]  max-sm:items-start max-sm:flex-col-reverse">
-              <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600">
+          <div className="flex flex-col gap-[20px] min-lg:w-[50vw] max-lg:w-[80vw]">
+            <div className="flex items-center gap-[14px] mt-[4px]  max-sm:items-start max-sm:flex-col-reverse min-lg:w-[50vw] max-lg:w-[80vw]">
+              <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600 wrap-break-word min-lg:w-[50vw] max-lg:w-[80vw]">
                 {name}
               </h1>
              {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#BD4F0A] text-[14px] underline">
                 Modifier
               </button>}
             </div>
-            <p className="leading-[100%] text-[18px] text-[#6B7280] max-lg:pr-2">{description}</p>
+            <p className="leading-[100%] text-[18px] text-[#6B7280] max-lg:pr-2 min-lg:max-w-[60vw] wrap-break-word pr-20">{description}</p>
           </div>
         </div>
 
