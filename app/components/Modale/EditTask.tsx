@@ -127,6 +127,21 @@ export function EditTask({task,members,setShowModale}:
                                 </option> 
                             )
                         }
+
+                        {
+                            (task.assignees && task.assignees?.length) && 
+                                task.assignees?.map((m:TaskUserAssigned)=> 
+                                !members.find((coll) => coll.user.id === m.user.id ) && 
+                                <option 
+                                    data-selected={selectedUsers?.includes(m.user.id)}  
+                                    key={m.id} 
+                                    value={m.user.id} 
+                                    className="text-[#6B7280]"
+                                    >{m.user.name}
+                                </option> 
+                            )
+                        }
+                        
                     </select>   
                 </div>
 
