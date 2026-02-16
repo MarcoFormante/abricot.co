@@ -93,8 +93,16 @@ export async function getProjectByID(id:string){
  */
 export async function newProject(formdata:FormData,contributors:Array<string>){
     const token = (await cookies()).get("auth_token")?.value || ""
-    const name = formdata.get("name")
-    const description = formdata.get("description")
+    const name = formdata.get("name") as string
+    const description = formdata.get("description") as string
+    
+    if (description?.length > 255) {
+       return {
+        success: false,
+        status: 400, 
+        errorMessage: "La description est trop longue (maximum 255 caractères)."
+        }
+    }
     
     try {
         const response = await axiosInstance.post("projects",{name,description,contributors},{
@@ -132,9 +140,17 @@ export async function newProject(formdata:FormData,contributors:Array<string>){
 export async function updateProject(formdata:FormData){
     const token = (await cookies()).get("auth_token")?.value || ""
 
-    const name = formdata.get("name")
-    const description = formdata.get("description")
+    const name = formdata.get("name") as string
+    const description = formdata.get("description") as string
     const id = formdata.get("projectId")
+
+    if (description?.length > 255) {
+       return {
+        success: false,
+        status: 400, 
+        errorMessage: "La description est trop longue (maximum 255 caractères)."
+        }
+    }
 
     try {
         const response = await axiosInstance.put(`projects/${id}`,{name,description},{
