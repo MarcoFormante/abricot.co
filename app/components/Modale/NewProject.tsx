@@ -79,12 +79,16 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
                 name="name"
                 label="Nom*"
                 gap="6px" 
-                required />
+                required 
+                max={50}
+                />
+               
             <Input
                 type="text"
                 name="description"
                 label="Description*"
                 gap="6px"
+                max={255}
                 required
             />
 
