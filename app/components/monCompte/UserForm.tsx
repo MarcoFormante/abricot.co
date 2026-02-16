@@ -24,6 +24,7 @@ export function UserForm({user}:{user:UserInterface}){
      */
     const submitProfile = async (e:React.FormEvent)=> {
         e.preventDefault()
+        setAlert(null)
         const formData = new FormData(e.currentTarget as HTMLFormElement)
         const name = (formData.get("name") as string) || ""
         const surname = (formData.get("surname") as string) || "user"
@@ -32,9 +33,14 @@ export function UserForm({user}:{user:UserInterface}){
         const currentPassword = (formData.get("currentPassword") as string) || "" 
 
         if (!name || !surname || !email ) {
-            setAlert(null)
+           
             setAlert({type:"error",message:"Veuillez remplir tous les champs obligatoires"})
             return
+        }
+
+        if((!newPassword && currentPassword) || (newPassword && !currentPassword)){
+          setAlert({type:"error",message: "Pour modifier votre mot de passe, veuillez renseigner l'ancien ainsi que le nouveau."})
+          return 
         }
 
         const userData = {
