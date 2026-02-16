@@ -28,7 +28,9 @@ export async function getProjects(){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any){
-        NotAuthReturn(error?.response?.status)
+        // console.log(error);
+        
+        // NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -54,6 +56,7 @@ export async function getProjectByID(id:string){
                 "Authorization":"Bearer " + token
             }     
         })
+        
         const projectData = response?.data
         
         const responseTasks = await axiosInstance.get(`projects/${id}/tasks`,{
@@ -70,7 +73,6 @@ export async function getProjectByID(id:string){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }catch (error:any){
-        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
@@ -79,6 +81,7 @@ export async function getProjectByID(id:string){
             : error?.response?.data?.message || "Erreur inconnue",
              errors:error?.response?.data?.data?.errors ?? null
         }
+        
     }
 }
 
