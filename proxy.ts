@@ -7,7 +7,7 @@ export async function proxy(request: NextRequest) {
   const userInfo = request.cookies.get("user_info")
   const authPaths = ['/','/inscription']
 
-  if ((!userInfo || !token) && !authPaths.includes(request.nextUrl.pathname)) {
+  if (((!userInfo || !token) || !userInfo?.value.startsWith("{")) && !authPaths.includes(request.nextUrl.pathname)) {
        return NextResponse.redirect(new URL('/', request.url))
   }
 
@@ -15,14 +15,8 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url))
   }
   
-  const headers = new Headers(request.headers);
-  headers.set("x-current-path", request.nextUrl.pathname);
 
-  return NextResponse.next({
-    request: {
-      headers: headers,
-    },
-  });
+  return NextResponse.next();
 }
 
 export const config = {
