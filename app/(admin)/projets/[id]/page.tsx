@@ -24,6 +24,7 @@ export default async function SingleProject({
 
   const userInfo =(await cookies()).get("user_info")?.value
   const userParsed = JSON.parse(userInfo as string)
+console.log(project);
 
   if (project.status === 403) {
       return <Forbidden/>
@@ -41,7 +42,7 @@ export default async function SingleProject({
               id={param.id} 
               name={project.data.name} 
               description={project.data.description} 
-              members={project.data.members}
+              members={[...project.data.members,{user:project.data.owner}]}
               isUserProject={project.data.owner.id === userParsed.id}
             /> 
             <ProjectContributors 
@@ -50,7 +51,7 @@ export default async function SingleProject({
             />
               <ProjectTasks 
                 tasks={project.tasks} 
-                projectMembers={project.data.members} 
+                projectMembers={[...project.data.members,{user:project.data.owner}]} 
                 isUserProject={project.data.owner.id === userParsed.id}
               />
           </>
