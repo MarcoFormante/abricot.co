@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: '%s | Abricot.co', 
     default: 'Abricot.co',
   },
-  description:"App innovante"
+  description:"Abricot.co est une plateforme SaaS intuitive pour gérer vos projets collaboratifs. Optimisez votre productivité avec nos vues Kanban, listes de tâches prioritaires et outils de collaboration en temps réel.",
 };
 
 
@@ -33,6 +33,7 @@ export default async function AdminLayout({
     const userInfo =(await cookies()).get("user_info")?.value
     user = userInfo ? JSON.parse(userInfo) : null
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
       redirect("/")
   }

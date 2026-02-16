@@ -12,7 +12,6 @@ export function Comment({
     commentToEdit,
     closeEdit,
     isCreator,
-    isUserCreator,
     userInfo
 }:{
     comment:CommentInterface,
@@ -28,9 +27,6 @@ export function Comment({
     userInfo:UserInterface | null
 }){
 
-  console.log(isUserCreator,comment.author.id === userInfo?.id);
-  
- 
     /**
      * Check if the message was modified so add the correct due Date 
      * @return date:string, isModified:boolean 

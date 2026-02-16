@@ -5,6 +5,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'Mon Compte',
+  description:'Gérez vos informations personnelles, mettez à jour votre mot de passe et configurez votre profil utilisateur sur Abricot.co.'
 };
 
 

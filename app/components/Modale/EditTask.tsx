@@ -16,7 +16,7 @@ export function EditTask({task,members,setShowModale}:
     }){
         
     const [newDate,setNewDate] = useState(task?.dueDate)
-    const [selectedUsers,setSelectedUser] = useState<string[]>(task?.assignees ? task.assignees.map((a: any) => a.user.id) : [])
+    const [selectedUsers,setSelectedUser] = useState<string[]>(task?.assignees ? task.assignees.map((a: TaskUserAssigned) => a.user.id) : [])
     const router = useRouter()
     const setAlert = useAlert()
 
@@ -130,14 +130,14 @@ export function EditTask({task,members,setShowModale}:
 
                         {
                             (task.assignees && task.assignees?.length) && 
-                                task.assignees?.map((m:TaskUserAssigned)=> 
-                                !members.find((coll) => coll.user.id === m.user.id ) && 
+                                task.assignees?.map((a:TaskUserAssigned)=> 
+                                !members.find((coll) => coll.user.id === a.user.id ) && 
                                 <option 
-                                    data-selected={selectedUsers?.includes(m.user.id)}  
-                                    key={m.id} 
-                                    value={m.user.id} 
+                                    data-selected={selectedUsers?.includes(a.user.id)}  
+                                    key={a.id} 
+                                    value={a.user.id} 
                                     className="text-[#6B7280]"
-                                    >{m.user.name}
+                                    >{a.user.name}
                                 </option> 
                             )
                         }

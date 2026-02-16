@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: '%s | Abricot.co', 
     default: 'Abricot.co',
   },
-  description:"App innovante"
+  description:"Optimisez votre productivité avec Abricot.co. Gérez vos projets, assignez des tâches et suivez votre progression via nos vues Kanban et Listes. La plateforme SaaS collaborative pensée pour l'efficacité."
 };
 
 

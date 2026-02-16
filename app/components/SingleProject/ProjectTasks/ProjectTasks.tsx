@@ -127,8 +127,8 @@ export function ProjectTasks(
                     <SwitchButton  svgName={"listeSvg"} label={"Liste"} isActive={filter?.type === ""} onClick={()=>onFilterChange("","")}  />
                  
                     <label htmlFor="dueDate" className="relative">
-                        <SwitchButton svgName={"date"} label={"Calendrier"} isActive={filter?.type === "date"}  />
-                        <input type="date" name="dueDate" id="dueDate" className="dueDate-input absolute top-3 left-0 " onChange={(e)=>onFilterChange("date",e.target.value)} />
+                        <SwitchButton svgName={"date"} label={"Calendrier"} isActive={filter?.type === "date"} />
+                        <input onClick={(e:React.MouseEvent<HTMLInputElement>)=>e.currentTarget.showPicker()} type="date" name="dueDate" id="dueDate" className="dueDate-input absolute top-3 left-0 " onChange={(e)=>onFilterChange("date",e.target.value)} />
                     </label>
                     
                 </div>

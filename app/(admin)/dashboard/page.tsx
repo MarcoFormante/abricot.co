@@ -8,6 +8,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'Tableau de bord',
+  description:"Visualisez vos priorités en un clin d'œil. Accédez à vos tâches urgentes, gérez votre planning sur Kanban et suivez l'état d'avancement de vos projets assignés.",
 };
 
 

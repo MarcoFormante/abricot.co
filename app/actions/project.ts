@@ -28,9 +28,8 @@ export async function getProjects(){
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any){
-        // console.log(error);
         
-        // NotAuthReturn(error?.response?.status)
+        NotAuthReturn(error?.response?.status)
         return {
             success: false,
             status: error?.response?.status || 500, 
