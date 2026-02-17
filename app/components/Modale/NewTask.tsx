@@ -114,9 +114,9 @@ export function NewTask({members,closeModale,aiTask,deleteAiTaskAfterSuccess}:
                 
                 <div className='relative'>
                     <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
-                    <div className="absolute top-[50%] pointer-events-none left-[17px] text-[#6B7280] ">{selectedUsers.length ? selectedUsers.length + " collaborateurs" : "Choisir un ou plusieurs collaborateurs"}</div>
-                    <select value=""  onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container cursor-pointer h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
-                        <option value=""></option>
+                    <div className="absolute top-[50%] pointer-events-none left-[17px] text-[#6B7280]" >{selectedUsers.length ? selectedUsers.length + " collaborateurs" : "Choisir un ou plusieurs collaborateurs"}</div>
+                    <select value="" onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container cursor-pointer h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
+                        <option value="" ></option>
                         {
                             (members && members?.length) && 
                                 members.map((m)=> 
