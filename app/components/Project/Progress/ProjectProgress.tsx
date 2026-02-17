@@ -4,8 +4,8 @@ export function ProjectProgress({tasksDone,totalTasks}:{
     tasksDone:number,
     totalTasks:number
 }){
-    const progressValue = ((tasksDone / totalTasks) * 100).toFixed(0)
-
+    const progressValue = totalTasks ? ((tasksDone / totalTasks) * 100).toFixed(0) : 0
+    
     return (
         <div>
             <div className="flex justify-between text-[12px]">
