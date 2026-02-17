@@ -24,7 +24,7 @@ export function ProjectTasks(
         isUserProject:boolean
     }
 ){
-
+    
     
     const [projectTasks,setProjectsTasks] = useState<TaskInterface[]>([])
     const [showModale,setShowModale] = useState<{type:string,task?:TaskInterface}>({type:""})
@@ -51,7 +51,7 @@ export function ProjectTasks(
 
             case "date":
                 newFilteredTasks = projectTasks.filter((f)=>{
-                    return new Date(f.dueDate) < new Date(filter.value)
+                    return new Date(f.dueDate) > new Date(filter.value)
                 })
                 
                 break;
