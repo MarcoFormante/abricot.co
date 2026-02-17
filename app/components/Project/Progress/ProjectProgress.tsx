@@ -4,7 +4,7 @@ export function ProjectProgress({tasksDone,totalTasks}:{
     tasksDone:number,
     totalTasks:number
 }){
-    const progressValue = tasksDone * 20
+    const progressValue = ((tasksDone / totalTasks) * 100).toFixed(0)
 
     return (
         <div>
@@ -12,7 +12,7 @@ export function ProjectProgress({tasksDone,totalTasks}:{
               <p className="text-[#6B7280]">Progression</p>
               <span className="text-[#1F1F1F]">{progressValue}%</span>
             </div>
-            <ProgressBar value={progressValue}/>
+            <ProgressBar value={+progressValue}/>
             <p className="text-[10px] text-[#6B7280]">{tasksDone}/{totalTasks} tâches terminées</p>
         </div>
     )
