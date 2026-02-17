@@ -29,12 +29,16 @@ export function Project({project}:{project:ProjectInterface}) {
             Équipe ({project.members.length})
           </span>
           <div className="">
-            <div className="flex items-center ">
+            <div className="flex items-center gap-2 ">
               <CircleTag name={project.owner.name} isOwner/>
               <NameTag isOwner/>
               <div className="flex items-center ">
                 {project.members && project.members.map((m:MemberInterface,i:number)=> 
-                  {
+                  { 
+                    if (m.user.id === project.owner.id) {
+                      return
+                    }
+
                     if (i === 0) {
                         return <CircleTag key={m.id} name={m.user.name} isOwner={false}/>
                     }else{
