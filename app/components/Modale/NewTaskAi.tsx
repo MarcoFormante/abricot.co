@@ -8,18 +8,13 @@ import { NewTask } from "./NewTask";
 
 export function NewTaskAI({
     members,
-    setMaxAiRequests,
-    maxAiRequests
 }:{
     members:MemberInterface[],
-    setMaxAiRequests:(num:number)=>void,
-    maxAiRequests:number
 }){
     const [tasks,setTasks] = useState([] as AiTasks)
     const [isLoading,setLoading] = useState(false)
     const [taskToEdit,setTaskToEdit] = useState<AiTask | null>(null)
     const setAlert = useAlert()
-
 
 
     const onDelete = (id:number)=>{
@@ -42,11 +37,10 @@ export function NewTaskAI({
         setLoading(true)
         const AIResponse = await createTasksWithAI(text as string)
         if (AIResponse?.success) {
-            setMaxAiRequests(maxAiRequests - 1)
             setTasks(AIResponse.data?.tasks)
             setLoading(false)
         }else{
-            
+
             const alertMessage = AIResponse?.apiKeyError ?  AIResponse?.apiKeyError :   AIResponse?.status == 429 ? "Limite quotidienne atteinte. Réessayez demain." : "Une Erreur est survenue" 
             setAlert({type:"error",message:alertMessage})
             setLoading(false)
@@ -154,7 +148,6 @@ export function NewTaskAI({
                 <label className="outScreen" htmlFor="aiText">Décrivez les tâches que vous souhaitez ajouter...</label>
                 <AiInput/>
             </form>
-            <p className="text-center text-sm">Requêtes restantes : {maxAiRequests}</p>
         </div>}
          </div>
     )
