@@ -38,7 +38,7 @@ export default async function SingleProject({
   if (!project.data) {
     notFound()
   }
-  
+
   return (
     <main className="pb-[78px]">
       {project?.data && (
@@ -47,7 +47,7 @@ export default async function SingleProject({
               id={param.id} 
               name={project.data.name} 
               description={project.data.description} 
-              members={[...project.data.members,{user:project.data.owner}]}
+              members={[...project.data.members]}
               isUserProject={project.data.owner.id === userParsed.id}
             /> 
             <ProjectContributors 
@@ -56,7 +56,7 @@ export default async function SingleProject({
             />
               <ProjectTasks 
                 tasks={project.tasks} 
-                projectMembers={[...project.data.members,{user:project.data.owner}]} 
+                projectMembers={[...project.data.members]} 
                 isUserProject={project.data.owner.id === userParsed.id}
               />
           </>
