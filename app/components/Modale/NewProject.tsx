@@ -9,7 +9,7 @@ import { UserInterface } from "@/app/types/globals";
 import { useAlert } from "@/app/context/AlertContext";
 
 
-export  function NewProject({closeModale}:{closeModale:()=>void}){
+export  function NewProject(){
     const [users,setUsers] = useState<UserInterface[]>([])
     const [selectedUsers,setSelectedUser] = useState<string[]>([])
     const router = useRouter()
@@ -26,10 +26,10 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
         const formdata = new FormData(e.currentTarget as HTMLFormElement)
         const response = await newProject(formdata,[...selectedUsers,userInfo?.email ?? ""])
         if (response?.success) {
-            closeModale()
             document.body.style.overflowY = "visible"
             setAlert({type:"success",message:"Project créé"})
             router.push("/projets/" + response.projectId)
+            
         }else{
           const errors = response?.errors || response?.errorMessage
             if (errors) {
@@ -63,7 +63,7 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
         if (!selectedUsers.includes(value)) {
             setSelectedUser(prev => [...prev,value])
         }else{
-            setSelectedUser(selectedUsers.filter((email)=> email !== value))
+            setSelectedUser(prev => prev.filter((email)=> email !== value))
         }
     }
 
@@ -94,7 +94,7 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
 
             <div className="relative">
                 <label htmlFor="collaborators" className="text-[14px]">Contributeurs</label>
-            <div className="absolute h-[0px] top-[50%] left-[17px] text-[#6B7280] ">
+            <div className="absolute h-[0px] top-[50%] left-[17px] text-[#6B7280] pointer-events-none">
 
               {selectedUsers.length
                 ? selectedUsers.length +
@@ -104,11 +104,10 @@ export  function NewProject({closeModale}:{closeModale:()=>void}){
 
             </div>
             <select
-              value={""}
               onChange={(e) => onChange(e.target.value)}
               name="collaborators"
               id="collaborators"
-              className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] cursor-pointer  pl-1.5 text-[#6B7280]"
+              className="select-container  h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] cursor-pointer  pl-1.5 text-transparent "
               defaultValue={""}
             >
               <option value=""></option>
