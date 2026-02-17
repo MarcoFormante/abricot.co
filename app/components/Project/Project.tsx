@@ -19,7 +19,7 @@ export function Project({project}:{project:ProjectInterface}) {
           </p>
         </div>
 
-        <ProjectProgress  totalTasks={project._count.tasks } tasksDone={project.completedTasks.length }/>
+        <ProjectProgress  totalTasks={project._count.tasks} tasksDone={project.completedTasks.length}/>
         
         <div className="flex flex-col gap-[15px]">
           <span className="text-[#6B7280] text-[10px] h-[12px] flex items-center gap-[8px]">
