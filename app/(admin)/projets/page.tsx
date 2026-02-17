@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function Projets(){
     const data = await getProjects()
+
     
     return(
         <main className="pt-[89px] px-5 lg:px-25 pb-[78px] max-sm:px-2 max-md:pt-[40px]">
@@ -21,13 +22,15 @@ export default async function Projets(){
                 <CreateProjectButton />
             </div>
 
+          {  data?.projects?.length > 0  ? 
             <section className="mt-[64px]">
                 <ul className="grid grid-cols-3 max-[1280px]:grid-cols-2 max-[1280px]:place-items-center gap-[14px]  text-[#1F1F1F] max-md:grid-cols-1 ">
-                    {data.projects && data.projects.map((project:ProjectInterface)=>
+                    {  data.projects.map((project:ProjectInterface)=>
                         <Project key={project.id} project={project}/>
                     )}
                 </ul>
             </section>
+              : <p className="text-center mt-20 font-semibold text-xl">Aucun projet disponible</p>}
         </main>    
         )
 }
