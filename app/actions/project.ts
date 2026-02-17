@@ -111,6 +111,7 @@ export async function newProject(formdata:FormData,contributors:Array<string>){
             }
         })
         
+        
         return {
             success:true,
             status:response.status,
@@ -257,3 +258,34 @@ export async function removeContributor(contributor:ContributorInterface,project
 
 
 
+
+export async function deleteProject(projectId:string){
+     
+     const token = (await cookies()).get("auth_token")?.value || ""
+    
+     try {
+        const response = await axiosInstance.delete(`/projects/${projectId}`,{
+            headers:{
+                "Authorization": "Bearer " + token
+            }
+        })
+       
+        return {
+            success:true,
+            status:response?.status,
+            message:response?.data?.message
+        }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }catch (error:any){
+        NotAuthReturn(error?.response?.status)
+        return {
+            success: false,
+            status: error?.response?.status || 500, 
+            errorMessage: (error?.response?.status >= 500 || !error.response) 
+            ? "Une Erreur est survenue" 
+            : error?.response?.data?.message || "Erreur inconnue",
+             errors:error?.response?.data?.data?.errors ?? null
+        }
+    }
+}
