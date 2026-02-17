@@ -19,7 +19,6 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
 }){
 
   const [showModale,setShowModale] = useState({type:""})
-  const [maxAiRequests,setMaxAiRequests] = useState(20)
   const router = useRouter()
 
   const navigateBack = ()=>{
@@ -46,7 +45,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
           </button>
           <div className="flex flex-col gap-[20px] min-lg:w-[50vw] max-lg:w-[80vw]">
             <div className="flex items-center gap-[14px] mt-[4px]  max-sm:items-start max-sm:flex-col-reverse min-lg:w-[50vw] max-lg:w-[80vw]">
-              <h1 className="text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600 wrap-break-word min-lg:w-[50vw] max-lg:w-[80vw]">
+              <h1 className=" text-[24px] text-[#1F1F1F] font-semibold leading-[100%] manrope-600 wrap-break-word min-lg:w-[50vw] max-lg:w-[80vw] max-w-max">
                 {name}
               </h1>
              {isUserProject &&  <button onClick={()=>setShowModale({type:"editProject"})} className="cursor-pointer text-[#BD4F0A] text-[14px] underline">
@@ -68,7 +67,7 @@ export function ProjectHeader({id,name,description,members,isUserProject}:{
               {
                 showModale.type === "newTask" 
                 ? <NewTask members={members} closeModale={()=>setShowModale({type:""})}/>
-                : showModale.type === "newAiTask" ? <NewTaskAI members={members} setMaxAiRequests={setMaxAiRequests} maxAiRequests={maxAiRequests} />
+                : showModale.type === "newAiTask" ? <NewTaskAI members={members}  />
                 : <EditProject closeModale={()=>setShowModale({type:""})}  members={members} project={{name,description,members,id}}/>
               }
             </ModaleContainer>
