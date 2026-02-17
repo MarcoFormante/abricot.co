@@ -28,7 +28,7 @@ export async function POST(req:NextRequest) {
       3. Si le nombre de tâches est inférieur ou égal à 3, le champ "error" doit être null.
       4. Sois concis pour les noms et les descriptions.
       5. tout dois etre toujours en francais meme si le prompt est dans une autre langue.
-      6. SI le prompt est trop generique, invente un titre et un description, max 255 chars, theme development web ou Web Design
+      6. SI le prompt est trop generique, invente un titre et un description, max 50 chars, theme development web ou Web Design
     `;
 
      const response = await ai.models.generateContent({
