@@ -14,6 +14,7 @@ export function EditTask({task,members,setShowModale}:
         members:MemberInterface[],
         setShowModale:React.Dispatch<React.SetStateAction<{type:string}>>
     }){
+
         
     const [newDate,setNewDate] = useState(task?.dueDate)
     const [selectedUsers,setSelectedUser] = useState<string[]>(task?.assignees ? task.assignees.map((a: TaskUserAssigned) => a.user.id) : [])
@@ -98,6 +99,9 @@ export function EditTask({task,members,setShowModale}:
       }
 
 
+      
+
+
     return (
         <div className="flex flex-col gap-[46px] max-md:gap-[12px]">
             <h5 className="font-semibold text-[24px] text-[#1F1F1F] manrope-600">Modifier</h5>
@@ -106,18 +110,18 @@ export function EditTask({task,members,setShowModale}:
                 <Input type='text' name='title' label='Title*' gap='6px' value={task.title ?? ""} required/>
                 <Input type='text' name='desc' label='Description*' gap='6px' value={task.description ?? ""} required/>
                 <div className='relative'>
-                    <Input type={"date"} name='date' label='Échéance*'  onChange={(e) => onDateChange(e.target.value)} value={new Date(newDate).toString()}  />
-                    <input name='isoDate' id='isoDate' disabled className='absolute top-[50%] left-0.5 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0' type={"text"} value={new Date(newDate).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"})}/>
+                    <Input type={"date"} name='date' label='Échéance*' required onChange={(e) => onDateChange(e.target.value)} value={new Date(newDate).toISOString().split('T')[0]}  />
+                    <input name='isoDate' id='isoDate' disabled className='absolute top-[50%] pointer-events-none left-0.5 h-max rounded-sm bg-[#FFFFFF]  border-[#E5E7EB] pl-1.5 w-[80%] focus:outline-0' type={"text"} value={new Date(newDate).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"})}/>                
                 </div>
-                
                 <div className='relative'>
                     <label htmlFor="collaborators" className='text-[14px]'>Assigné à :</label>
                     <div className="absolute top-[50%] pointer-events-none left-[17px] text-[#6B7280] ">{selectedUsers?.length ? selectedUsers.length + " collaborateurs" : "Choisir un ou plusieurs collaborateurs"}</div>
-                    <select value="" onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
+                    <select value={""} onChange={(e)=>onSelectChange(e.target.value)} name="collaborators" id="collaborators" className="select-container h-[53px]  pl-[17px] w-full text-[14px]  rounded-sm bg-[#FFFFFF] border border-[#E5E7EB]  pl-1.5 text-[#6B7280]" >
                         <option value=""></option>
                         {
                             (members && members?.length) && 
                                 members?.map((m:MemberInterface)=> 
+                                    m.role === "CONTRIBUTOR" &&  
                                 <option 
                                     data-selected={selectedUsers?.includes(m.user.id)}  
                                     key={m.id} 
