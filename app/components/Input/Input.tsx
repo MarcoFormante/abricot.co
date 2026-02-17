@@ -1,7 +1,7 @@
 'use client'
 import { ChangeEventHandler, useState } from "react"
 
-export function Input({label,type,name,placeholder,gap,required,onChange,value,styles,max}:{
+export function Input({label,type,name,placeholder,gap,required,onChange,value,styles,max,onClick}:{
     label?:string,
     type: "text" | "password" | "search" | "date" | "email",
     name:string,
@@ -11,7 +11,8 @@ export function Input({label,type,name,placeholder,gap,required,onChange,value,s
     onChange?:ChangeEventHandler<HTMLInputElement>,
     value?:string,
     styles?:string,
-    max?:number
+    max?:number,
+    onClick?:(e:any)=>void
 }){
     
     const [inputValue,setInputValue] = useState(value)
@@ -19,7 +20,7 @@ export function Input({label,type,name,placeholder,gap,required,onChange,value,s
     return(
         <div className={`flex flex-col w-full gap-[${gap}]`}>
             <label htmlFor={name} className={`font-normal text-[14px] ${!label ? "outScreen" : ""}`}>{label || placeholder}</label>
-            <input maxLength={max} onChange={onChange} onInput={(e)=>setInputValue(e.currentTarget.value)} required={required} placeholder={placeholder} id={name} name={name} type={type} value={inputValue ?? ""} className={`h-13.25 pl-[17px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] pl-1.5 w-full text-[#6B7280] ${type === "search" ? "pl-[32px] text-[14px] h-[63px] pr-10 [&::-webkit-search-cancel-button]:hidden " : ""} ${styles ? styles : ""}`} />
+            <input onClick={onClick} maxLength={max} onChange={onChange} onInput={(e)=>setInputValue(e.currentTarget.value)} required={required} placeholder={placeholder} id={name} name={name} type={type} value={inputValue ?? ""} className={`h-13.25 pl-[17px] rounded-sm bg-[#FFFFFF] border border-[#E5E7EB] pl-1.5 w-full text-[#6B7280] ${type === "search" ? "pl-[32px] text-[14px] h-[63px] pr-10 [&::-webkit-search-cancel-button]:hidden " : ""} ${styles ? styles : ""}`} />
         </div>
     )   
 }
